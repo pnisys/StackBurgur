@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - CLERKCOLLIDER
+  - CLERK
+  - FIRE
+  - MEAT
+  - GRILL
+  - SANDWICHBREAD
+  - HAMBURGURBREAD
+  - BLACKBREAD
+  - LETTUCE
+  - TOMATO
+  - ONION
+  - CHICKEN
+  - BULGOGI
+  - BACON
+  - MUSHROOM
+  - CHEEZE
+  - SHIRMP
+  - ShrimpBurger
+  - TotoBurger
+  - TomatoPattyBurger
+  - DoubleCheezeBurger
+  - BaconBurger
+  - MushroomBurger
+  - ChokchokBurger
+  - BulgogiBurger
+  - CheezeBulgogiBurger
+  - SesameBurger
+  - ChickenBurger
+  - TripleMeatBurger
+  - InkBurger
+  - OnionBurger
+  - YugjeubBurger
+  - ManymushroomBurger
+  - FatBurger
+  - CheeseTomatoBurger
+  - SesameCheeseBurger
+  - DietBurger
+  - HighcalorieBurger
+  - DoubleShrimpBurger
+  - GrilledMushroomBulgogiHamburger
+  - CheeseShrimpBurger
+  - GuinnessBurger
+  - MoistureBurger
+  - BigBurger
+  - VisualBurger
+  - BombcalorieBurger
+  - SingleHeartBurger
+  - EnergyBoosterBurger
+  - ManyBreadBurger
+  - 1TABLE
+  - 2TABLE
+  - 3TABLE
+  - 4TABLE
+  - DOOR
+  - GOODMEAT
+  - HANDGRAB
+  - CHILLSOURCE
+  - BBQSOURCE
+  - MUSTADSOURCE
+  - MAYONAISE
+  - RHANDCOLLIDER
+  - TRASH
+  - EMPTY
+  - TRAY
+  - TRAYCOLLIDER
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - FOOD
+  - SOURCE
+  - DISH
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
