@@ -8,6 +8,12 @@ public class FoodControl : MonoBehaviour
     public bool isOk = false;
     public bool isTrash = false;
     public bool isChecking = false;
+
+    public bool isEntry = false;
+    public bool isInGrab = false;
+    public bool isOutGrab = false;
+
+
     HandGrabInteractor grabstatus;
     Transform empty;
     Rigidbody rb;
@@ -35,9 +41,8 @@ public class FoodControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("TRAY"))
         {
-            print("트레이 벗어남");
             //트레이에서 벗어나면
-            OnTraying();
+            //OnTraying();
         }
         //접시에서 빼면
         if (other.gameObject.layer == LayerMask.NameToLayer("DISH"))

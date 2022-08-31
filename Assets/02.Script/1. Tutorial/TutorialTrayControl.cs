@@ -54,12 +54,12 @@ public class TutorialTrayControl : MonoBehaviour
     private void OnEnable()
     {
         TutorialPeopleAnimator.OnLimitTimeComplete += this.MenuSelection;
-        FoodControl.OnTraying += this.UpdateStatus;
+        //FoodControl.OnTraying += this.UpdateStatus;
     }
     private void OnDisable()
     {
         TutorialPeopleAnimator.OnLimitTimeComplete -= this.MenuSelection;
-        FoodControl.OnTraying -= this.UpdateStatus;
+        //FoodControl.OnTraying -= this.UpdateStatus;
     }
 
     //각종 Start함수 선언들
@@ -139,24 +139,24 @@ public class TutorialTrayControl : MonoBehaviour
 
 
     //Food가 Tray를 벗어날때마다 traystatus 상태 체크해줘야 함
-    void UpdateStatus()
-    {
-        if (combination[traystatus - 1].childCount == 0)
-        {
-            stackcreateburgur.Pop();
-            traystatus = stackcreateburgur.ToArray().Length;
-            if (traystatus != 0)
-            {
-                //8. 남아 있는 가장 최상단에 있는 것들을 다시 잡을 수 있게 만들어 놓음
-                stackcreateburgur.ToArray()[0].gameObject.GetComponent<Grabbable>().enabled = true;
-                stackcreateburgur.ToArray()[0].gameObject.GetComponent<PhysicsGrabbable>().enabled = true;
-                stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().useGravity = true;
-                stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabInteractable>().enabled = true;
-                stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = true;
-            }
-        }
-    }
+    //void UpdateStatus()
+    //{
+    //    if (combination[traystatus - 1].childCount == 0)
+    //    {
+    //        stackcreateburgur.Pop();
+    //        traystatus = stackcreateburgur.ToArray().Length;
+    //        if (traystatus != 0)
+    //        {
+    //            //8. 남아 있는 가장 최상단에 있는 것들을 다시 잡을 수 있게 만들어 놓음
+    //            stackcreateburgur.ToArray()[0].gameObject.GetComponent<Grabbable>().enabled = true;
+    //            stackcreateburgur.ToArray()[0].gameObject.GetComponent<PhysicsGrabbable>().enabled = true;
+    //            stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().useGravity = true;
+    //            stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+    //            stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabInteractable>().enabled = true;
+    //            stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = true;
+    //        }
+    //    }
+    //}
 
     //내가 적층한 햄버거와 정답 적층 순서를 비교한다.
     void MenuSelection()
@@ -224,16 +224,30 @@ public class TutorialTrayControl : MonoBehaviour
     //적층
     IEnumerator OnTriggerEnter(Collider other)
     {
-        //음식 넣을 때 + 두번 타는거 방지
-        if (other.gameObject.layer == LayerMask.NameToLayer("FOOD") && dictriggertest[other.gameObject.tag] == false)
+        //들어와서 놓았을때는 함수 타면 안됨, 그러나 놓아진 걸 다시 잡을 때는 한번 탈 필요도 있음
+        if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false)
         {
-            print("들어옴 ㅋㅋ");
-            //두번 타는거 방지용 조건 걸어주기
-            dictriggertest[other.gameObject.tag] = true;
-            //음식이 들어왔다는 걸 알리기 위함
-            dicmaterialtest[other.gameObject.tag] = true;
-            //음식이 바깥으로 빠지거나, 재료가 적층되지 않으면 계속 검사
-            while (dicmaterialtest[other.gameObject.tag] == true)
+            print("들어와서 놓을 때");
+            yield break;
+        }
+        //안에 있을 때 잡을 때
+        if (other.gameObject.GetComponent<FoodControl>().isInGrab == true)
+        {
+            print("안에 있는데 잡을 때");
+            yield return new WaitForSeconds(0.2f);
+            other.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+            other.gameObject.GetComponent<FoodControl>().isInGrab = false;
+            other.gameObject.GetComponent<FoodControl>().isOutGrab = true;
+        }
+        
+
+        //1. 밖에서 안으로 음식 넣을 때
+        if (other.gameObject.layer == LayerMask.NameToLayer("FOOD") && other.gameObject.GetComponent<FoodControl>().isEntry == false)
+        {
+            other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+            other.gameObject.GetComponent<FoodControl>().isEntry = true;
+            //잡고 있으면 계속 검사하다가
+            while (grabstatus.IsGrabbing == true)
             {
                 ////0.3초마다 검사를 할 것
                 yield return null;
@@ -249,7 +263,6 @@ public class TutorialTrayControl : MonoBehaviour
                         traystatus = stackcreateburgur.ToArray().Length;
 
                         //13개의 combination position의 자식으로 게임오브젝트가 들어가게 한다. 
-
                         other.gameObject.transform.parent = combination[traystatus - 1];
                     }
                     catch (System.IndexOutOfRangeException)
@@ -261,7 +274,6 @@ public class TutorialTrayControl : MonoBehaviour
                         break;
                     }
                     #endregion
-
 
                     //처음 적층하는거라면, 햄버거 거꾸로 뒤집기
                     if (traystatus == 1 && ((other.gameObject.CompareTag(hamburgurbread) || other.gameObject.CompareTag(blackbread))))
@@ -285,8 +297,9 @@ public class TutorialTrayControl : MonoBehaviour
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.3f);
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    other.gameObject.GetComponent<FoodControl>().isInGrab = true;
 
                     //10.  처음 쌓는 거 말고, 두번 째부터 쌓을 때
                     if (traystatus != 1)
@@ -296,12 +309,12 @@ public class TutorialTrayControl : MonoBehaviour
                         stackcreateburgur.ToArray()[1].gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                         stackcreateburgur.ToArray()[1].gameObject.GetComponent<PhysicsGrabbable>().enabled = false;
                         stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabInteractable>().enabled = false;
+                        stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabInteractable>().enabled = false;
                         stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = false;
+                        stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabPose>().enabled = false;
+
                     }
-                    //모든 과정이 완료되면 여러번 Trigger 방지용 딕셔너리 다시 false 시켜줌
-                    dictriggertest[other.gameObject.tag] = false;
-                    //적층하거나, 빠져나가거나 했을 때 딕셔너리 false해줘야 한다.
-                    dicmaterialtest[other.gameObject.tag] = false;
+
                 }
             }
         }
@@ -331,118 +344,133 @@ public class TutorialTrayControl : MonoBehaviour
         }
     }
 
-    //이거 잡으면 바로 TriggerExit타니까
-    void OnTriggerExit(Collider other)
+
+    IEnumerator OnTriggerExit(Collider other)
     {
         //음식이 벗어날때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
-            print("이게 타는게 어이가없어");
+            //안에서 놓을때나, 안에서 집을 때나 TriggerExit 방지
+            if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
+            {
+                print("안에서 놓았을 때 방지");
+                yield break;
+            }
+            else if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isOutGrab == true)
+            {
+                other.gameObject.GetComponent<FoodControl>().isEntry = false;
+                other.gameObject.GetComponent<FoodControl>().isOutGrab = false;
+            }
+
+            print("나감");
+            other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+            other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            other.gameObject.GetComponent<Rigidbody>().useGravity = true;
+
+            //other.gameObject.GetComponent<FoodControl>().isEntry = false;
+            //other.gameObject.GetComponent<FoodControl>().isOutGrab = false;
+            //3. stack에서 빼버린다.
+            stackcreateburgur.Pop();
+            //6.  stack의 배열길이를 트레이상태로 업데이트
+            traystatus = stackcreateburgur.ToArray().Length;
+            if (traystatus != 0)
+            {
+                //8. 남아 있는 가장 최상단에 있는 것들을 다시 잡을 수 있게 만들어 놓음
+                stackcreateburgur.ToArray()[0].gameObject.GetComponent<Grabbable>().enabled = true;
+                stackcreateburgur.ToArray()[0].gameObject.GetComponent<PhysicsGrabbable>().enabled = true;
+                stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().useGravity = true;
+                stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabInteractable>().enabled = true;
+                stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabInteractable>().enabled = true;
+
+                stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = true;
+                stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabPose>().enabled = true;
+
+            }
+            //9. 만약 마지막 것을 빼는 거라면
+            else
+            {
+                //10. 그냥 집어들었던 게임오브젝트의 rigidbody를 다 풀어줌
+                other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            }
+            yield break;
             ////잡고 있다가
-            //while ()
+            //while (grabstatus.IsGrabbing == true)
             //{
+            //    yield return null;
             //    //이게 문제는 아직 안나갔는데 TriggerExit가 발동된다는거다.
             //    print("나가고 나서 계속 검사중이야");
+              
+            //    //놓게 되면
+            //    if (grabstatus.IsGrabbing == false)
+            //    {
+            //        print("놓았다");
+            //        //3. stack에서 빼버린다.
+            //        //stackcreateburgur.Pop();
+
+            //        ////6.  stack의 배열길이를 트레이상태로 업데이트
+            //        //traystatus = stackcreateburgur.ToArray().Length;
+            //        //other.gameObject.transform.parent = empty;
+            //        //4. 빼는 순간 Rigidbody의 모든 제약을 풀어줌
+            //        //5. 중력값을 켜줌
+            //        //7. 빼도 아직 남아 있을 때
+                  
+            //    }
+            //}
+
+            #region 일단 보류해놓은 코드
+            ////나가면 false
+            ////dicmaterialtest[other.gameObject.tag] = false;
+            ////1. 손에 쥐고 있고, 여러번 방지용 딕셔너리가 false라면
+            //if (grabstatus.IsGrabbing == true && dicmaterialtest[other.gameObject.tag] == false && dictriggertest[other.gameObject.tag] == false)
+            //{
+            //    //Debug.Log("여기 타냐");
+            //    //dictriggertest[other.gameObject.tag] = true;
+
+            //    yield return new WaitForSeconds(2f);
             //    //3. stack에서 빼버린다.
             //    stackcreateburgur.Pop();
-            //    //6.  stack의 배열길이를 트레이상태로 업데이트
-            //    traystatus = stackcreateburgur.ToArray().Length;
             //    //4. 빼는 순간 Rigidbody의 모든 제약을 풀어줌
             //    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             //    //5. 중력값을 켜줌
             //    other.gameObject.GetComponent<Rigidbody>().useGravity = true;
-            //    yield return null;
-            //    //놓게 되면
-            //    if (grabstatus.IsGrabbing == false)
+            //    //6.  stack의 배열길이를 트레이상태로 업데이트
+            //    traystatus = stackcreateburgur.ToArray().Length;
+            //    other.gameObject.transform.parent = empty;
+
+            //    //7. 빼도 아직 남아 있을 때
+            //    if (traystatus != 0)
             //    {
-
-            //        //3. stack에서 빼버린다.
-            //        stackcreateburgur.Pop();
-
-            //        //6.  stack의 배열길이를 트레이상태로 업데이트
-            //        traystatus = stackcreateburgur.ToArray().Length;
-            //        //other.gameObject.transform.parent = empty;
-            //        //4. 빼는 순간 Rigidbody의 모든 제약을 풀어줌
-            //        other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-            //        //5. 중력값을 켜줌
-            //        other.gameObject.GetComponent<Rigidbody>().useGravity = true;
-            //        //7. 빼도 아직 남아 있을 때
-            //        if (traystatus != 0)
-            //        {
-            //            //8. 남아 있는 가장 최상단에 있는 것들을 다시 잡을 수 있게 만들어 놓음
-            //            stackcreateburgur.ToArray()[0].gameObject.GetComponent<Grabbable>().enabled = true;
-            //            stackcreateburgur.ToArray()[0].gameObject.GetComponent<PhysicsGrabbable>().enabled = true;
-            //            stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().useGravity = true;
-            //            stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-            //            stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabInteractable>().enabled = true;
-            //            stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = true;
-            //        }
-            //        //9. 만약 마지막 것을 빼는 거라면
-            //        else
-            //        {
-            //            //10. 그냥 집어들었던 게임오브젝트의 rigidbody를 다 풀어줌
-            //            other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-            //        }
-            //        //두번 타는거 방지용 조건 걸어주기
-            //        dictriggertest[other.gameObject.tag] = false;
-            //        yield break;
+            //        //8. 남아 있는 가장 최상단에 있는 것들을 다시 잡을 수 있게 만들어 놓음
+            //        stackcreateburgur.ToArray()[0].gameObject.GetComponent<Grabbable>().enabled = true;
+            //        stackcreateburgur.ToArray()[0].gameObject.GetComponent<PhysicsGrabbable>().enabled = true;
+            //        stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().useGravity = true;
+            //        stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            //        stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabInteractable>().enabled = true;
+            //        stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = true;
             //    }
+            //    //9. 만약 마지막 것을 빼는 거라면
+            //    else
+            //    {
+            //        //10. 그냥 집어들었던 게임오브젝트의 rigidbody를 다 풀어줌
+            //        other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            //    }
+            //    yield return new WaitForSeconds(1f);
+            //    dictriggertest[other.gameObject.tag] = false;
+            //}
+            #endregion
         }
-
-
-
-
-
-        #region 일단 보류해놓은 코드
-        ////나가면 false
-        ////dicmaterialtest[other.gameObject.tag] = false;
-        ////1. 손에 쥐고 있고, 여러번 방지용 딕셔너리가 false라면
-        //if (grabstatus.IsGrabbing == true && dicmaterialtest[other.gameObject.tag] == false && dictriggertest[other.gameObject.tag] == false)
-        //{
-        //    //Debug.Log("여기 타냐");
-        //    //dictriggertest[other.gameObject.tag] = true;
-
-        //    yield return new WaitForSeconds(2f);
-        //    //3. stack에서 빼버린다.
-        //    stackcreateburgur.Pop();
-        //    //4. 빼는 순간 Rigidbody의 모든 제약을 풀어줌
-        //    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        //    //5. 중력값을 켜줌
-        //    other.gameObject.GetComponent<Rigidbody>().useGravity = true;
-        //    //6.  stack의 배열길이를 트레이상태로 업데이트
-        //    traystatus = stackcreateburgur.ToArray().Length;
-        //    other.gameObject.transform.parent = empty;
-
-        //    //7. 빼도 아직 남아 있을 때
-        //    if (traystatus != 0)
-        //    {
-        //        //8. 남아 있는 가장 최상단에 있는 것들을 다시 잡을 수 있게 만들어 놓음
-        //        stackcreateburgur.ToArray()[0].gameObject.GetComponent<Grabbable>().enabled = true;
-        //        stackcreateburgur.ToArray()[0].gameObject.GetComponent<PhysicsGrabbable>().enabled = true;
-        //        stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().useGravity = true;
-        //        stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-        //        stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabInteractable>().enabled = true;
-        //        stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = true;
-        //    }
-        //    //9. 만약 마지막 것을 빼는 거라면
-        //    else
-        //    {
-        //        //10. 그냥 집어들었던 게임오브젝트의 rigidbody를 다 풀어줌
-        //        other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        //    }
-        //    yield return new WaitForSeconds(1f);
-        //    dictriggertest[other.gameObject.tag] = false;
-        //}
-        #endregion
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }
-
-
-
-
-
-
-
-
-
-

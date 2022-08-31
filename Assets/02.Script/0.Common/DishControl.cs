@@ -50,32 +50,6 @@ public class DishControl : MonoBehaviour
             //4. 소환 후 포지션값과 위치값을 맞춰준다.
             newcreatematerial.transform.localPosition = new Vector3(0, 0, 0);
             newcreatematerial.transform.localRotation = Quaternion.Euler(0, 90, 0);
-            ////5. 각 오브젝트 마다 크기가 달라서 따로 작업해줘야 한다.
-            //if (newcreatematerial.CompareTag("MUSHROOM"))
-            //{
-            //    newcreatematerial.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            //}
-            //else if (newcreatematerial.CompareTag("BULGOGI"))
-            //{
-            //    newcreatematerial.transform.localScale = new Vector3(1, 1, 1);
-            //}
-            //else if (newcreatematerial.CompareTag("CHEEZE"))
-            //{
-            //    newcreatematerial.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-
-            //}
-            //else if (newcreatematerial.CompareTag("LETTUCE"))
-            //{
-            //    newcreatematerial.transform.localRotation = Quaternion.Euler(0, 0, 180);
-            //}
-            //else if (newcreatematerial.CompareTag("BACON"))
-            //{
-            //    newcreatematerial.transform.localRotation = Quaternion.Euler(0, 0, 180);
-            //}
-            //else
-            //{
-            //    newcreatematerial.transform.localScale = new Vector3(0.62877f, 0.62877f, 0.62877f);
-            //}
         }
         catch (System.IndexOutOfRangeException)
         {
