@@ -1383,6 +1383,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!1001 &80818114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51537,6 +51541,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!33 &3469287836800980801
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51560,6 +51568,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!33 &3469287836834721913
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51583,6 +51595,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!33 &3469287837230656888
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51668,6 +51684,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!33 &3469287837247522589
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51753,6 +51773,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!33 &3469287837499193079
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51776,6 +51800,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!33 &3469287838118630894
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51799,6 +51827,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!33 &3469287838198055670
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51822,6 +51854,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!33 &3469287838598625856
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51845,6 +51881,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!4 &3474302132474153574
 Transform:
   m_ObjectHideFlags: 0
@@ -70761,6 +70801,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!4 &8713951000347518733
 Transform:
   m_ObjectHideFlags: 0
@@ -71119,6 +71163,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!114 &8760863851976906401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71134,6 +71182,10 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
 --- !u!114 &8803387606621262093
 MonoBehaviour:
   m_ObjectHideFlags: 0

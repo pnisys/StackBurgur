@@ -12,6 +12,7 @@ public class FoodControl : MonoBehaviour
     public bool isEntry = false;
     public bool isInGrab = false;
     public bool isOutGrab = false;
+    public bool isInOutGrab = false;
 
 
     HandGrabInteractor grabstatus;
