@@ -40,11 +40,6 @@ public class FoodControl : MonoBehaviour
     //이게 트레이를 벗어나면
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("TRAY"))
-        {
-            //트레이에서 벗어나면
-            //OnTraying();
-        }
         //접시에서 빼면
         if (other.gameObject.layer == LayerMask.NameToLayer("DISH"))
         {

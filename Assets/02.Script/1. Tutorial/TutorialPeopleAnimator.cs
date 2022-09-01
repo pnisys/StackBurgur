@@ -37,10 +37,10 @@ public class TutorialPeopleAnimator : MonoBehaviour
     public GameObject[] sourceCard;
 
     public GameObject selecthambugurcard;
-    public GameObject selectsourcecard;
+    //public GameObject selectsourcecard;
     public TextMeshProUGUI guidetext;
 
-    public List<int> sourcenumber = new List<int>();
+    //public List<int> sourcenumber = new List<int>();
 
 
     public AudioClip[] audioclip;
@@ -86,7 +86,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
         //1. 손님 등판
         StartCoroutine(ClerkStateCheck());
         //2. 숫자 랜덤하게 섞기
-        RandomNumberSelect();
+        //RandomNumberSelect();
     }
 
 
@@ -151,7 +151,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
         //카드 Setactive(false); 시키기
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         TutorialLevelBurgerCard.SetActive(false);
-        sourceCard[sourcenumber[0]].SetActive(false);
+        sourceCard[0].SetActive(false);
         animator.SetBool(hashTalk, false);
         StartCoroutine(Order());
     }
@@ -281,30 +281,29 @@ public class TutorialPeopleAnimator : MonoBehaviour
         //audioing = true;
     }
 
-    //8개중에 랜덤한 숫자 골라내는 함수
-    public void RandomNumberSelect()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            sourcenumber.Add(i);
-        }
+    //이건 소스 하나로 통일할 거임, 튜토리얼에선 없어도 됨
+    //public void RandomNumberSelect()
+    //{
+    //    for (int i = 0; i < 4; i++)
+    //    {
+    //        sourcenumber.Add(i);
+    //    }
 
-        for (int i = 0; i < 4; i++)
-        {
-            int temp1 = sourcenumber[i];
-            ran1 = UnityEngine.Random.Range(0, 3);
-            sourcenumber[i] = sourcenumber[ran1];
-            sourcenumber[ran1] = temp1;
-        }
-    }
+    //    for (int i = 0; i < 4; i++)
+    //    {
+    //        int temp1 = sourcenumber[i];
+    //        ran1 = UnityEngine.Random.Range(0, 3);
+    //        sourcenumber[i] = sourcenumber[ran1];
+    //        sourcenumber[ran1] = temp1;
+    //    }
+    //}
 
     //난이도에 맞는 카드를 Setactiove 하고, selecthambugurcard에 넣는 함수
     public void LevelBurgurSetting()
     {
         TutorialLevelBurgerCard.SetActive(true);
         selecthambugurcard = TutorialLevelBurgerCard;
-        sourceCard[sourcenumber[0]].SetActive(true);
-        selectsourcecard = sourceCard[sourcenumber[0]];
+        sourceCard[0].SetActive(true);
     }
 
 }
