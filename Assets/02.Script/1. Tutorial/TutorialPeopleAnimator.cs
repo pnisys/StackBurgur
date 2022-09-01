@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
+using UnityEngine.Video;
 
 public class TutorialPeopleAnimator : MonoBehaviour
 {
@@ -39,6 +40,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
     public GameObject selecthambugurcard;
     //public GameObject selectsourcecard;
     public TextMeshProUGUI guidetext;
+    public VideoClip[] viedoclips;
+    public VideoPlayer viedoplayer;
 
     //public List<int> sourcenumber = new List<int>();
 
@@ -111,11 +114,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
     IEnumerator ThinkBallon()
     {
         yield return new WaitForSeconds(2f);
-        //Text와 버튼 Canvas 틀기
-        guidetext.transform.parent.gameObject.SetActive(true);
-        guidetext.text = "주문이 들어왔습니다. \n\n20초간 재료, 순서를 기억하세요";
-        //주문이 들어왔습니다. 20초간 재료와 순서를 기억하세요. 오디오 틀기
-        audiosource.PlayOneShot(audioclip[0]);
+      
 
         //손님이 주문하는 상태 켜기
         tutorialgamemanager.isThinking = true;
@@ -123,7 +122,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
         animator.SetBool(hashIdle, false);
         animator.SetBool(hashTalk, true);
 
-        //StartCoroutine(VoiceControl());
+        StartCoroutine(VoiceControl());
 
         //난이도에 따라 햄버거 카드에 맞는 햄버거와 소스를 카드를 보여주기
         LevelBurgurSetting();
@@ -245,6 +244,20 @@ public class TutorialPeopleAnimator : MonoBehaviour
     //음성 컨트롤 메서드
     IEnumerator VoiceControl()
     {
+        //Text와 버튼 Canvas 틀기
+        guidetext.transform.parent.gameObject.SetActive(true);
+        //guidetext.text = "주문이 들어왔습니다. \n\n손님이 주문한 햄버거 카드를 보면 \n\n만들어야 하는 \n\n햄버거 재료 순서를 알 수 있습니다.";
+        //주문이 들어왔습니다. 20초간 재료와 순서를 기억하세요. 오디오 틀기
+        audiosource.PlayOneShot(audioclip[0]);
+        yield return new WaitForSeconds(9f);
+        viedoplayer.transform.parent.GetChild(1).gameObject.SetActive(true);    
+        viedoplayer.transform.parent.GetChild(1).localScale = new Vector3(0.005124412f, 0.01479571f, 0.005124412f);
+        audiosource.PlayOneShot(audioclip[1]);
+        guidetext.text = "재료를 잡는 방법을 알려드리겠습니다.\n\n재료에 손을 가져가서 \n\n오른손 컨트롤러 버튼을 누르고 있으면\n\n재료를 집을 수 있습니다.\n\n재료를 잡은 상태에서\n\n컨트롤러 버튼을 떼면 재료를 떨어뜨립니다.";
+        viedoplayer.clip = viedoclips[0];
+        viedoplayer.playbackSpeed = 0.5f;
+        viedoplayer.Play();
+
         if (istutorial1 == true)
         {
             audiosource.Stop();
