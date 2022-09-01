@@ -36,7 +36,6 @@ public class MeatControl : MonoBehaviour
         {
             grilltransform[i] = grill.transform.GetChild(i + 3);
         }
-
     }
 
     private void OnEnable()
@@ -61,23 +60,26 @@ public class MeatControl : MonoBehaviour
         var a = 0;
         if (collision.gameObject.CompareTag("GRILL"))
         {
-            if (isposition == false && grabstatus.IsGrabbing == false)
+            if (grabstatus.IsGrabbing == false)
             {
-                for (int i = 0; i < 4; i++)
+                currentTime += Time.deltaTime;
+                if (isposition == false)
                 {
-                    if (grilltransform[i].childCount == 0)
+                    for (int i = 0; i < 4; i++)
                     {
-                        gameObject.transform.parent = grilltransform[i];
-                        //OnTraying();
-                        gameObject.transform.localPosition = new Vector3(0, 0, 0);
-                        gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
-                        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
-                        isposition = true;
-                        break;
+                        if (grilltransform[i].childCount == 0)
+                        {
+                            gameObject.transform.parent = grilltransform[i];
+                            gameObject.GetComponent<Rigidbody>().useGravity = false;
+                            gameObject.transform.localPosition = new Vector3(0, 0, 0);
+                            gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                            gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            isposition = true;
+                            break;
+                        }
                     }
                 }
             }
-            currentTime += Time.deltaTime;
             //5초 지나면 고기가 구워짐
             if (currentTime > 5f && isgoodmeat == false && islivemeat == true)
             {
@@ -102,7 +104,9 @@ public class MeatControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GRILL"))
         {
-
+            gameObject.GetComponent<FoodControl>().isGrill = false;
+            gameObject.GetComponent<FoodControl>().isOnlyMeat = false;
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
         }
     }
 

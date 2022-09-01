@@ -8,11 +8,14 @@ public class FoodControl : MonoBehaviour
     public bool isOk = false;
     public bool isTrash = false;
     public bool isChecking = false;
+    public bool isGrill = false;
+
 
     public bool isEntry = false;
     public bool isInGrab = false;
     public bool isOutGrab = false;
     public bool isInOutGrab = false;
+    public bool isOnlyMeat = false;
 
 
     HandGrabInteractor grabstatus;
@@ -35,6 +38,11 @@ public class FoodControl : MonoBehaviour
         if (other.gameObject.CompareTag("TRASH"))
         {
             isTrash = true;
+        }
+
+        if (other.gameObject.CompareTag("GRILL") && gameObject.CompareTag("BULGOGI"))
+        {
+            isGrill = true;
         }
     }
     //이게 트레이를 벗어나면
@@ -61,6 +69,11 @@ public class FoodControl : MonoBehaviour
         {
             StartCoroutine(FoodDestory());
         }
+
+        //if (isOk == true && grabstatus.IsGrabbing == false && isGrill == true)
+        //{
+
+        //}
     }
 
     IEnumerator FoodDestory()

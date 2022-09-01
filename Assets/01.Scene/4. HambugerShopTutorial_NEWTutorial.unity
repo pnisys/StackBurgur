@@ -1383,10 +1383,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!1001 &80818114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6396,7 +6398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 446980522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.126, y: 1.074, z: 0.135}
+  m_LocalPosition: {x: 0.154, y: 1.074, z: -0.08699951}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8504,7 +8506,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 547745040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.154, y: 1.074, z: -0.115}
+  m_LocalPosition: {x: 0.154, y: 1.074, z: -0.227}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10798,8 +10800,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6298065, y: 0.91922575, z: 1}
-  m_Center: {x: -0.0015029907, y: 0.6258441, z: 0}
+  m_Size: {x: 0.69641876, y: 0.7451501, z: 0.77770233}
+  m_Center: {x: 0.042591095, y: 0.53880626, z: 0.111148834}
 --- !u!1 &687796092
 GameObject:
   m_ObjectHideFlags: 0
@@ -12697,7 +12699,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799207612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.156, y: 1.074, z: -0.12}
+  m_LocalPosition: {x: -0.033, y: 1.074, z: -0.227}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21626,7 +21628,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268284706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.18, y: 1.074, z: 0.191}
+  m_LocalPosition: {x: -0.033, y: 1.074, z: -0.08699951}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30858,8 +30860,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7268524, y: 0.11207318, z: 0.5908661}
-  m_Center: {x: -0.046058655, y: 1.0659069, z: 0.037094116}
+  m_Size: {x: 0.7268524, y: 0.48901352, z: 0.5908661}
+  m_Center: {x: -0.046058655, y: 1.2543774, z: 0.037094116}
 --- !u!1 &1921049534
 GameObject:
   m_ObjectHideFlags: 0
@@ -31448,6 +31450,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.21404602, y: 0.039573368, z: 0.23209757}
   m_Center: {x: 0.0037453794, y: 0.17996545, z: 0.007143019}
+--- !u!1 &1964786720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1964786721}
+  m_Layer: 0
+  m_Name: GrillPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1964786721
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964786720}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.882, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 543450651787941709}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1974756847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41238,6 +41271,7 @@ Transform:
   - {fileID: 799207613}
   - {fileID: 1268284707}
   - {fileID: 1436411099}
+  - {fileID: 1964786721}
   m_Father: {fileID: 672653780}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -42147,7 +42181,7 @@ MonoBehaviour:
   - {fileID: 1619883060}
   tutorialgamemanager: {fileID: 281929761}
   grabstatus: {fileID: 8553364198841914600}
-  tutorialpeopleanimator: {fileID: 0}
+  tutorialpeopleanimator: {fileID: 6590741275123452060}
   burgursource: {fileID: 1926964979}
   empty: {fileID: 752012327}
   selectedsource: 
@@ -51651,10 +51685,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!33 &3469287836800980801
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51678,10 +51714,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!33 &3469287836834721913
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51705,10 +51743,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!33 &3469287837230656888
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51794,10 +51834,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!33 &3469287837247522589
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51883,10 +51925,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!33 &3469287837499193079
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51910,10 +51954,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!33 &3469287838118630894
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51937,10 +51983,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!33 &3469287838198055670
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51964,10 +52012,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!33 &3469287838598625856
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51991,10 +52041,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!4 &3474302132474153574
 Transform:
   m_ObjectHideFlags: 0
@@ -70813,10 +70865,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!4 &8713951000347518733
 Transform:
   m_ObjectHideFlags: 0
@@ -71175,10 +71229,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!114 &8760863851976906401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71194,10 +71250,12 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
   isEntry: 0
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
 --- !u!114 &8803387606621262093
 MonoBehaviour:
   m_ObjectHideFlags: 0

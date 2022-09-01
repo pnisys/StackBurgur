@@ -207,7 +207,7 @@ public class TutorialTrayControl : MonoBehaviour
                         }
                         if (other.gameObject.CompareTag(bbqsource))
                         {
-                           
+
                             selectedsource = "BBQSOURCE";
                             burgursource.position = new Vector3(combination[traystatus].position.x, combination[traystatus].position.y + 0.01f, combination[traystatus].position.z);
                             GameObject aa = Instantiate(burgursourceprefab[0], burgursource);
@@ -255,10 +255,25 @@ public class TutorialTrayControl : MonoBehaviour
                             Instantiate(sourceprefab[3], source.GetChild(3));
                         }
                         Destroy(other.gameObject);
+
+                        if (tutorialpeopleanimator.sourceCard[0].tag == selectedsource)
+                        {
+                            sourcecorrect = true;
+                        }
+                        else
+                        {
+                            sourcecorrect = false;
+                        }
                         yield break;
                     }
                 }
             }
+        }
+
+        if (other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isOnlyMeat == true)
+        {
+            print("여길 타야하는데 왜 나감이 떠 ㅅㅂ");
+            yield break;
         }
         //들어와서 놓았을때는 함수 타면 안됨, 그러나 놓아진 걸 다시 잡을 때는 한번 탈 필요도 있음
         if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false)
@@ -266,7 +281,6 @@ public class TutorialTrayControl : MonoBehaviour
             print("들어와서 놓을 때");
             yield break;
         }
-
 
         //안에 있을 때 잡을 때
         if (other.gameObject.GetComponent<FoodControl>().isInGrab == true)
@@ -278,7 +292,6 @@ public class TutorialTrayControl : MonoBehaviour
             other.gameObject.GetComponent<FoodControl>().isOutGrab = true;
         }
 
-
         //1. 밖에서 안으로 음식 넣을 때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
@@ -289,11 +302,15 @@ public class TutorialTrayControl : MonoBehaviour
                 //잡고 있으면 계속 검사하다가
                 while (grabstatus.IsGrabbing == true)
                 {
-                    ////0.3초마다 검사를 할 것
+                    //0.3초마다 검사를 할 것
                     yield return null;
                     //여기서 잡기를 놓는다면
                     if (grabstatus.IsGrabbing == false)
                     {
+                        if(other.gameObject.GetComponent<FoodControl>().isOnlyMeat==true)
+                        {
+                            yield break;
+                        }
                         #region 1. 만약 13개보다 더 쌓는다면? 그냥 Destory 해버리기
                         try
                         {
@@ -312,7 +329,6 @@ public class TutorialTrayControl : MonoBehaviour
                             break;
                         }
                         #endregion
-
                         //처음 적층하는거라면, 햄버거 거꾸로 뒤집기
                         if (traystatus == 1 && ((other.gameObject.CompareTag(hamburgurbread) || other.gameObject.CompareTag(blackbread))))
                         {
@@ -354,26 +370,6 @@ public class TutorialTrayControl : MonoBehaviour
             }
 
         }
-
-        ////1. 소스오브젝트를 트레이 위에 위치시킨다.
-        //other.gameObject.transform.position = sourceposition.position;
-        ////2. 180도 회전에서 아래를 보게 한다.
-        //other.gameObject.GetComponent<Animator>().SetBool("try", true);
-        ////3. 애니메이션 실행시간 1초
-        //yield return new WaitForSeconds(1f);
-        ////other.gameObject.transform.localRotation = Quaternion.Euler(-270, 0, 0);
-        ////4. 소스병을 꽉 짜는 애니메이션
-        //other.gameObject.GetComponent<Animator>().SetBool("wait", true);
-
-        ////6. 선택한 소스의 태그와 카드에서 제시된 소스의 태그를 비교한다.
-        //if (tutorialpeopleanimator.sourceCard[0].tag == other.gameObject.tag)
-        //{
-        //    sourcecorrect = true;
-        //}
-        //else
-        //{
-        //    sourcecorrect = false;
-        //}
     }
 
 
@@ -383,6 +379,20 @@ public class TutorialTrayControl : MonoBehaviour
         //음식이 벗어날때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
+            //잡고 있는 상태고 안놓고 바로 그릴쪽으로 가려면
+            if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<FoodControl>().isOnlyMeat == false)
+            {
+                other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
+                other.gameObject.GetComponent<FoodControl>().isEntry = false;
+                other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                yield break;
+            }
+            if (other.gameObject.GetComponent<FoodControl>().isOnlyMeat == true)
+            {
+                yield break;
+            }
+
             //안에서 놓을때나, 안에서 집을 때나 TriggerExit 방지
             if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
             {
