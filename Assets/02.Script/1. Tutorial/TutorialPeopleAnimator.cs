@@ -44,7 +44,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
     //public GameObject selectsourcecard;
     public TextMeshProUGUI guidetext;
     public VideoClip[] viedoclips;
-    public VideoPlayer[] viedoplayer;
+    public VideoPlayer viedoplayer;
     public GameObject patty;
     public HandGrabInteractor grabstatus;
 
@@ -256,20 +256,15 @@ public class TutorialPeopleAnimator : MonoBehaviour
         audiosource.PlayOneShot(audioclip[0]);
 
         yield return new WaitForSeconds(10f);
-        viedoplayer[0].transform.parent.GetChild(1).localScale = new Vector3(0.005124412f, 0.01479571f, 0.005124412f);
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        viedoplayer[0].transform.parent.GetChild(1).gameObject.SetActive(true);
-        viedoplayer[0].transform.parent.GetChild(3).gameObject.SetActive(true);
+        viedoplayer.transform.parent.GetChild(1).gameObject.SetActive(true);
         audiosource.PlayOneShot(audioclip[1]);
         guidetext.text = "오른손 컨트롤러 버튼을 누르면\n\n재료를 집을 수 있습니다.\n\n버튼을 떼면 재료를 떨어뜨립니다.\n\n고기를 잡고 떼보세요";
-        viedoplayer[0].clip = viedoclips[0];
-        viedoplayer[1].clip = viedoclips[1];
-        //viedoplayer[0].playbackSpeed = 0.5f;
-        viedoplayer[0].Play();
-        viedoplayer[1].Play();
+        viedoplayer.clip = viedoclips[0];
+        viedoplayer.Play();
         patty.GetComponent<HighlightEffect>().highlighted = true;
-        patty.GetComponent<HighlightEffect>().outline = 0.6f;
-        patty.GetComponent<HighlightEffect>().innerGlow = 0.6f;
+        patty.GetComponent<HighlightEffect>().outline = 0.2f;
+        patty.GetComponent<HighlightEffect>().innerGlow = 0.2f;
         while (grabstatus.IsGrabbing == false)
         {
             yield return null;
@@ -291,13 +286,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
         patty.GetComponent<HighlightEffect>().highlighted = false;
         guidetext.text = "고기를 잡고\n\n고기를 구워보세요.\n\n5초가 지나면 구워지지만\n\n10초가 지나면 타게 됩니다.";
         audiosource.PlayOneShot(audioclip[2]);
-        viedoplayer[0].transform.parent.GetChild(1).localScale = new Vector3(0.005124412f, 0.0087115f, 0.005124412f);
-        viedoplayer[0].transform.parent.GetChild(1).localPosition = new Vector3(-0.025f, 0.557f, 0);
-        viedoplayer[0].clip = viedoclips[2];
-        viedoplayer[0].playbackSpeed = 1f;
-        viedoplayer[0].Play();
-        viedoplayer[1].Stop();
-        viedoplayer[0].transform.parent.GetChild(3).gameObject.SetActive(false);
+        //viedoplayer.transform.parent.GetChild(1).localScale = new Vector3(0.005124412f, 0.0087115f, 0.005124412f);
+        viedoplayer.transform.parent.GetChild(1).localPosition = new Vector3(-0.025f, 0.557f, 0);
         while (isgoodmeat == false)
         {
             yield return null;
@@ -315,8 +305,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
             {
                 audiosource.PlayOneShot(audioclip[4]);
                 guidetext.text = "고기가 타버렸습니다. \n\n 타버린 고기는 버리고 \n\n 다시 고기를 잘 구워서 \n\n 접시에 올려주세요";
-                viedoplayer[0].clip = viedoclips[3];
-                viedoplayer[0].Play();
+                viedoplayer.clip = viedoclips[3];
+                viedoplayer.Play();
                 break;
             }
         }
