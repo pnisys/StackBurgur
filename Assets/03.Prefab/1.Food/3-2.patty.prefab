@@ -136,8 +136,8 @@ GameObject:
   - component: {fileID: 8557991198719814028}
   - component: {fileID: 8557991198719814029}
   - component: {fileID: 8557991198719814016}
-  - component: {fileID: 8557991198719814030}
   - component: {fileID: 5424936763764206177}
+  - component: {fileID: 8557991198719814030}
   - component: {fileID: 8557991198719814031}
   - component: {fileID: 8557991198719814017}
   m_Layer: 6
@@ -229,6 +229,7 @@ MonoBehaviour:
   currentTime: 0
   tutorialgamemanager: {fileID: 0}
   grilltransform: []
+  ismeattrash: 0
 --- !u!54 &8557991198719814016
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -245,19 +246,6 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 126
   m_CollisionDetection: 2
---- !u!65 &8557991198719814030
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1103594005116751304}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.17115784, y: 0.027005652, z: 0.16855755}
-  m_Center: {x: -0.0000000053411275, y: 0.015715314, z: 0.000000005164865}
 --- !u!114 &5424936763764206177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +266,20 @@ MonoBehaviour:
   isInGrab: 0
   isOutGrab: 0
   isInOutGrab: 0
+  isOnlyMeat: 0
+--- !u!65 &8557991198719814030
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103594005116751304}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.17115784, y: 0.027005652, z: 0.16855755}
+  m_Center: {x: -0.0000000053411275, y: 0.015715314, z: 0.000000005164865}
 --- !u!114 &8557991198719814031
 MonoBehaviour:
   m_ObjectHideFlags: 0

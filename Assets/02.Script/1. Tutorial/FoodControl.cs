@@ -69,11 +69,6 @@ public class FoodControl : MonoBehaviour
         {
             StartCoroutine(FoodDestory());
         }
-
-        //if (isOk == true && grabstatus.IsGrabbing == false && isGrill == true)
-        //{
-
-        //}
     }
 
     IEnumerator FoodDestory()
@@ -83,11 +78,5 @@ public class FoodControl : MonoBehaviour
         Destroy(gameObject);
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.layer == LayerMask.NameToLayer("FOOD"))
-    //    {
-    //        rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
-    //    }
-    //}
+  
 }

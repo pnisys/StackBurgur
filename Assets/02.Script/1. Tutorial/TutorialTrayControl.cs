@@ -173,6 +173,7 @@ public class TutorialTrayControl : MonoBehaviour
     //적층
     IEnumerator OnTriggerEnter(Collider other)
     {
+
         //소스 집어 넣을 때
         if (other.gameObject.layer == LayerMask.NameToLayer("SOURCE"))
         {
@@ -270,17 +271,90 @@ public class TutorialTrayControl : MonoBehaviour
             }
         }
 
-        if (other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isOnlyMeat == true)
+        //트레이를 벗어나서 버릴 때는 이 함수가 맞음
+        //고기가 불판을 갔다가, 다시 입장할 때
+        //다시 쌓을 때가 있고, 버릴 때가 있다.
+        if ((other.gameObject.CompareTag(badbulgogi) || other.gameObject.CompareTag(bulgogi)) && other.gameObject.GetComponent<MeatControl>().ismeattrash == true)
         {
-            print("여길 타야하는데 왜 나감이 떠 ㅅㅂ");
-            yield break;
+            other.gameObject.GetComponent<FoodControl>().isEntry = true;
+            //들어왔어!
+            while (grabstatus.IsGrabbing == true)
+            {
+                //들어왔다가 다시나가면?
+                if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
+                {
+                    yield break;
+                }
+                yield return null;
+                if (grabstatus.IsGrabbing == false)
+                {
+                    other.gameObject.GetComponent<FoodControl>().isOutGrab = false;
+                    other.gameObject.GetComponent<MeatControl>().ismeattrash = false;
+
+                    #region 1. 만약 13개보다 더 쌓는다면? 그냥 Destory 해버리기
+                    try
+                    {
+                        //컬렉션 stack을 써서 적재한 것을 Push 밀어넣는다.
+                        stackcreateburgur.Push(other.gameObject);
+                        //tray에 얼마나 쌓여있는지는 stack의 배열 길이만큼 셀 것이다.
+                        traystatus = stackcreateburgur.ToArray().Length;
+
+                        //13개의 combination position의 자식으로 게임오브젝트가 들어가게 한다. 
+                        other.gameObject.transform.parent = combination[traystatus - 1];
+                    }
+                    catch (System.IndexOutOfRangeException)
+                    {
+                        //13.   모든 과정이 완료되면 여러번 Trigger 방지용 딕셔너리 다시 false 시켜줌
+                        Destroy(other.gameObject);
+                        break;
+                    }
+                    #endregion
+                    //처음 적층하는거라면, 햄버거 거꾸로 뒤집기
+                    if (traystatus == 1 && ((other.gameObject.CompareTag(hamburgurbread) || other.gameObject.CompareTag(blackbread))))
+                    {
+                        other.gameObject.transform.localRotation = Quaternion.Euler(0, 90, 0);
+                        other.gameObject.transform.localPosition = new Vector3(0, 0.1f, 0);
+                    }
+                    //처음 적층하는게 아니라면
+                    else if (traystatus != 1 && ((other.gameObject.CompareTag(hamburgurbread) || other.gameObject.CompareTag(blackbread))))
+                    {
+                        other.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 180);
+                        other.gameObject.transform.localPosition = new Vector3(0, 0.1f, 0);
+                    }
+                    else if (!(other.gameObject.CompareTag(hamburgurbread) || other.gameObject.CompareTag(blackbread)))
+                    {
+                        //적층한 게임오브젝트의 position과 rotation 값을 초기화시킨다.
+                        other.gameObject.transform.localRotation = Quaternion.Euler(180, 0, 0);
+                        other.gameObject.transform.localPosition = new Vector3(0, 0.08f, 0);
+                    }
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                    yield return new WaitForSeconds(0.3f);
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    other.gameObject.GetComponent<FoodControl>().isInGrab = true;
+
+                    //10.  처음 쌓는 거 말고, 두번 째부터 쌓을 때
+                    if (traystatus != 1)
+                    {
+                        //11.  놓은 것 직전의 것은 못집게 잡는 컴포넌트 모두 Off시킴
+                        stackcreateburgur.ToArray()[1].gameObject.GetComponent<Grabbable>().enabled = false;
+                        stackcreateburgur.ToArray()[1].gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                        stackcreateburgur.ToArray()[1].gameObject.GetComponent<PhysicsGrabbable>().enabled = false;
+                        stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabInteractable>().enabled = false;
+                        stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabInteractable>().enabled = false;
+                        stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = false;
+                        stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabPose>().enabled = false;
+                    }
+                    yield break;
+                }
+                else if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
+                {
+                    yield break;
+                }
+            }
+
         }
-        //들어와서 놓았을때는 함수 타면 안됨, 그러나 놓아진 걸 다시 잡을 때는 한번 탈 필요도 있음
-        if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false)
-        {
-            print("들어와서 놓을 때");
-            yield break;
-        }
+
 
         //안에 있을 때 잡을 때
         if (other.gameObject.GetComponent<FoodControl>().isInGrab == true)
@@ -295,6 +369,7 @@ public class TutorialTrayControl : MonoBehaviour
         //1. 밖에서 안으로 음식 넣을 때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
+            //밖에서 안으로 들어온것일 때
             if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
             {
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
@@ -304,13 +379,22 @@ public class TutorialTrayControl : MonoBehaviour
                 {
                     //0.3초마다 검사를 할 것
                     yield return null;
+
                     //여기서 잡기를 놓는다면
                     if (grabstatus.IsGrabbing == false)
                     {
-                        if(other.gameObject.GetComponent<FoodControl>().isOnlyMeat==true)
+                        //놓는데 트레이밖으로 나가서 그릴에 있으면
+                        if (other.gameObject.GetComponent<FoodControl>().isGrill == true)
                         {
+                            print("이건가?");
                             yield break;
                         }
+                        //놓는데 트레이밖, 그릴도 아니면
+                        else if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
+                        {
+                            other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                        }
+
                         #region 1. 만약 13개보다 더 쌓는다면? 그냥 Destory 해버리기
                         try
                         {
@@ -380,23 +464,42 @@ public class TutorialTrayControl : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
             //잡고 있는 상태고 안놓고 바로 그릴쪽으로 가려면
-            if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<FoodControl>().isOnlyMeat == false)
+            if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<MeatControl>().ismeattrash == false)
             {
-                other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
+                //other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
                 other.gameObject.GetComponent<FoodControl>().isEntry = false;
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
                 other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 yield break;
             }
-            if (other.gameObject.GetComponent<FoodControl>().isOnlyMeat == true)
+            else if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<MeatControl>().ismeattrash == true)
             {
+                other.gameObject.GetComponent<FoodControl>().isEntry = false;
                 yield break;
             }
+
+
+            if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && /*other.gameObject.GetComponent<FoodControl>().isOnlyMeat == false && */other.gameObject.GetComponent<MeatControl>().ismeattrash == true)
+            {
+                print("여길 타는거니?");
+                other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+                yield break;
+            }
+
+            //if (other.gameObject.GetComponent<FoodControl>().isOnlyMeat == true)
+            //{
+            //    yield break;
+            //}
 
             //안에서 놓을때나, 안에서 집을 때나 TriggerExit 방지
             if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
             {
                 print("안에서 놓았을 때 방지");
+                //if (other.gameObject.GetComponent<FoodControl>().isOnlyMeat == true)
+                //{
+                //    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                //    print("여기 타니?");
+                //}
                 yield break;
             }
             else if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isOutGrab == true)

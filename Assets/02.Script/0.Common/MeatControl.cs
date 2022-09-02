@@ -19,11 +19,17 @@ public class MeatControl : MonoBehaviour
     public delegate void Traying();
     public static event Traying OnTraying;
 
+    public delegate void GoodMeat();
+    public static event GoodMeat OnGoodMeeting;
+
+    public delegate void BadMeat();
+    public static event BadMeat OnBadMeeting;
+
     bool islivemeat = true;
     bool isgoodmeat = false;
     bool isbadmeat = false;
     bool isposition = false;
-
+    public bool ismeattrash = false;
     private void Start()
     {
         meatrenderer = GetComponent<Renderer>();
@@ -60,6 +66,11 @@ public class MeatControl : MonoBehaviour
         var a = 0;
         if (collision.gameObject.CompareTag("GRILL"))
         {
+            if (gameObject.GetComponent<BoxCollider>().isTrigger == true)
+            {
+                gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                gameObject.GetComponent<BoxCollider>().isTrigger = false;
+            }
             if (grabstatus.IsGrabbing == false)
             {
                 currentTime += Time.deltaTime;
@@ -87,7 +98,7 @@ public class MeatControl : MonoBehaviour
                 isgoodmeat = true;
                 meatrenderer.material.color = new Color(94 / 255f, 64 / 255f, 52 / 255f);
                 gameObject.tag = "GOODMEAT";
-                print("고기가 잘 구워짐");
+                OnGoodMeeting();
             }
             //10초 지나면 고기가 탐
             else if (currentTime > 10f && isbadmeat == false)
@@ -96,25 +107,39 @@ public class MeatControl : MonoBehaviour
                 isbadmeat = true;
                 meatrenderer.material.color = new Color(0, 0, 0);
                 gameObject.tag = "BULGOGI";
-                print("고기가 탐");
+                OnBadMeeting();
             }
         }
     }
-    private void OnTriggerExit(Collider other)
+    IEnumerator OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("GRILL"))
         {
+            while (grabstatus.IsGrabbing == true)
+            {
+                yield return null;
+                if (gameObject.GetComponent<FoodControl>().isGrill == false)
+                {
+                    yield break;
+                }
+                if (grabstatus.IsGrabbing == false)
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    ismeattrash = true;
+                    break;
+                }
+            }
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("GRILL"))
+        {
+            print("그릴에서 나갔다고 판단하는건가?");
             gameObject.GetComponent<FoodControl>().isGrill = false;
-            gameObject.GetComponent<FoodControl>().isOnlyMeat = false;
+            //gameObject.GetComponent<FoodControl>().isOnlyMeat = false;
+            gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
             gameObject.GetComponent<Rigidbody>().useGravity = true;
         }
     }
-
-
-
-
-    //추가해야 할 사항
-    //1. 구울 때 연기
-    //2. 구울 때 소리
-    //3. 햄버거 완성 소리
 }

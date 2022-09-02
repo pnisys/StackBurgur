@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
 using UnityEngine.Video;
+using HighlightPlus;
+using Oculus.Interaction.HandGrab;
+using Oculus.Interaction;
 
 public class TutorialPeopleAnimator : MonoBehaviour
 {
@@ -41,10 +44,32 @@ public class TutorialPeopleAnimator : MonoBehaviour
     //public GameObject selectsourcecard;
     public TextMeshProUGUI guidetext;
     public VideoClip[] viedoclips;
-    public VideoPlayer viedoplayer;
+    public VideoPlayer[] viedoplayer;
+    public GameObject patty;
+    public HandGrabInteractor grabstatus;
 
-    //public List<int> sourcenumber = new List<int>();
+    private void OnEnable()
+    {
+        MeatControl.OnGoodMeeting += GoodMeeting;
+        MeatControl.OnBadMeeting += BadMeeting;
 
+    }
+    private void OnDisable()
+    {
+        MeatControl.OnGoodMeeting -= GoodMeeting;
+        MeatControl.OnBadMeeting -= BadMeeting;
+
+    }
+
+    void GoodMeeting()
+    {
+        isgoodmeat = true;
+    }
+
+    void BadMeeting()
+    {
+        isbadmeat = true;
+    }
 
     public AudioClip[] audioclip;
     public AudioSource audiosource;
@@ -53,26 +78,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
     int ran1 = 0;
 
     bool audioing = false;
-
-
-    bool istutorial0 = false;
-    //재료가 앞에 놓여있습니다.
-    bool istutorial1 = true;
-    //4. 컨트롤러를 활용하여 햄버거를 주문에 맞춰 만들어보세요.
-    bool istutorial2 = false;
-    //5. 첫번째로 패티를 구워볼까요?
-    bool istutorial3 = false;
-    //6. 너무 장시간 구우면 패티가 탈 수 있으니 주의해주세요
-    bool istutorial4 = false;
-    //7. 잘하셨습니다. 나머지 재료를 접시에 담아 햄버거를 완성해주세요. 
-    bool istutorial5 = false;
-    //정답입니다. 성공시에는 손님이 자리에 앉으며 점수를 획득합니다.
-    bool istutorial6 = false;
-    //오답시에는 기회를 빼앗기고 손님이 실망하며 나가니 주의해주세요.
-    bool istutorial7 = false;
-    //게임이 종료시 랭킹이 보여지며 사용자의 닉네임과 순위가 보여지게 됩니다.
-    bool istutorial8 = false;
-
+    bool isgoodmeat = false;
+    bool isbadmeat = false;
 
     private void Start()
     {
@@ -114,7 +121,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
     IEnumerator ThinkBallon()
     {
         yield return new WaitForSeconds(2f);
-      
+
 
         //손님이 주문하는 상태 켜기
         tutorialgamemanager.isThinking = true;
@@ -244,51 +251,81 @@ public class TutorialPeopleAnimator : MonoBehaviour
     //음성 컨트롤 메서드
     IEnumerator VoiceControl()
     {
-        //Text와 버튼 Canvas 틀기
         guidetext.transform.parent.gameObject.SetActive(true);
-        //guidetext.text = "주문이 들어왔습니다. \n\n손님이 주문한 햄버거 카드를 보면 \n\n만들어야 하는 \n\n햄버거 재료 순서를 알 수 있습니다.";
-        //주문이 들어왔습니다. 20초간 재료와 순서를 기억하세요. 오디오 틀기
+        guidetext.text = "카드를 보고\n\n햄버거 재료 순서를\n\n알 수 있습니다.";
         audiosource.PlayOneShot(audioclip[0]);
-        yield return new WaitForSeconds(9f);
-        viedoplayer.transform.parent.GetChild(1).gameObject.SetActive(true);    
-        viedoplayer.transform.parent.GetChild(1).localScale = new Vector3(0.005124412f, 0.01479571f, 0.005124412f);
+
+        yield return new WaitForSeconds(10f);
+        viedoplayer[0].transform.parent.GetChild(1).localScale = new Vector3(0.005124412f, 0.01479571f, 0.005124412f);
+        animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        viedoplayer[0].transform.parent.GetChild(1).gameObject.SetActive(true);
+        viedoplayer[0].transform.parent.GetChild(3).gameObject.SetActive(true);
         audiosource.PlayOneShot(audioclip[1]);
-        guidetext.text = "재료를 잡는 방법을 알려드리겠습니다.\n\n재료에 손을 가져가서 \n\n오른손 컨트롤러 버튼을 누르고 있으면\n\n재료를 집을 수 있습니다.\n\n재료를 잡은 상태에서\n\n컨트롤러 버튼을 떼면 재료를 떨어뜨립니다.";
-        viedoplayer.clip = viedoclips[0];
-        viedoplayer.playbackSpeed = 0.5f;
-        viedoplayer.Play();
-
-        if (istutorial1 == true)
+        guidetext.text = "오른손 컨트롤러 버튼을 누르면\n\n재료를 집을 수 있습니다.\n\n버튼을 떼면 재료를 떨어뜨립니다.\n\n고기를 잡고 떼보세요";
+        viedoplayer[0].clip = viedoclips[0];
+        viedoplayer[1].clip = viedoclips[1];
+        //viedoplayer[0].playbackSpeed = 0.5f;
+        viedoplayer[0].Play();
+        viedoplayer[1].Play();
+        patty.GetComponent<HighlightEffect>().highlighted = true;
+        patty.GetComponent<HighlightEffect>().outline = 0.6f;
+        patty.GetComponent<HighlightEffect>().innerGlow = 0.6f;
+        while (grabstatus.IsGrabbing == false)
         {
-            audiosource.Stop();
-            guidetext.text = "재료가 앞에 놓여있습니다.";
-            audiosource.PlayOneShot(audioclip[1]);
-            istutorial2 = true;
-            istutorial1 = false;
-            yield return new WaitForSeconds(1f);
+            yield return null;
+            if (grabstatus.IsGrabbing == true)
+            {
+                break;
+            }
+        }
+        while (grabstatus.IsGrabbing == true)
+        {
+            yield return null;
+            if (grabstatus.IsGrabbing == false)
+            {
+                break;
+            }
+        }
+        yield return new WaitForSeconds(2f);
+        audiosource.Stop();
+        patty.GetComponent<HighlightEffect>().highlighted = false;
+        guidetext.text = "고기를 잡고\n\n고기를 구워보세요.\n\n5초가 지나면 구워지지만\n\n10초가 지나면 타게 됩니다.";
+        audiosource.PlayOneShot(audioclip[2]);
+        viedoplayer[0].transform.parent.GetChild(1).localScale = new Vector3(0.005124412f, 0.0087115f, 0.005124412f);
+        viedoplayer[0].transform.parent.GetChild(1).localPosition = new Vector3(-0.025f, 0.557f, 0);
+        viedoplayer[0].clip = viedoclips[2];
+        viedoplayer[0].playbackSpeed = 1f;
+        viedoplayer[0].Play();
+        viedoplayer[1].Stop();
+        viedoplayer[0].transform.parent.GetChild(3).gameObject.SetActive(false);
+        while (isgoodmeat == false)
+        {
+            yield return null;
+            if (isgoodmeat == true)
+            {
+                audiosource.PlayOneShot(audioclip[3]);
+                guidetext.text = "고기가 잘 구워졌습니다.";
+                break;
+            }
+        }
+        while (isbadmeat == false)
+        {
+            yield return null;
+            if (isbadmeat == true)
+            {
+                audiosource.PlayOneShot(audioclip[4]);
+                guidetext.text = "고기가 타버렸습니다. \n\n 타버린 고기는 버리고 \n\n 다시 고기를 잘 구워서 \n\n 접시에 올려주세요";
+                viedoplayer[0].clip = viedoclips[3];
+                viedoplayer[0].Play();
+                break;
+            }
         }
 
-        else if (istutorial2 == true && istutorial1 == false)
-        {
-            audiosource.Stop();
-            guidetext.text = "컨트롤러를 활용하여 햄버거를 주문에 맞춰 만들어보세요.";
-            audiosource.PlayOneShot(audioclip[2]);
-            istutorial3 = true;
-            istutorial2 = false;
+        //이제 햄버거 카드
 
-        }
-        else if(istutorial3 == true && istutorial2 == false)
-        {
-            audiosource.Stop();
-            guidetext.text = "첫번째로 패티를 구워볼까요?";
-            audiosource.PlayOneShot(audioclip[3]);
-            OnMeatHighlight();
-            istutorial4 = true;
-            istutorial3 = false;
-            yield return new WaitForSeconds(5f);
-            guidetext.text = " 너무 장시간 구우면 패티가 탈 수 있으니 주의해주세요";
-            audiosource.PlayOneShot(audioclip[4]);
-        }
+
+
+
 
         ////고기패티 강조하는 쉐이더
         //audioing = true;
