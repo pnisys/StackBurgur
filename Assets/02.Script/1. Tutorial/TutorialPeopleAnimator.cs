@@ -80,6 +80,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
     bool audioing = false;
     bool isgoodmeat = false;
     bool isbadmeat = false;
+    bool testkey = false;
 
     private void Start()
     {
@@ -138,26 +139,26 @@ public class TutorialPeopleAnimator : MonoBehaviour
         //튜토리얼 안내캔버스 끝나야 제한시간 흐르게 하기
         yield return new WaitUntil(() => audioing == true);
         //주문하고 있으면 계속 반복 켜기
-        while (tutorialgamemanager.isThinking == true)
-        {
-            yield return null;
-            //주문하는 시간 15초 생성
-            tutorialgamemanager.orderlimitTime -= Time.deltaTime;
-            animator.gameObject.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(tutorialgamemanager.orderlimitTime).ToString() + "초";
+        //while (tutorialgamemanager.isThinking == true)
+        //{
+        //    yield return null;
+        //    //주문하는 시간 15초 생성
+        //    tutorialgamemanager.orderlimitTime -= Time.deltaTime;
+        //    animator.gameObject.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(tutorialgamemanager.orderlimitTime).ToString() + "초";
 
-            //15초 지나면 다음단계로 넘어감
-            if (tutorialgamemanager.orderlimitTime < 0)
-            {
-                //초기화
-                tutorialgamemanager.orderlimitTime = 15;
-                tutorialgamemanager.isThinking = false;
-            }
-        }
+        //    //15초 지나면 다음단계로 넘어감
+        //    if (tutorialgamemanager.orderlimitTime < 0)
+        //    {
+        //        //초기화
+        //        tutorialgamemanager.orderlimitTime = 15;
+        //        tutorialgamemanager.isThinking = false;
+        //    }
+        //}
 
         //카드 Setactive(false); 시키기
-        animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        TutorialLevelBurgerCard.SetActive(false);
-        sourceCard[0].SetActive(false);
+        //animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        //TutorialLevelBurgerCard.SetActive(false);
+        //sourceCard[0].SetActive(false);
         animator.SetBool(hashTalk, false);
         StartCoroutine(Order());
     }
@@ -190,7 +191,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                 tutorialgamemanager.limitTime = 30f;
                 tutorialgamemanager.isOrder = false;
                 //검사 후 성공이면
-                if (tutorialgamemanager.iscompletesuccess == true || tutorialgamemanager.islittlesuccess == true)
+                if (tutorialgamemanager.iscompletesuccess == true || tutorialgamemanager.islittlesuccess == true || testkey == false)
                 {
                     //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
                     //다음 테이블로 넘어가기
@@ -226,8 +227,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                 {
                     //실패 애니메이션 설정
                     animator.SetBool(hashfail, true);
-                    //5초 뒤에
-                    yield return new WaitForSeconds(5f);
+                    yield return new WaitForSeconds(3.5f);
                     //문으로 간다.
                     agent.destination = door.transform.position;
                     //문 일정 범위 안으로 들어오면
@@ -237,6 +237,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                     agent.enabled = false;
                     transform.position = new Vector3(100, 100, 100);
                     animator.SetBool(hashfail, false);
+                    Destroy(gameObject);
                 }
             }
         }
@@ -268,15 +269,15 @@ public class TutorialPeopleAnimator : MonoBehaviour
         while (grabstatus.IsGrabbing == false)
         {
             yield return null;
-            if (grabstatus.IsGrabbing == true)
+            if (grabstatus.IsGrabbing == true || testkey == true)
             {
                 break;
             }
         }
-        while (grabstatus.IsGrabbing == true)
+        while (grabstatus.IsGrabbing == true || testkey == true)
         {
             yield return null;
-            if (grabstatus.IsGrabbing == false)
+            if (grabstatus.IsGrabbing == false || testkey == false)
             {
                 break;
             }
@@ -291,36 +292,48 @@ public class TutorialPeopleAnimator : MonoBehaviour
         while (isgoodmeat == false)
         {
             yield return null;
-            if (isgoodmeat == true)
+            if (isgoodmeat == true || testkey == true)
             {
                 audiosource.PlayOneShot(audioclip[3]);
+                viedoplayer.clip = viedoclips[2];
                 guidetext.text = "고기가 잘 구워졌습니다.";
                 break;
             }
         }
-        while (isbadmeat == false)
+        while (isbadmeat == false || testkey == true)
         {
             yield return null;
-            if (isbadmeat == true)
+            if (isbadmeat == true || testkey == false)
             {
                 audiosource.PlayOneShot(audioclip[4]);
                 guidetext.text = "고기가 타버렸습니다. \n\n 타버린 고기는 버리고 \n\n 다시 고기를 잘 구워서 \n\n 접시에 올려주세요";
-                viedoplayer.clip = viedoclips[3];
-                viedoplayer.Play();
                 break;
             }
         }
-
-        //이제 햄버거 카드
-
-
+        audioing = true;
+        viedoplayer.clip = viedoclips[3];
+        guidetext.text = "제한 시간 이내에 \n\n햄버거 카드의 순서대로\n\n 햄버거를 쌓아올려보세요.";
 
 
 
         ////고기패티 강조하는 쉐이더
-        //audioing = true;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            if (testkey == false)
+            {
+                testkey = true;
+            }
+            else
+            {
+                testkey = false;
+            }
+
+        }
+    }
     //이건 소스 하나로 통일할 거임, 튜토리얼에선 없어도 됨
     //public void RandomNumberSelect()
     //{
