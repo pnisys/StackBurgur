@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
     public bool isTray = false;
 
     public GameObject[] people;
-    public int peoplenumbur = 0;
+    public int tablepeoplenumbur = 0;
+    public int stagepeoplenumber = 0;
 
     public Animator animator;
 
@@ -33,11 +34,11 @@ public class GameManager : MonoBehaviour
     //생각 풍선 보여주는 시간
     public float orderlimitTime = 20;
     //주문 시간 30초
-    public float limitTime = 5;
+    public float limitTime = 20;
 
-    //level이 햄버거 난이도, 튜토리얼 난이도부터 4난이도까지 있음
+    //level이 햄버거 난이도, 1난이도~ 4난이도까지 있음
     public int level = 1;
-    //stage가 단계, 1단계~5단계까지 있음 -> 튜토리얼 단계는 없음
+    //stage가 단계, 1단계~5단계까지 있음
     public int stage = 1;
 
     public GameObject selecthambugurcard;

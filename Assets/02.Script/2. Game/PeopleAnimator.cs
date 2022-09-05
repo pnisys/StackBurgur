@@ -51,7 +51,7 @@ public class PeopleAnimator : MonoBehaviour
     int ran = 0;
     int ran1 = 0;
 
-    
+
 
     bool audioing = false;
 
@@ -78,6 +78,54 @@ public class PeopleAnimator : MonoBehaviour
         StartCoroutine(ClerkStateCheck());
         //2.숫자 랜덤하게 섞기
         RandomNumberSelect();
+        //스테이지 넘기기 위한 카운트
+        gamemanager.stagepeoplenumber++;
+        if (gamemanager.stagepeoplenumber > 5)
+        {
+            gamemanager.stage++;
+        }
+        else if (gamemanager.stagepeoplenumber > 10)
+        {
+            gamemanager.stage++;
+        }
+        else if (gamemanager.stagepeoplenumber > 15)
+        {
+            gamemanager.stage++;
+        }
+        else if (gamemanager.stagepeoplenumber > 20)
+        {
+            gamemanager.stage++;
+        }
+        StageLevelRandom();
+    }
+
+    void StageLevelRandom()
+    {
+        int randomstage = 0;
+        if (gamemanager.stage == 1)
+        {
+            gamemanager.level = 1;
+        }
+        else if (gamemanager.stage == 2)
+        {
+            randomstage = UnityEngine.Random.Range(1, 3);
+            gamemanager.level = randomstage;
+        }
+        else if (gamemanager.stage == 3)
+        {
+            randomstage = UnityEngine.Random.Range(2, 4);
+            gamemanager.level = randomstage;
+        }
+        else if (gamemanager.stage == 4)
+        {
+            randomstage = UnityEngine.Random.Range(1, 4);
+            gamemanager.level = randomstage;
+        }
+        else if (gamemanager.stage == 5)
+        {
+            randomstage = UnityEngine.Random.Range(3, 5);
+            gamemanager.level = randomstage;
+        }
     }
 
 
@@ -190,7 +238,6 @@ public class PeopleAnimator : MonoBehaviour
                             transform.parent = table[i].transform;
                             //각 텡이블 포지션은 미리 설정해놓았던 곳으로 간다.
                             transform.localPosition = gamemanager.tableposition[i];
-                            print(gamemanager.tableposition[i]);
                             transform.localRotation = gamemanager.tablerotation[i];
                             //먹는 애니메이션 실행
                             animator.SetBool(hasheat, true);
@@ -203,8 +250,8 @@ public class PeopleAnimator : MonoBehaviour
                     }
                     yield return new WaitForSeconds(2f);
                     //이제 다른 사람 한명을 켜야됨
-                    gamemanager.peoplenumbur++;
-                    gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
+                    gamemanager.tablepeoplenumbur++;
+                    gamemanager.people[gamemanager.tablepeoplenumbur].SetActive(true);
                     gamemanager.iscompletesuccess = false;
                     gamemanager.islittlesuccess = false;
                 }
@@ -226,8 +273,8 @@ public class PeopleAnimator : MonoBehaviour
                     animator.SetBool(hashfail, false);
                     yield return new WaitForSeconds(2f);
                     //이제 다른 사람 한명을 켜야됨
-                    gamemanager.peoplenumbur++;
-                    gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
+                    gamemanager.tablepeoplenumbur++;
+                    gamemanager.people[gamemanager.tablepeoplenumbur].SetActive(true);
                     gamemanager.isfail = false;
                     Destroy(gameObject);
                 }
