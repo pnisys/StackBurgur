@@ -347,8 +347,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.19806884, y: 0.040348895, z: 0.19873314}
-  m_Center: {x: -0.0000000059247265, y: 0.016039597, z: -0.00000027846215}
+  m_Size: {x: 0.19806884, y: 0.037743963, z: 0.19873314}
+  m_Center: {x: -0.0000000059247265, y: 0.017342063, z: -0.00000027846215}
 --- !u!54 &8038740847602137608
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -413,3 +413,9 @@ MonoBehaviour:
   isOk: 0
   isTrash: 0
   isChecking: 0
+  isGrill: 0
+  isEntry: 0
+  isInGrab: 0
+  isOutGrab: 0
+  isInOutGrab: 0
+  isOnlyMeat: 0

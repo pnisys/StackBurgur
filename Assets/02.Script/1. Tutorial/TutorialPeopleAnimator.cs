@@ -38,6 +38,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
     public static event MeatHighlight OnMeatHighlight;
 
     public GameObject TutorialLevelBurgerCard;
+    public TutorialTrayControl tutorialtraycontrol;
     public GameObject[] sourceCard;
 
     public GameObject selecthambugurcard;
@@ -184,6 +185,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                 agent.isStopped = false;
                 //제한 시간 끄기
                 animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
                 //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
                 OnLimitTimeComplete();
                 yield return new WaitForSeconds(1f);
@@ -191,8 +193,9 @@ public class TutorialPeopleAnimator : MonoBehaviour
                 tutorialgamemanager.limitTime = 30f;
                 tutorialgamemanager.isOrder = false;
                 //검사 후 성공이면
-                if (tutorialgamemanager.iscompletesuccess == true || tutorialgamemanager.islittlesuccess == true || testkey == false)
+                if (tutorialgamemanager.iscompletesuccess == true || tutorialgamemanager.islittlesuccess == true)
                 {
+                    
                     //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
                     //다음 테이블로 넘어가기
                     for (int i = 0; i < 10; i++)
@@ -215,6 +218,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                             transform.localRotation = tablerotation[i];
                             //먹는 애니메이션 실행
                             animator.SetBool(hasheat, true);
+                            gameObject.transform.GetChild(16).localPosition = new Vector3(0, 0.831f, 0.579f);
                             //들어간 테이블은 닫게 하기
                             istable[i] = true;
                             //반복 끝내기
@@ -260,24 +264,24 @@ public class TutorialPeopleAnimator : MonoBehaviour
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         viedoplayer.transform.parent.GetChild(1).gameObject.SetActive(true);
         audiosource.PlayOneShot(audioclip[1]);
-        guidetext.text = "오른손 컨트롤러 버튼을 누르면\n\n재료를 집을 수 있습니다.\n\n버튼을 떼면 재료를 떨어뜨립니다.\n\n고기를 잡고 떼보세요";
+        guidetext.text = "버튼을 누르면\n\n재료를 집을 수 있습니다.\n\n버튼을 떼면 재료를 떨어뜨립니다.\n\n고기를 잡고 떼보세요";
         viedoplayer.clip = viedoclips[0];
         viedoplayer.Play();
         patty.GetComponent<HighlightEffect>().highlighted = true;
-        patty.GetComponent<HighlightEffect>().outline = 0.2f;
-        patty.GetComponent<HighlightEffect>().innerGlow = 0.2f;
+        patty.GetComponent<HighlightEffect>().outline = 0.07f;
+        patty.GetComponent<HighlightEffect>().innerGlow = 0.07f;
         while (grabstatus.IsGrabbing == false)
         {
             yield return null;
-            if (grabstatus.IsGrabbing == true || testkey == true)
+            if (grabstatus.IsGrabbing == true)
             {
                 break;
             }
         }
-        while (grabstatus.IsGrabbing == true || testkey == true)
+        while (grabstatus.IsGrabbing == true)
         {
             yield return null;
-            if (grabstatus.IsGrabbing == false || testkey == false)
+            if (grabstatus.IsGrabbing == false)
             {
                 break;
             }
@@ -285,55 +289,21 @@ public class TutorialPeopleAnimator : MonoBehaviour
         yield return new WaitForSeconds(2f);
         audiosource.Stop();
         patty.GetComponent<HighlightEffect>().highlighted = false;
-        guidetext.text = "고기를 잡고\n\n고기를 구워보세요.\n\n5초가 지나면 구워지지만\n\n10초가 지나면 타게 됩니다.";
+        guidetext.text = "고기를 구워보세요.\n\n5초가 지나면 구워지지만\n\n10초가 지나면 타게 됩니다.";
         audiosource.PlayOneShot(audioclip[2]);
-        //viedoplayer.transform.parent.GetChild(1).localScale = new Vector3(0.005124412f, 0.0087115f, 0.005124412f);
+        viedoplayer.clip = viedoclips[2];
         viedoplayer.transform.parent.GetChild(1).localPosition = new Vector3(-0.025f, 0.557f, 0);
-        while (isgoodmeat == false)
-        {
-            yield return null;
-            if (isgoodmeat == true || testkey == true)
-            {
-                audiosource.PlayOneShot(audioclip[3]);
-                viedoplayer.clip = viedoclips[2];
-                guidetext.text = "고기가 잘 구워졌습니다.";
-                break;
-            }
-        }
-        while (isbadmeat == false || testkey == true)
-        {
-            yield return null;
-            if (isbadmeat == true || testkey == false)
-            {
-                audiosource.PlayOneShot(audioclip[4]);
-                guidetext.text = "고기가 타버렸습니다. \n\n 타버린 고기는 버리고 \n\n 다시 고기를 잘 구워서 \n\n 접시에 올려주세요";
-                break;
-            }
-        }
+        yield return new WaitForSeconds(10f);
+
         audioing = true;
+        audiosource.PlayOneShot(audioclip[5]);
         viedoplayer.clip = viedoclips[3];
         guidetext.text = "제한 시간 이내에 \n\n햄버거 카드의 순서대로\n\n 햄버거를 쌓아올려보세요.";
-
-
 
         ////고기패티 강조하는 쉐이더
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            if (testkey == false)
-            {
-                testkey = true;
-            }
-            else
-            {
-                testkey = false;
-            }
 
-        }
-    }
     //이건 소스 하나로 통일할 거임, 튜토리얼에선 없어도 됨
     //public void RandomNumberSelect()
     //{

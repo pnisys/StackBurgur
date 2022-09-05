@@ -34,6 +34,7 @@ public class TutorialTrayControl : MonoBehaviour
     public static event Traying OnTraying;
 
     Transform burgurs;
+    public Transform mantray;
     #region 스트링 선언
     string sandwichbreadbread;
     string hamburgurbread;
@@ -146,29 +147,44 @@ public class TutorialTrayControl : MonoBehaviour
             {
                 tutorialgamemanager.iscompletesuccess = true;
                 print("완벽한성공");
-                //손님이 자리에 앉으러 돌아가는 애니메이션 구현
-                //몸 방향을 돌려줘서 z방향으로 가게 해야 함
+                Invoke(nameof(SuccessTray), 1.1f);
+
+
             }
             //이건 부분성공한거임
             else if (successscore != 3 && littlesuccessscore == 3 && sourcecorrect == true)
             {
                 tutorialgamemanager.islittlesuccess = true;
                 print("부분성공");
+                Invoke(nameof(SuccessTray), 1.1f);
 
-                //손님이 자리에 앉으러 돌아가는 애니메이션 구현
-                //몸 방향을 돌려줘서 z방향으로 가게 해야 함
             }
-            //이건 다 쌓았으나 실패
-            else/* if (successscore != 3 && littlesuccessscore != 3)*/
+            else
             {
                 tutorialgamemanager.isfail = true;
                 print("실패");
-                //손님이 실망하면서 나가는 애니메이션 구현
             }
             sourcecorrect = false;
         }
     }
 
+    void SuccessTray()
+    {
+        mantray.gameObject.SetActive(true);
+        foreach (var item in stackcreateburgur.ToArray())
+        {
+            if (burgursource.GetChild(0) == null)
+            {
+                return;
+            }
+            else
+            {
+                Destroy(burgursource.GetChild(0).gameObject);
+            }
+            item.transform.parent = mantray;
+            item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.4219f, 0);
+        }
+    }
 
     //적층
     IEnumerator OnTriggerEnter(Collider other)
@@ -200,12 +216,12 @@ public class TutorialTrayControl : MonoBehaviour
                         yield return new WaitForSeconds(0.7f);
                         other.gameObject.GetComponent<AudioSource>().enabled = true;
 
-                        //소스 부어져있는게 없으면
                         if (burgursource.childCount != 0)
                         {
                             Destroy(burgursource.GetChild(0).gameObject);
 
                         }
+                        //소스 부어져있는게 없으면
                         if (other.gameObject.CompareTag(bbqsource))
                         {
 
@@ -352,9 +368,7 @@ public class TutorialTrayControl : MonoBehaviour
                     yield break;
                 }
             }
-
         }
-
 
         //안에 있을 때 잡을 때
         if (other.gameObject.GetComponent<FoodControl>().isInGrab == true)
@@ -452,11 +466,8 @@ public class TutorialTrayControl : MonoBehaviour
                     }
                 }
             }
-
         }
     }
-
-
 
     IEnumerator OnTriggerExit(Collider other)
     {
@@ -478,7 +489,6 @@ public class TutorialTrayControl : MonoBehaviour
                 yield break;
             }
 
-
             if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && /*other.gameObject.GetComponent<FoodControl>().isOnlyMeat == false && */other.gameObject.GetComponent<MeatControl>().ismeattrash == true)
             {
                 print("여길 타는거니?");
@@ -486,20 +496,10 @@ public class TutorialTrayControl : MonoBehaviour
                 yield break;
             }
 
-            //if (other.gameObject.GetComponent<FoodControl>().isOnlyMeat == true)
-            //{
-            //    yield break;
-            //}
-
             //안에서 놓을때나, 안에서 집을 때나 TriggerExit 방지
             if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
             {
                 print("안에서 놓았을 때 방지");
-                //if (other.gameObject.GetComponent<FoodControl>().isOnlyMeat == true)
-                //{
-                //    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                //    print("여기 타니?");
-                //}
                 yield break;
             }
             else if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isOutGrab == true)
