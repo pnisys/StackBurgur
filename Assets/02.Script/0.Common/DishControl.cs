@@ -10,13 +10,13 @@ public class DishControl : MonoBehaviour
     int index = 0;
     private void OnEnable()
     {
-        MeatControl.OnTraying += this.DishcontrolMethod;
+        TutorialMeatControl.OnTraying += this.DishcontrolMethod;
         TutorialTrayControl.OnTraying += this.DishcontrolMethod;
         FoodControl.OnDishing += this.DishcontrolMethod;
     }
     private void OnDisable()
     {
-        MeatControl.OnTraying -= this.DishcontrolMethod;
+        TutorialMeatControl.OnTraying -= this.DishcontrolMethod;
         TutorialTrayControl.OnTraying -= this.DishcontrolMethod;
         FoodControl.OnDishing -= this.DishcontrolMethod;
     }

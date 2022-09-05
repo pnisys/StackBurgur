@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class ClerkManager : MonoBehaviour
 {
+    public GameManager gamemanager;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("CLERK"))
         {
             //손님이 없을 때, 손님 오면 왔다는 신호 on
-            if (GameManager.instance.isClerk == false)
+            if (gamemanager.isClerk == false)
             {
-                GameManager.instance.isClerk = true;
+                gamemanager.isClerk = true;
             }
         }
     }
@@ -20,9 +21,9 @@ public class ClerkManager : MonoBehaviour
         if (other.gameObject.CompareTag("CLERK"))
         {
             //손님 나가면
-            if (GameManager.instance.isClerk == true)
+            if (gamemanager.isClerk == true)
             {
-                GameManager.instance.isClerk = false;
+                gamemanager.isClerk = false;
             }
         }
     }

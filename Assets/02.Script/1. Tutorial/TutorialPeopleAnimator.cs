@@ -51,15 +51,14 @@ public class TutorialPeopleAnimator : MonoBehaviour
 
     private void OnEnable()
     {
-        MeatControl.OnGoodMeeting += GoodMeeting;
-        MeatControl.OnBadMeeting += BadMeeting;
+        TutorialMeatControl.OnGoodMeeting += GoodMeeting;
+        TutorialMeatControl.OnBadMeeting += BadMeeting;
 
     }
     private void OnDisable()
     {
-        MeatControl.OnGoodMeeting -= GoodMeeting;
-        MeatControl.OnBadMeeting -= BadMeeting;
-
+        TutorialMeatControl.OnGoodMeeting -= GoodMeeting;
+        TutorialMeatControl.OnBadMeeting -= BadMeeting;
     }
 
     void GoodMeeting()

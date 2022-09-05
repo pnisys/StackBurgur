@@ -290,7 +290,7 @@ public class TutorialTrayControl : MonoBehaviour
         //트레이를 벗어나서 버릴 때는 이 함수가 맞음
         //고기가 불판을 갔다가, 다시 입장할 때
         //다시 쌓을 때가 있고, 버릴 때가 있다.
-        if ((other.gameObject.CompareTag(badbulgogi) || other.gameObject.CompareTag(bulgogi)) && other.gameObject.GetComponent<MeatControl>().ismeattrash == true)
+        if ((other.gameObject.CompareTag(badbulgogi) || other.gameObject.CompareTag(bulgogi)) && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == true)
         {
             other.gameObject.GetComponent<FoodControl>().isEntry = true;
             //들어왔어!
@@ -305,7 +305,7 @@ public class TutorialTrayControl : MonoBehaviour
                 if (grabstatus.IsGrabbing == false)
                 {
                     other.gameObject.GetComponent<FoodControl>().isOutGrab = false;
-                    other.gameObject.GetComponent<MeatControl>().ismeattrash = false;
+                    other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash = false;
 
                     #region 1. 만약 13개보다 더 쌓는다면? 그냥 Destory 해버리기
                     try
@@ -475,7 +475,7 @@ public class TutorialTrayControl : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
             //잡고 있는 상태고 안놓고 바로 그릴쪽으로 가려면
-            if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<MeatControl>().ismeattrash == false)
+            if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == false)
             {
                 //other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
                 other.gameObject.GetComponent<FoodControl>().isEntry = false;
@@ -483,13 +483,13 @@ public class TutorialTrayControl : MonoBehaviour
                 other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 yield break;
             }
-            else if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<MeatControl>().ismeattrash == true)
+            else if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == true)
             {
                 other.gameObject.GetComponent<FoodControl>().isEntry = false;
                 yield break;
             }
 
-            if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && /*other.gameObject.GetComponent<FoodControl>().isOnlyMeat == false && */other.gameObject.GetComponent<MeatControl>().ismeattrash == true)
+            if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && /*other.gameObject.GetComponent<FoodControl>().isOnlyMeat == false && */other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == true)
             {
                 print("여길 타는거니?");
                 other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;

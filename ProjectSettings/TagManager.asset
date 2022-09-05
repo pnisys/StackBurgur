@@ -69,6 +69,12 @@ TagManager:
   - EMPTY
   - TRAY
   - TRAYCOLLIDER
+  - 5TABLE
+  - 6TABLE
+  - 7TABLE
+  - 8TABLE
+  - 9TABLE
+  - 10TABLE
   layers:
   - Default
   - TransparentFX
