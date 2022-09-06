@@ -15,6 +15,8 @@ public class TrayControl : MonoBehaviour
     public Transform burgursource;
     public Transform empty;
     public string selectedsource;
+    public GameObject selectedsourceobject;
+
     //소스 4개 모아놓는 위치
     public Transform source;
     //소스 4개 프리팹
@@ -262,7 +264,6 @@ public class TrayControl : MonoBehaviour
             {
                 print("재료 개수가 안맞아서 실패");
                 gamemanager.isfail = true;
-                gamemanager.lifescore--;
                 Invoke("FailTray", 3f);
                 return;
             }
@@ -313,7 +314,6 @@ public class TrayControl : MonoBehaviour
                 print("재료가 달라서 실패");
                 Invoke("FailTray", 3f);
                 gamemanager.isfail = true;
-                gamemanager.lifescore--;
             }
         }
         void LocalMenuSeletionTwoLevel(params string[] a)
@@ -324,7 +324,6 @@ public class TrayControl : MonoBehaviour
             if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0)
             {
                 gamemanager.isfail = true;
-                gamemanager.lifescore--;
                 Invoke("FailTray", 3f);
                 return;
             }
@@ -374,12 +373,11 @@ public class TrayControl : MonoBehaviour
                 gamemanager.score += 250;
                 Invoke(nameof(SuccessTray), 1.1f);
             }
-          
+
             else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
             {
                 Invoke("FailTray", 3f);
                 gamemanager.isfail = true;
-                gamemanager.lifescore--;
             }
         }
         void LocalMenuSeletionThreeLevel(params string[] a)
@@ -391,7 +389,6 @@ public class TrayControl : MonoBehaviour
             if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0)
             {
                 gamemanager.isfail = true;
-                gamemanager.lifescore--;
                 Invoke("FailTray", 3f);
                 return;
             }
@@ -450,7 +447,6 @@ public class TrayControl : MonoBehaviour
             {
                 Invoke("FailTray", 3f);
                 gamemanager.isfail = true;
-                gamemanager.lifescore--;
             }
         }
         void LocalMenuSeletionFourLevel(params string[] a)
@@ -461,7 +457,6 @@ public class TrayControl : MonoBehaviour
             if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || burgurs.GetChild(6).childCount == 0)
             {
                 gamemanager.isfail = true;
-                gamemanager.lifescore--;
                 Invoke("FailTray", 3f);
                 return;
             }
@@ -525,7 +520,6 @@ public class TrayControl : MonoBehaviour
             {
                 Invoke("FailTray", 3f);
                 gamemanager.isfail = true;
-                gamemanager.lifescore--;
             }
         }
     }
@@ -554,7 +548,14 @@ public class TrayControl : MonoBehaviour
         {
             stackcreateburgur.Pop();
             Destroy(item);
-            Destroy(burgursource.GetChild(0).gameObject);
+            if (burgursource.GetChild(0).gameObject == null)
+            {
+                return;
+            }
+            else
+            {
+                Destroy(burgursource.GetChild(0).gameObject);
+            }
         }
     }
 
@@ -578,6 +579,28 @@ public class TrayControl : MonoBehaviour
                     //여기서 잡기를 놓는다면
                     if (grabstatus.IsGrabbing == false)
                     {
+                        if (selectedsourceobject != null)
+                        {
+                            if (other.gameObject.CompareTag(bbqsource))
+                            {
+                                Instantiate(sourceprefab[0], source.GetChild(0));
+                            }
+                            else if (other.gameObject.CompareTag(mayonnaise))
+                            {
+                                Instantiate(sourceprefab[1], source.GetChild(1));
+                            }
+                            else if (other.gameObject.CompareTag(chillsource))
+                            {
+                                Instantiate(sourceprefab[2], source.GetChild(2));
+                            }
+                            else if (other.gameObject.CompareTag(mustadsource))
+                            {
+                                Instantiate(sourceprefab[3], source.GetChild(3));
+                            }
+                            Destroy(other.gameObject);
+                            yield break;
+                        }
+                        selectedsourceobject = other.gameObject;
                         Destroy(other.gameObject.GetComponent<Rigidbody>());
                         other.gameObject.transform.position = new Vector3(burgurs.transform.position.x, burgurs.transform.position.y + 0.4f, burgurs.transform.position.z);
                         other.gameObject.transform.rotation = Quaternion.Euler(-90, 0, -90);
@@ -589,8 +612,8 @@ public class TrayControl : MonoBehaviour
                         if (burgursource.childCount != 0)
                         {
                             Destroy(burgursource.GetChild(0).gameObject);
-
                         }
+
                         //소스 부어져있는게 없으면
                         if (other.gameObject.CompareTag(bbqsource))
                         {
@@ -640,8 +663,8 @@ public class TrayControl : MonoBehaviour
                             yield return new WaitForSeconds(1.5f);
                             Instantiate(sourceprefab[3], source.GetChild(3));
                         }
-                        Destroy(other.gameObject);
 
+                        Destroy(other.gameObject);
                         if (peopleanimator.sourceCard[0].tag == selectedsource)
                         {
                             sourcecorrect = true;
@@ -659,7 +682,7 @@ public class TrayControl : MonoBehaviour
         //트레이를 벗어나서 버릴 때는 이 함수가 맞음
         //고기가 불판을 갔다가, 다시 입장할 때
         //다시 쌓을 때가 있고, 버릴 때가 있다.
-        if ((other.gameObject.CompareTag(badbulgogi) || other.gameObject.CompareTag(bulgogi)) && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == true)
+        if (((other.gameObject.CompareTag(badbulgogi) || other.gameObject.CompareTag(bulgogi)) && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == true))
         {
             other.gameObject.GetComponent<FoodControl>().isEntry = true;
             //들어왔어!
@@ -673,6 +696,7 @@ public class TrayControl : MonoBehaviour
                 yield return null;
                 if (grabstatus.IsGrabbing == false)
                 {
+
                     other.gameObject.GetComponent<FoodControl>().isOutGrab = false;
                     other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash = false;
 
@@ -762,7 +786,11 @@ public class TrayControl : MonoBehaviour
                 {
                     //0.3초마다 검사를 할 것
                     yield return null;
-
+                    //들어왔다가 다시나가면?
+                    if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
+                    {
+                        yield break;
+                    }
                     //여기서 잡기를 놓는다면
                     if (grabstatus.IsGrabbing == false)
                     {

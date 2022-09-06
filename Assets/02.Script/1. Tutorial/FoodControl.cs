@@ -59,7 +59,6 @@ public class FoodControl : MonoBehaviour
             //접시에 프리팹 생기게 하는 순간
             OnDishing();
         }
-
     }
 
     private void Update()
@@ -69,6 +68,10 @@ public class FoodControl : MonoBehaviour
         {
             StartCoroutine(FoodDestory());
         }
+        //if (isOk == true && grabstatus.IsGrabbing == false && isEntry == false)
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 
     IEnumerator FoodDestory()
@@ -78,5 +81,5 @@ public class FoodControl : MonoBehaviour
         Destroy(gameObject);
     }
 
-  
+
 }

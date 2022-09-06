@@ -258,6 +258,7 @@ public class PeopleAnimator : MonoBehaviour
                 //검사 후 실패면
                 else if (gamemanager.isfail)
                 {
+                    gamemanager.lifescore--;
                     //실패 애니메이션 설정
                     animator.SetBool(hashfail, true);
                     yield return new WaitForSeconds(5f);
@@ -303,8 +304,6 @@ public class PeopleAnimator : MonoBehaviour
     //난이도에 맞는 카드를 Setactiove 하고, selecthambugurcard에 넣는 함수
     public void LevelBurgurSetting()
     {
-        //레벨이 햄버거 난이도, 0번이 선택된 버거
-        //튜토리얼 버거
         if (gamemanager.level == 1)
         {
             OneLevelBurgerCard[hambugernumber[0]].SetActive(true);
