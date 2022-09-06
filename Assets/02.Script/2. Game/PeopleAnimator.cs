@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
-using UnityEngine.Video;
-using HighlightPlus;
 using Oculus.Interaction.HandGrab;
-using Oculus.Interaction;
 
 public class PeopleAnimator : MonoBehaviour
 {
@@ -38,9 +35,13 @@ public class PeopleAnimator : MonoBehaviour
     public static event MeatHighlight OnMeatHighlight;
 
     public GameObject selecthambugurcard;
+    public GameObject selecthambugurcard2;
     public GameObject selectsourcecard;
+    public GameObject selectsourcecard2;
+
 
     public HandGrabInteractor grabstatus;
+    public TrayControl traycontrol;
 
     public GameObject[] OneLevelBurgerCard;
     public GameObject[] TwoLevelBurgerCard;
@@ -50,10 +51,6 @@ public class PeopleAnimator : MonoBehaviour
 
     int ran = 0;
     int ran1 = 0;
-
-
-
-    bool audioing = false;
 
     private void Start()
     {
@@ -69,7 +66,6 @@ public class PeopleAnimator : MonoBehaviour
         table[7] = GameObject.FindGameObjectWithTag("8TABLE");
         table[8] = GameObject.FindGameObjectWithTag("9TABLE");
         table[9] = GameObject.FindGameObjectWithTag("10TABLE");
-
         door = GameObject.FindGameObjectWithTag("DOOR");
         clerkcollider = GameObject.FindGameObjectWithTag("CLERKCOLLIDER");
         agent.destination = clerkcollider.transform.position;
@@ -78,6 +74,7 @@ public class PeopleAnimator : MonoBehaviour
         //게임매니저에, 출현한 사람 담기
         gamemanager.uppeople.Add(gameObject);
         gamemanager.peoplenumbur++;
+
         //1. 손님 등판
         StartCoroutine(ClerkStateCheck());
         //2.숫자 랜덤하게 섞기
@@ -93,26 +90,39 @@ public class PeopleAnimator : MonoBehaviour
         if (gamemanager.stage == 1)
         {
             gamemanager.level = 1;
+            gamemanager.limitTime = 90f;
+            gamemanager.orderlimitTime = 15f;
         }
         else if (gamemanager.stage == 2)
         {
             randomstage = UnityEngine.Random.Range(1, 3);
             gamemanager.level = randomstage;
+            gamemanager.limitTime = 90f;
+            gamemanager.orderlimitTime = 15f;
+
         }
         else if (gamemanager.stage == 3)
         {
             randomstage = UnityEngine.Random.Range(2, 4);
             gamemanager.level = randomstage;
+            gamemanager.limitTime = 90f;
+            gamemanager.orderlimitTime = 15f;
+
         }
         else if (gamemanager.stage == 4)
         {
             randomstage = UnityEngine.Random.Range(1, 4);
             gamemanager.level = randomstage;
+            gamemanager.limitTime = 5f;
+            gamemanager.orderlimitTime = 5f;
+
         }
         else if (gamemanager.stage == 5)
         {
             randomstage = UnityEngine.Random.Range(3, 5);
             gamemanager.level = randomstage;
+            gamemanager.limitTime = 60f;
+            gamemanager.orderlimitTime = 30f;
         }
     }
 
@@ -160,7 +170,7 @@ public class PeopleAnimator : MonoBehaviour
             if (gamemanager.orderlimitTime < 0)
             {
                 //초기화
-                gamemanager.orderlimitTime = 1;
+                gamemanager.orderlimitTime = 20;
                 gamemanager.isThinking = false;
             }
         }
@@ -168,7 +178,9 @@ public class PeopleAnimator : MonoBehaviour
         //카드 Setactive(false); 시키기
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         selecthambugurcard.SetActive(false);
+        selecthambugurcard2.SetActive(false);
         selectsourcecard.SetActive(false);
+        selectsourcecard2.SetActive(false);
         animator.SetBool(hashTalk, false);
         StartCoroutine(Order());
     }
@@ -178,16 +190,145 @@ public class PeopleAnimator : MonoBehaviour
     {
         //주문 상태 On
         gamemanager.isOrder = true;
-
+        animator.gameObject.transform.GetChild(1).gameObject.SetActive(true);
         while (gamemanager.isOrder == true)
         {
             yield return null;
             //제한 시간 켜주기
+
             gamemanager.limitTime -= Time.deltaTime;
-            animator.gameObject.transform.GetChild(1).gameObject.SetActive(true);
             animator.gameObject.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(gamemanager.limitTime).ToString() + "초";
 
             //시간 끝나면
+            if (gamemanager.limitTime < 0)
+            {
+                //스테이지가 4이상이면
+                if (gamemanager.stage >= 4)
+                {
+                    StartCoroutine(Stage45());
+                    yield break;
+                }
+                //스테이지가 4이하이면
+                else
+                {
+                    //agent 꺼줬던거 켜죽
+                    agent.isStopped = false;
+                    //제한 시간 끄기
+                    animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                    animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+                    //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
+                    OnLimitTimeComplete();
+                    yield return new WaitForSeconds(1f);
+                    //초기화 시켜주기
+                    gamemanager.isOrder = false;
+                    //검사 후 성공이면
+                    if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
+                    {
+                        //테이블 숫자 한명 늘려주고
+                        gamemanager.tablepeoplenumbur++;
+                        mantray.gameObject.SetActive(true);
+                        //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
+                        //다음 테이블로 넘어가기
+                        for (int i = 0; i < 10; i++)
+                        {
+                            if (gamemanager.istable[i] == false)
+                            {
+                                //성공의 애니메이션
+                                animator.SetBool(hashSuccess, true);
+                                //테이블로 가게 하기
+                                agent.destination = table[i].transform.position;
+                                //근처 일정 범위안으로 들어가면
+                                yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                                //agent가 멈추기
+                                agent.isStopped = true;
+                                agent.enabled = false;
+                                //사람은 테이블 자식으로 들어간다.
+                                transform.parent = table[i].transform;
+                                //각 텡이블 포지션은 미리 설정해놓았던 곳으로 간다.
+                                transform.localPosition = gamemanager.tableposition[i];
+                                transform.localRotation = gamemanager.tablerotation[i];
+                                //먹는 애니메이션 실행
+                                animator.SetBool(hasheat, true);
+                                gameObject.transform.GetChild(3).localPosition = new Vector3(0, 0.879f, 0.579f);
+                                //들어간 테이블은 닫게 하기
+                                gamemanager.istable[i] = true;
+                                //반복 끝내기
+                                break;
+                            }
+                        }
+                        yield return new WaitForSeconds(2f);
+                        //이제 다른 사람 한명을 켜야됨
+                        gamemanager.iscompletesuccess = false;
+                        gamemanager.islittlesuccess = false;
+                        //테이블숫자가 5명이 되었으면
+                        if (gamemanager.tablepeoplenumbur == 5)
+                        {
+                            //스테이지 업 함수 호출
+                            StageUp();
+                            yield break;
+                        }
+                        gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
+                    }
+                    //검사 후 실패면
+                    else if (gamemanager.isfail)
+                    {
+                        gamemanager.lifescore--;
+                        //실패 애니메이션 설정
+                        animator.SetBool(hashfail, true);
+                        yield return new WaitForSeconds(5f);
+                        //문으로 간다.
+                        agent.destination = door.transform.position;
+
+                        //문 일정 범위 안으로 들어오면
+                        yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                        agent.isStopped = true;
+                        agent.enabled = false;
+                        transform.position = new Vector3(100, 100, 100);
+                        animator.SetBool(hashfail, false);
+                        yield return new WaitForSeconds(2f);
+                        //이제 다른 사람 한명을 켜야됨
+                        gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
+                        gamemanager.isfail = false;
+                        //Destroy(gameObject);
+                    }
+                }
+
+
+            }
+        }
+    }
+
+    IEnumerator Stage45()
+    {
+        print("이거 왜 안탐?");
+        foreach (var item in traycontrol.stackcreateburgur.ToArray())
+        {
+            item.transform.parent = traycontrol.gameObject.transform.GetChild(0).GetChild(0).GetChild(15).transform;
+            item.transform.localPosition = new Vector3(0, 0, 0);
+            traycontrol.stackcreateburgur.Pop();
+        }
+        //소스가 남아 있다면?
+        if (traycontrol.gameObject.transform.GetChild(0).GetChild(0).GetChild(13).childCount == 1)
+        {
+            GameObject aa = traycontrol.gameObject.transform.GetChild(0).GetChild(0).GetChild(13).GetChild(0).gameObject;
+            aa.transform.parent = traycontrol.gameObject.transform.GetChild(0).GetChild(0).GetChild(15).transform;
+            aa.transform.localPosition = new Vector3(0, 0, 0);
+        }
+
+        //4단계나 5단계는 한번 더 돌아야 함
+        if (gamemanager.stage == 4)
+        {
+            gamemanager.limitTime = 5f;
+        }
+        else if (gamemanager.stage == 5)
+        {
+            gamemanager.limitTime = 60f;
+        }
+        while (true)
+        {
+            yield return null;
+            gamemanager.limitTime -= Time.deltaTime;
+            animator.gameObject.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(gamemanager.limitTime).ToString() + "초";
             if (gamemanager.limitTime < 0)
             {
                 //agent 꺼줬던거 켜죽
@@ -195,17 +336,17 @@ public class PeopleAnimator : MonoBehaviour
                 //제한 시간 끄기
                 animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
                 animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+
                 //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
-                print("지금 여기는 타는거야?");
                 OnLimitTimeComplete();
                 yield return new WaitForSeconds(1f);
                 //초기화 시켜주기
-                gamemanager.limitTime = 1f;
                 gamemanager.isOrder = false;
                 //검사 후 성공이면
-                if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
+                if ((gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true) && (gamemanager.iscompletesuccess2 == true || gamemanager.islittlesuccess2 == true))
                 {
-
+                    //테이블 숫자 한명 늘려주고
+                    gamemanager.tablepeoplenumbur++;
                     mantray.gameObject.SetActive(true);
                     //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
                     //다음 테이블로 넘어가기
@@ -224,7 +365,7 @@ public class PeopleAnimator : MonoBehaviour
                             agent.enabled = false;
                             //사람은 테이블 자식으로 들어간다.
                             transform.parent = table[i].transform;
-                            //각 텡이블 포지션은 미리 설정해놓았던 곳으로 간다.
+                            //각 테이블 포지션은 미리 설정해놓았던 곳으로 간다.
                             transform.localPosition = gamemanager.tableposition[i];
                             transform.localRotation = gamemanager.tablerotation[i];
                             //먹는 애니메이션 실행
@@ -239,9 +380,9 @@ public class PeopleAnimator : MonoBehaviour
                     yield return new WaitForSeconds(2f);
                     //이제 다른 사람 한명을 켜야됨
                     gamemanager.iscompletesuccess = false;
+                    gamemanager.iscompletesuccess2 = false;
                     gamemanager.islittlesuccess = false;
-                    //테이블 숫자 한명 늘려주고
-                    gamemanager.tablepeoplenumbur++;
+                    gamemanager.islittlesuccess2 = false;
                     //테이블숫자가 5명이 되었으면
                     if (gamemanager.tablepeoplenumbur == 5)
                     {
@@ -249,14 +390,10 @@ public class PeopleAnimator : MonoBehaviour
                         StageUp();
                         yield break;
                     }
-                    else
-                    {
-                        gamemanager.people[gamemanager.tablepeoplenumbur].SetActive(true);
-                    }
-
+                    gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
                 }
-                //검사 후 실패면
-                else if (gamemanager.isfail)
+                //둘 중 하나라도 실패하면
+                else if (gamemanager.isfail == true || gamemanager.isfail2 == true)
                 {
                     gamemanager.lifescore--;
                     //실패 애니메이션 설정
@@ -267,7 +404,6 @@ public class PeopleAnimator : MonoBehaviour
 
                     //문 일정 범위 안으로 들어오면
                     yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
-
                     agent.isStopped = true;
                     agent.enabled = false;
                     transform.position = new Vector3(100, 100, 100);
@@ -276,8 +412,9 @@ public class PeopleAnimator : MonoBehaviour
                     //이제 다른 사람 한명을 켜야됨
                     gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
                     gamemanager.isfail = false;
-                    Destroy(gameObject);
+                    gamemanager.isfail2 = false;
                 }
+                yield break;
             }
         }
     }
@@ -286,7 +423,8 @@ public class PeopleAnimator : MonoBehaviour
     {
         //스테이지 업!
         gamemanager.stage++;
-        gamemanager.people[gamemanager.tablepeoplenumbur].SetActive(true);
+        gamemanager.tablepeoplenumbur = 0;
+        gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
         //기존 테이블에 있던 손님들 다시 People에 넣고 초기화시키고
         foreach (var item in gamemanager.uppeople)
         {
@@ -295,35 +433,91 @@ public class PeopleAnimator : MonoBehaviour
             item.transform.localPosition = new Vector3(0, 0, 0);
             item.transform.localRotation = Quaternion.Euler(0, -90, 0);
         }
-        gamemanager.tablepeoplenumbur = 0;
-        //스테이지
     }
-
-
 
     //난이도에 맞는 카드를 Setactiove 하고, selecthambugurcard에 넣는 함수
     public void LevelBurgurSetting()
     {
         if (gamemanager.level == 1)
         {
+            //스테이지가 4라면
+            if (gamemanager.stage >= 4)
+            {
+                OneLevelBurgerCard[hambugernumber[1]].SetActive(true);
+                selecthambugurcard2 = OneLevelBurgerCard[hambugernumber[1]];
+                gamemanager.selecthambugurcard2 = OneLevelBurgerCard[hambugernumber[1]];
+                sourceCard[sourcenumber[1]].SetActive(true);
+                selectsourcecard2 = sourceCard[sourcenumber[1]];
+                gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
+
+                OneLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
+                OneLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+            }
             OneLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = OneLevelBurgerCard[hambugernumber[0]];
             gamemanager.selecthambugurcard = OneLevelBurgerCard[hambugernumber[0]];
         }
         else if (gamemanager.level == 2)
         {
+            //스테이지가 4라면
+            if (gamemanager.stage >= 4)
+            {
+                TwoLevelBurgerCard[hambugernumber[1]].SetActive(true);
+                selecthambugurcard2 = TwoLevelBurgerCard[hambugernumber[1]];
+                gamemanager.selecthambugurcard2 = TwoLevelBurgerCard[hambugernumber[1]];
+                sourceCard[sourcenumber[1]].SetActive(true);
+                selectsourcecard2 = sourceCard[sourcenumber[1]];
+                gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
+
+                TwoLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
+                TwoLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+            }
             TwoLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = TwoLevelBurgerCard[hambugernumber[0]];
             gamemanager.selecthambugurcard = TwoLevelBurgerCard[hambugernumber[0]];
         }
         else if (gamemanager.level == 3)
         {
+            //스테이지가 4라면
+            if (gamemanager.stage >= 4)
+            {
+                ThreeLevelBurgerCard[hambugernumber[1]].SetActive(true);
+                selecthambugurcard2 = ThreeLevelBurgerCard[hambugernumber[1]];
+                gamemanager.selecthambugurcard2 = ThreeLevelBurgerCard[hambugernumber[1]];
+                sourceCard[sourcenumber[1]].SetActive(true);
+                selectsourcecard2 = sourceCard[sourcenumber[1]];
+                gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
+
+                ThreeLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
+                ThreeLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+            }
             ThreeLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = ThreeLevelBurgerCard[hambugernumber[0]];
             gamemanager.selecthambugurcard = ThreeLevelBurgerCard[hambugernumber[0]];
         }
         else if (gamemanager.level == 4)
         {
+            //스테이지가 4라면
+            if (gamemanager.stage >= 4)
+            {
+                FourLevelBurgerCard[hambugernumber[1]].SetActive(true);
+                selecthambugurcard2 = FourLevelBurgerCard[hambugernumber[1]];
+                gamemanager.selecthambugurcard2 = FourLevelBurgerCard[hambugernumber[1]];
+                sourceCard[sourcenumber[1]].SetActive(true);
+                selectsourcecard2 = sourceCard[sourcenumber[1]];
+                gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
+
+                FourLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
+                FourLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+            }
             FourLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = FourLevelBurgerCard[hambugernumber[0]];
             gamemanager.selecthambugurcard = FourLevelBurgerCard[hambugernumber[0]];

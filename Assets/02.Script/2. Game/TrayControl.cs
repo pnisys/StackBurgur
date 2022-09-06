@@ -116,6 +116,42 @@ public class TrayControl : MonoBehaviour
         //메뉴를 모두 적층하고 손님에게 내밀었을 때
         if (gamemanager.level == 1)
         {
+            //스테이지가 4이상일 때
+            if (gamemanager.stage >= 4)
+            {
+                if (gamemanager.selecthambugurcard2.CompareTag("ShrimpBurger"))
+                {
+                    LocalMenuSeletionOneLevel2(blackbread, lettuce, shrimp, blackbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("TotoBurger"))
+                {
+                    LocalMenuSeletionOneLevel2(sandwichbreadbread, tomato, tomato, sandwichbreadbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("TomatoPattyBurger"))
+                {
+                    LocalMenuSeletionOneLevel2(sandwichbreadbread, bulgogi, tomato, bulgogi);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("DoubleCheezeBurger"))
+                {
+                    LocalMenuSeletionOneLevel2(hamburgurbread, cheeze, cheeze, hamburgurbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("BaconBurger"))
+                {
+                    LocalMenuSeletionOneLevel2(blackbread, bulgogi, bacon, blackbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("MushroomBurger"))
+                {
+                    LocalMenuSeletionOneLevel2(hamburgurbread, bulgogi, mushroom, blackbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("ChokchokBurger"))
+                {
+                    LocalMenuSeletionOneLevel2(hamburgurbread, bulgogi, onion, hamburgurbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("BulgogiBurger"))
+                {
+                    LocalMenuSeletionOneLevel2(sandwichbreadbread, lettuce, bulgogi, hamburgurbread);
+                }
+            }
             if (gamemanager.selecthambugurcard.CompareTag("ShrimpBurger"))
             {
                 LocalMenuSeletionOneLevel(blackbread, lettuce, shrimp, blackbread);
@@ -151,6 +187,42 @@ public class TrayControl : MonoBehaviour
         }
         else if (gamemanager.level == 2)
         {
+            //스테이지가 4이상일 때
+            if (gamemanager.stage >= 4)
+            {
+                if (gamemanager.selecthambugurcard2.CompareTag("CheezeBulgogiBurger"))
+                {
+                    LocalMenuSeletionTwoLevel2(hamburgurbread, bulgogi, cheeze, lettuce, hamburgurbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("SesameBurger"))
+                {
+                    LocalMenuSeletionTwoLevel2(sandwichbreadbread, bulgogi, chicken, cheeze, sandwichbreadbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("ChickenBurger"))
+                {
+                    LocalMenuSeletionTwoLevel2(sandwichbreadbread, cheeze, chicken, tomato, sandwichbreadbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("TripleMeatBurger"))
+                {
+                    LocalMenuSeletionTwoLevel2(blackbread, chicken, bulgogi, bacon, sandwichbreadbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("InkBurger"))
+                {
+                    LocalMenuSeletionTwoLevel2(blackbread, shrimp, bulgogi, lettuce, blackbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("OnionBurger"))
+                {
+                    LocalMenuSeletionTwoLevel2(lettuce, onion, shrimp, onion, blackbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("YugjeubBurger"))
+                {
+                    LocalMenuSeletionTwoLevel2(bulgogi, onion, lettuce, tomato, bulgogi);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("ManymushroomBurger"))
+                {
+                    LocalMenuSeletionTwoLevel2(sandwichbreadbread, mushroom, bulgogi, mushroom, hamburgurbread);
+                }
+            }
             if (gamemanager.selecthambugurcard.CompareTag("CheezeBulgogiBurger"))
             {
                 LocalMenuSeletionTwoLevel(hamburgurbread, bulgogi, cheeze, lettuce, hamburgurbread);
@@ -186,6 +258,42 @@ public class TrayControl : MonoBehaviour
         }
         else if (gamemanager.level == 3)
         {
+            //스테이지가 4이상일 때
+            if (gamemanager.stage >= 4)
+            {
+                if (gamemanager.selecthambugurcard2.CompareTag("FatBurger"))
+                {
+                    LocalMenuSeletionThreeLevel2(sandwichbreadbread, cheeze, chicken, lettuce, bulgogi, hamburgurbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("CheeseTomatoBurger"))
+                {
+                    LocalMenuSeletionThreeLevel2(hamburgurbread, lettuce, tomato, cheeze, bulgogi, hamburgurbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("SesameCheeseBurger"))
+                {
+                    LocalMenuSeletionThreeLevel2(hamburgurbread, bulgogi, cheeze, tomato, lettuce, sandwichbreadbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("DietBurger"))
+                {
+                    LocalMenuSeletionThreeLevel2(lettuce, sandwichbreadbread, chicken, tomato, cheeze, lettuce);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("HighcalorieBurger"))
+                {
+                    LocalMenuSeletionThreeLevel2(blackbread, cheeze, bacon, shrimp, bulgogi, hamburgurbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("DoubleShrimpBurger"))
+                {
+                    LocalMenuSeletionThreeLevel2(sandwichbreadbread, shrimp, bacon, onion, shrimp, hamburgurbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("GrilledMushroomBulgogiHamburger"))
+                {
+                    LocalMenuSeletionThreeLevel2(blackbread, mushroom, bulgogi, cheeze, onion, hamburgurbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("CheeseShrimpBurger"))
+                {
+                    LocalMenuSeletionThreeLevel2(sandwichbreadbread, cheeze, onion, bacon, shrimp, hamburgurbread);
+                }
+            }
             if (gamemanager.selecthambugurcard.CompareTag("FatBurger"))
             {
                 LocalMenuSeletionThreeLevel(sandwichbreadbread, cheeze, chicken, lettuce, bulgogi, hamburgurbread);
@@ -221,37 +329,73 @@ public class TrayControl : MonoBehaviour
         }
         else if (gamemanager.level == 4)
         {
+            //스테이지가 4이상일 때
+            if (gamemanager.stage >= 4)
+            {
+                if (gamemanager.selecthambugurcard2.CompareTag("GuinnessBurger"))
+                {
+                    LocalMenuSeletionFourLevel(blackbread, bulgogi, cheeze, cheeze, bulgogi, onion, blackbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("MoistureBurger"))
+                {
+                    LocalMenuSeletionFourLevel(hamburgurbread, bacon, onion, lettuce, shrimp, mushroom, hamburgurbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("BigBurger"))
+                {
+                    LocalMenuSeletionFourLevel(bulgogi, lettuce, onion, bacon, shrimp, mushroom, bulgogi);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("VisualBurger"))
+                {
+                    LocalMenuSeletionFourLevel(hamburgurbread, lettuce, cheeze, bacon, bulgogi, onion, sandwichbreadbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("BombcalorieBurger"))
+                {
+                    LocalMenuSeletionFourLevel(blackbread, lettuce, cheeze, bulgogi, cheeze, bulgogi, blackbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("SingleHeartBurger"))
+                {
+                    LocalMenuSeletionFourLevel(lettuce, bulgogi, onion, shrimp, onion, bulgogi, lettuce);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("EnergyBoosterBurger"))
+                {
+                    LocalMenuSeletionFourLevel(sandwichbreadbread, mushroom, bacon, onion, shrimp, mushroom, sandwichbreadbread);
+                }
+                else if (gamemanager.selecthambugurcard2.CompareTag("ManyBreadBurger"))
+                {
+                    LocalMenuSeletionFourLevel(blackbread, cheeze, bacon, onion, sandwichbreadbread, bulgogi, hamburgurbread);
+                }
+            }
             if (gamemanager.selecthambugurcard.CompareTag("GuinnessBurger"))
             {
-                LocalMenuSeletionFourLevel(blackbread, bulgogi, cheeze, cheeze, bulgogi, onion, blackbread);
+                LocalMenuSeletionFourLevel2(blackbread, bulgogi, cheeze, cheeze, bulgogi, onion, blackbread);
             }
             else if (gamemanager.selecthambugurcard.CompareTag("MoistureBurger"))
             {
-                LocalMenuSeletionFourLevel(hamburgurbread, bacon, onion, lettuce, shrimp, mushroom, hamburgurbread);
+                LocalMenuSeletionFourLevel2(hamburgurbread, bacon, onion, lettuce, shrimp, mushroom, hamburgurbread);
             }
             else if (gamemanager.selecthambugurcard.CompareTag("BigBurger"))
             {
-                LocalMenuSeletionFourLevel(bulgogi, lettuce, onion, bacon, shrimp, mushroom, bulgogi);
+                LocalMenuSeletionFourLevel2(bulgogi, lettuce, onion, bacon, shrimp, mushroom, bulgogi);
             }
             else if (gamemanager.selecthambugurcard.CompareTag("VisualBurger"))
             {
-                LocalMenuSeletionFourLevel(hamburgurbread, lettuce, cheeze, bacon, bulgogi, onion, sandwichbreadbread);
+                LocalMenuSeletionFourLevel2(hamburgurbread, lettuce, cheeze, bacon, bulgogi, onion, sandwichbreadbread);
             }
             else if (gamemanager.selecthambugurcard.CompareTag("BombcalorieBurger"))
             {
-                LocalMenuSeletionFourLevel(blackbread, lettuce, cheeze, bulgogi, cheeze, bulgogi, blackbread);
+                LocalMenuSeletionFourLevel2(blackbread, lettuce, cheeze, bulgogi, cheeze, bulgogi, blackbread);
             }
             else if (gamemanager.selecthambugurcard.CompareTag("SingleHeartBurger"))
             {
-                LocalMenuSeletionFourLevel(lettuce, bulgogi, onion, shrimp, onion, bulgogi, lettuce);
+                LocalMenuSeletionFourLevel2(lettuce, bulgogi, onion, shrimp, onion, bulgogi, lettuce);
             }
             else if (gamemanager.selecthambugurcard.CompareTag("EnergyBoosterBurger"))
             {
-                LocalMenuSeletionFourLevel(sandwichbreadbread, mushroom, bacon, onion, shrimp, mushroom, sandwichbreadbread);
+                LocalMenuSeletionFourLevel2(sandwichbreadbread, mushroom, bacon, onion, shrimp, mushroom, sandwichbreadbread);
             }
             else if (gamemanager.selecthambugurcard.CompareTag("ManyBreadBurger"))
             {
-                LocalMenuSeletionFourLevel(blackbread, cheeze, bacon, onion, sandwichbreadbread, bulgogi, hamburgurbread);
+                LocalMenuSeletionFourLevel2(blackbread, cheeze, bacon, onion, sandwichbreadbread, bulgogi, hamburgurbread);
             }
         }
 
@@ -522,6 +666,256 @@ public class TrayControl : MonoBehaviour
                 gamemanager.isfail = true;
             }
         }
+
+        void LocalMenuSeletionOneLevel2(params string[] a)
+        {
+            int localsuccessscore = 0;
+            int locallittlesuccessscore = 0;
+
+            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0)
+            {
+                print("재료 개수가 안맞아서 실패");
+                gamemanager.isfail2 = true;
+                return;
+            }
+            //가장 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
+            {
+                localsuccessscore++;
+            }
+
+            //그다음 아래에는 양상추가 깔렸으면
+            if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 새우가 깔렸으면
+            if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
+            {
+                localsuccessscore++;
+            }
+            foreach (var item in stackcreateburgur.ToArray())
+            {
+                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]))
+                {
+                    locallittlesuccessscore++;
+                }
+            }
+            //이거 성공인거임
+            if (localsuccessscore == 4)
+            {
+                gamemanager.iscompletesuccess2 = true;
+                gamemanager.score += 500;
+            }
+            //이건 부분성공한거임
+            else if (localsuccessscore != 4 && locallittlesuccessscore == 4)
+            {
+                gamemanager.islittlesuccess2 = true;
+                gamemanager.score += 250;
+            }
+            else if (localsuccessscore != 4 || locallittlesuccessscore != 4)
+            {
+                print("재료가 달라서 실패");
+                gamemanager.isfail2 = true;
+            }
+        }
+        void LocalMenuSeletionTwoLevel2(params string[] a)
+        {
+            int localsuccessscore = 0;
+            int locallittlesuccessscore = 0;
+
+            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0)
+            {
+                gamemanager.isfail2 = true;
+                return;
+            }
+            //가장 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 양상추가 깔렸으면
+            if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 새우가 깔렸으면
+            if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
+            {
+                localsuccessscore++;
+            }
+            foreach (var item in stackcreateburgur.ToArray())
+            {
+                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
+                {
+                    locallittlesuccessscore++;
+                }
+            }
+            //이거 성공인거임
+            if (localsuccessscore == 5)
+            {
+                gamemanager.iscompletesuccess2 = true;
+                gamemanager.score += 500;
+            }
+            //이건 부분성공한거임
+            else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
+            {
+                gamemanager.islittlesuccess2 = true;
+                gamemanager.score += 250;
+            }
+
+            else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
+            {
+                gamemanager.isfail2 = true;
+            }
+        }
+        void LocalMenuSeletionThreeLevel2(params string[] a)
+        {
+            int localsuccessscore = 0;
+            int locallittlesuccessscore = 0;
+
+            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0)
+            {
+                gamemanager.isfail2 = true;
+                return;
+            }
+            //가장 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 양상추가 깔렸으면
+            if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 새우가 깔렸으면
+            if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(5).GetChild(0).gameObject.CompareTag(a[5]))
+            {
+                localsuccessscore++;
+            }
+            foreach (var item in stackcreateburgur.ToArray())
+            {
+                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]))
+                {
+                    locallittlesuccessscore++;
+                }
+            }
+            //이거 성공인거임
+            if (localsuccessscore == 6)
+            {
+                gamemanager.iscompletesuccess2 = true;
+                gamemanager.score += 500;
+            }
+            //이건 부분성공한거임
+            else if (localsuccessscore != 6 && locallittlesuccessscore == 6)
+            {
+                gamemanager.islittlesuccess2 = true;
+                gamemanager.score += 250;
+            }
+            else if (localsuccessscore != 6 && locallittlesuccessscore != 6)
+            {
+                gamemanager.isfail2 = true;
+            }
+        }
+        void LocalMenuSeletionFourLevel2(params string[] a)
+        {
+            int localsuccessscore = 0;
+            int locallittlesuccessscore = 0;
+            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || burgurs.GetChild(6).childCount == 0)
+            {
+                gamemanager.isfail2 = true;
+                return;
+            }
+            //가장 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 양상추가 깔렸으면
+            if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 새우가 깔렸으면
+            if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(5).GetChild(0).gameObject.CompareTag(a[5]))
+            {
+                localsuccessscore++;
+            }
+            //그다음 아래에는 먹물빵이 깔렸으면
+            if (burgurs.GetChild(6).GetChild(0).gameObject.CompareTag(a[6]))
+            {
+                localsuccessscore++;
+            }
+            foreach (var item in stackcreateburgur.ToArray())
+            {
+                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]) || item.gameObject.CompareTag(a[6]))
+                {
+                    locallittlesuccessscore++;
+                }
+            }
+            //이거 성공인거임
+            if (localsuccessscore == 7)
+            {
+                gamemanager.iscompletesuccess2 = true;
+                gamemanager.score += 500;
+            }
+            //이건 부분성공한거임
+            else if (localsuccessscore != 7 && locallittlesuccessscore == 7)
+            {
+                gamemanager.islittlesuccess2 = true;
+                gamemanager.score += 250;
+            }
+            else if (localsuccessscore != 7 && locallittlesuccessscore != 7)
+            {
+                gamemanager.isfail2 = true;
+            }
+        }
     }
 
 
@@ -537,7 +931,7 @@ public class TrayControl : MonoBehaviour
             {
                 Destroy(burgursource.GetChild(0).gameObject);
             }
-            item.transform.parent = gamemanager.people[gamemanager.tablepeoplenumbur].transform.GetChild(3);
+            item.transform.parent = gamemanager.people[gamemanager.tablepeoplenumbur - 1].transform.GetChild(3);
             item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.4219f, 0);
             stackcreateburgur.Pop();
         }
@@ -548,14 +942,14 @@ public class TrayControl : MonoBehaviour
         {
             stackcreateburgur.Pop();
             Destroy(item);
-            if (burgursource.GetChild(0).gameObject == null)
-            {
-                return;
-            }
-            else
-            {
-                Destroy(burgursource.GetChild(0).gameObject);
-            }
+        }
+        if (burgursource.childCount == 0)
+        {
+            return;
+        }
+        else
+        {
+            Destroy(burgursource.GetChild(0).gameObject);
         }
     }
 
@@ -663,7 +1057,6 @@ public class TrayControl : MonoBehaviour
                             yield return new WaitForSeconds(1.5f);
                             Instantiate(sourceprefab[3], source.GetChild(3));
                         }
-
                         Destroy(other.gameObject);
                         if (peopleanimator.sourceCard[0].tag == selectedsource)
                         {

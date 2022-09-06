@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     public bool islittlesuccess = false;
     public bool isfail = false;
 
+    public bool iscompletesuccess2 = false;
+    public bool islittlesuccess2 = false;
+    public bool isfail2 = false;
+
     public bool isTray = false;
 
     public GameObject[] people;
@@ -33,8 +37,10 @@ public class GameManager : MonoBehaviour
     public int lifescore = 5;
 
     //생각 풍선 보여주는 시간
+    [HideInInspector]
     public float orderlimitTime = 1;
     //주문 시간 30초
+    [HideInInspector]
     public float limitTime = 1;
 
     //level이 햄버거 난이도, 1난이도~ 4난이도까지 있음
@@ -43,7 +49,10 @@ public class GameManager : MonoBehaviour
     public int stage = 1;
 
     public GameObject selecthambugurcard;
+    public GameObject selecthambugurcard2;
     public GameObject selectsourcecard;
+    public GameObject selectsourcecard2;
+
 
     public bool[] istable = new bool[10] { true, true, true, true, false, false, false, false, false, false };
     public Vector3[] tableposition = new Vector3[10] { new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0.051f, 0.32f, -0.075f), new Vector3(0, 0.278f, 0) };
