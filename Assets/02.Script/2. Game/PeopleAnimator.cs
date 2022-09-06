@@ -73,29 +73,13 @@ public class PeopleAnimator : MonoBehaviour
         door = GameObject.FindGameObjectWithTag("DOOR");
         clerkcollider = GameObject.FindGameObjectWithTag("CLERKCOLLIDER");
         agent.destination = clerkcollider.transform.position;
-        mantray = gameObject.transform.GetChild(16);
+        mantray = gameObject.transform.GetChild(3);
         //1. 손님 등판
         StartCoroutine(ClerkStateCheck());
         //2.숫자 랜덤하게 섞기
         RandomNumberSelect();
-        //스테이지 넘기기 위한 카운트
-        gamemanager.stagepeoplenumber++;
-        if (gamemanager.stagepeoplenumber > 5)
-        {
-            gamemanager.stage++;
-        }
-        else if (gamemanager.stagepeoplenumber > 10)
-        {
-            gamemanager.stage++;
-        }
-        else if (gamemanager.stagepeoplenumber > 15)
-        {
-            gamemanager.stage++;
-        }
-        else if (gamemanager.stagepeoplenumber > 20)
-        {
-            gamemanager.stage++;
-        }
+
+
         StageLevelRandom();
     }
 
@@ -150,7 +134,6 @@ public class PeopleAnimator : MonoBehaviour
     IEnumerator ThinkBallon()
     {
         yield return new WaitForSeconds(1f);
-
         //손님이 주문하는 상태 켜기
         gamemanager.isThinking = true;
         //손님이 주문하는 애니메이션 켜기
@@ -180,7 +163,6 @@ public class PeopleAnimator : MonoBehaviour
 
         //카드 Setactive(false); 시키기
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-
         selecthambugurcard.SetActive(false);
         selectsourcecard.SetActive(false);
         animator.SetBool(hashTalk, false);
@@ -218,6 +200,7 @@ public class PeopleAnimator : MonoBehaviour
                 //검사 후 성공이면
                 if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
                 {
+
                     mantray.gameObject.SetActive(true);
                     //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
                     //다음 테이블로 넘어가기
@@ -241,7 +224,7 @@ public class PeopleAnimator : MonoBehaviour
                             transform.localRotation = gamemanager.tablerotation[i];
                             //먹는 애니메이션 실행
                             animator.SetBool(hasheat, true);
-                            gameObject.transform.GetChild(16).localPosition = new Vector3(0, 0.879f, 0.579f);
+                            gameObject.transform.GetChild(3).localPosition = new Vector3(0, 0.879f, 0.579f);
                             //들어간 테이블은 닫게 하기
                             gamemanager.istable[i] = true;
                             //반복 끝내기
@@ -250,10 +233,22 @@ public class PeopleAnimator : MonoBehaviour
                     }
                     yield return new WaitForSeconds(2f);
                     //이제 다른 사람 한명을 켜야됨
-                    gamemanager.tablepeoplenumbur++;
-                    gamemanager.people[gamemanager.tablepeoplenumbur].SetActive(true);
                     gamemanager.iscompletesuccess = false;
                     gamemanager.islittlesuccess = false;
+                    //테이블 숫자 한명 늘려주고
+                    gamemanager.tablepeoplenumbur++;
+                    //테이블숫자가 5명이 되었으면
+                    if (gamemanager.tablepeoplenumbur == 5)
+                    {
+                        //스테이지 업!
+                        gamemanager.stage++;
+                        yield break;
+                    }
+                    else
+                    {
+                        gamemanager.people[gamemanager.tablepeoplenumbur].SetActive(true);
+                    }
+
                 }
                 //검사 후 실패면
                 else if (gamemanager.isfail)

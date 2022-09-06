@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] people;
     public int tablepeoplenumbur = 0;
-    public int stagepeoplenumber = 0;
 
     public Animator animator;
 

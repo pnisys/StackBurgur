@@ -541,7 +541,7 @@ public class TrayControl : MonoBehaviour
             {
                 Destroy(burgursource.GetChild(0).gameObject);
             }
-            item.transform.parent = gamemanager.people[gamemanager.tablepeoplenumbur].transform.GetChild(16);
+            item.transform.parent = gamemanager.people[gamemanager.tablepeoplenumbur].transform.GetChild(3);
             item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.4219f, 0);
             stackcreateburgur.Pop();
         }
