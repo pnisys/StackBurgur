@@ -13,7 +13,7 @@ public class PeopleAnimator : MonoBehaviour
     Animator animator;
     NavMeshAgent agent;
     public GameObject[] table;
-
+    public GameObject people;
     GameObject door;
     GameObject clerkcollider;
 
@@ -74,12 +74,16 @@ public class PeopleAnimator : MonoBehaviour
         clerkcollider = GameObject.FindGameObjectWithTag("CLERKCOLLIDER");
         agent.destination = clerkcollider.transform.position;
         mantray = gameObject.transform.GetChild(3);
+
+        //게임매니저에, 출현한 사람 담기
+        gamemanager.uppeople.Add(gameObject);
+        gamemanager.peoplenumbur++;
         //1. 손님 등판
         StartCoroutine(ClerkStateCheck());
         //2.숫자 랜덤하게 섞기
         RandomNumberSelect();
 
-
+        //스테이지,난이도 판독 함수
         StageLevelRandom();
     }
 
@@ -156,7 +160,7 @@ public class PeopleAnimator : MonoBehaviour
             if (gamemanager.orderlimitTime < 0)
             {
                 //초기화
-                gamemanager.orderlimitTime = 20;
+                gamemanager.orderlimitTime = 1;
                 gamemanager.isThinking = false;
             }
         }
@@ -192,10 +196,11 @@ public class PeopleAnimator : MonoBehaviour
                 animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
                 animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
                 //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
+                print("지금 여기는 타는거야?");
                 OnLimitTimeComplete();
                 yield return new WaitForSeconds(1f);
                 //초기화 시켜주기
-                gamemanager.limitTime = 5f;
+                gamemanager.limitTime = 1f;
                 gamemanager.isOrder = false;
                 //검사 후 성공이면
                 if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
@@ -240,8 +245,8 @@ public class PeopleAnimator : MonoBehaviour
                     //테이블숫자가 5명이 되었으면
                     if (gamemanager.tablepeoplenumbur == 5)
                     {
-                        //스테이지 업!
-                        gamemanager.stage++;
+                        //스테이지 업 함수 호출
+                        StageUp();
                         yield break;
                     }
                     else
@@ -268,13 +273,29 @@ public class PeopleAnimator : MonoBehaviour
                     animator.SetBool(hashfail, false);
                     yield return new WaitForSeconds(2f);
                     //이제 다른 사람 한명을 켜야됨
-                    gamemanager.tablepeoplenumbur++;
-                    gamemanager.people[gamemanager.tablepeoplenumbur].SetActive(true);
+                    gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
                     gamemanager.isfail = false;
                     Destroy(gameObject);
                 }
             }
         }
+    }
+
+    void StageUp()
+    {
+        //스테이지 업!
+        gamemanager.stage++;
+        gamemanager.people[gamemanager.tablepeoplenumbur].SetActive(true);
+        //기존 테이블에 있던 손님들 다시 People에 넣고 초기화시키고
+        foreach (var item in gamemanager.uppeople)
+        {
+            item.SetActive(false);
+            item.transform.parent = people.transform;
+            item.transform.localPosition = new Vector3(0, 0, 0);
+            item.transform.localRotation = Quaternion.Euler(0, -90, 0);
+        }
+        gamemanager.tablepeoplenumbur = 0;
+        //스테이지
     }
 
 

@@ -384,6 +384,7 @@ public class TrayControl : MonoBehaviour
         }
         void LocalMenuSeletionThreeLevel(params string[] a)
         {
+            print("쓰리레벨 체크함수는 들어옴");
             int localsuccessscore = 0;
             int locallittlesuccessscore = 0;
 
@@ -454,6 +455,7 @@ public class TrayControl : MonoBehaviour
         }
         void LocalMenuSeletionFourLevel(params string[] a)
         {
+            print("포레벨 체크함수는 들어옴");
             int localsuccessscore = 0;
             int locallittlesuccessscore = 0;
             if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || burgurs.GetChild(6).childCount == 0)
@@ -576,7 +578,6 @@ public class TrayControl : MonoBehaviour
                     //여기서 잡기를 놓는다면
                     if (grabstatus.IsGrabbing == false)
                     {
-
                         Destroy(other.gameObject.GetComponent<Rigidbody>());
                         other.gameObject.transform.position = new Vector3(burgurs.transform.position.x, burgurs.transform.position.y + 0.4f, burgurs.transform.position.z);
                         other.gameObject.transform.rotation = Quaternion.Euler(-90, 0, -90);
