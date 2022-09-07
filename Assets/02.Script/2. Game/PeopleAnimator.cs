@@ -178,13 +178,16 @@ public class PeopleAnimator : MonoBehaviour
                 gamemanager.isThinking = false;
             }
         }
-
+        //스테이지가 4일 경우에만
+        if (gamemanager.stage >= 4)
+        {
+            selecthambugurcard2.SetActive(false);
+            selectsourcecard2.SetActive(false);
+        }
         //카드 Setactive(false); 시키기
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         selecthambugurcard.SetActive(false);
-        selecthambugurcard2.SetActive(false);
         selectsourcecard.SetActive(false);
-        selectsourcecard2.SetActive(false);
         animator.SetBool(hashTalk, false);
         StartCoroutine(Order());
     }
