@@ -1410,10 +1410,7 @@ public class TrayControl : MonoBehaviour
                     //들어왔다가 다시나가면?
                     if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
                     {
-                        //if(other.gameObject.CompareTag(badbulgogi))
-                        //{
                         other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                        //}
                         yield break;
                     }
                     //여기서 잡기를 놓는다면
@@ -1496,6 +1493,16 @@ public class TrayControl : MonoBehaviour
         //음식이 벗어날때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
+            //잡고 있는 상태고 안놓고 바로 그릴쪽으로 가려면
+            if (grabstatus.IsGrabbing == true &&  other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
+            {
+                //other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
+                other.gameObject.GetComponent<FoodControl>().isEntry = false;
+                other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                yield break;
+            }
+            
             //잡고 있는 상태고 안놓고 바로 그릴쪽으로 가려면
             if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == false)
             {
