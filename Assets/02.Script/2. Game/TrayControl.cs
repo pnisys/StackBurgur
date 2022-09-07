@@ -418,22 +418,26 @@ public class TrayControl : MonoBehaviour
             //가장 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
             {
+                print("ok");
                 localsuccessscore++;
             }
 
             //그다음 아래에는 양상추가 깔렸으면
             if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 새우가 깔렸으면
             if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             foreach (var item in stackcreateburgur.ToArray())
@@ -446,6 +450,7 @@ public class TrayControl : MonoBehaviour
             //이거 성공인거임
             if (localsuccessscore == 4)
             {
+                print("완전성공ok");
                 gamemanager.iscompletesuccess = true;
                 gamemanager.score += 500;
                 if (gamemanager.stage < 4)
@@ -456,6 +461,7 @@ public class TrayControl : MonoBehaviour
             //이건 부분성공한거임
             else if (localsuccessscore != 4 && locallittlesuccessscore == 4)
             {
+                print("부분성공ok");
                 gamemanager.islittlesuccess = true;
                 gamemanager.score += 250;
                 if (gamemanager.stage < 4)
@@ -480,6 +486,7 @@ public class TrayControl : MonoBehaviour
 
             if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false)
             {
+                print("재료 개수가 안맞아서 실패");
                 gamemanager.isfail = true;
                 if (gamemanager.stage < 4)
                 {
@@ -490,26 +497,31 @@ public class TrayControl : MonoBehaviour
             //가장 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 양상추가 깔렸으면
             if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 새우가 깔렸으면
             if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             foreach (var item in stackcreateburgur.ToArray())
@@ -522,6 +534,7 @@ public class TrayControl : MonoBehaviour
             //이거 성공인거임
             if (localsuccessscore == 5)
             {
+                print("완전성공ok");
                 gamemanager.iscompletesuccess = true;
                 gamemanager.score += 500;
                 if (gamemanager.stage < 4)
@@ -532,6 +545,7 @@ public class TrayControl : MonoBehaviour
             //이건 부분성공한거임
             else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
             {
+                print("부분성공ok");
                 gamemanager.islittlesuccess = true;
                 gamemanager.score += 250;
                 if (gamemanager.stage < 4)
@@ -542,6 +556,7 @@ public class TrayControl : MonoBehaviour
 
             else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
             {
+                print("재료가 달라서 실패");
                 if (gamemanager.stage < 4)
                 {
                     Invoke("FailTray", 3f);
@@ -551,12 +566,12 @@ public class TrayControl : MonoBehaviour
         }
         void LocalMenuSeletionThreeLevel(params string[] a)
         {
-            print("쓰리레벨 체크함수는 들어옴");
             int localsuccessscore = 0;
             int locallittlesuccessscore = 0;
 
             if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false)
             {
+                print("재료 개수가 안맞아서 실패");
                 gamemanager.isfail = true;
                 if (gamemanager.stage < 4)
                 {
@@ -567,31 +582,41 @@ public class TrayControl : MonoBehaviour
             //가장 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 양상추가 깔렸으면
             if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 새우가 깔렸으면
             if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(5).GetChild(0).gameObject.CompareTag(a[5]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             foreach (var item in stackcreateburgur.ToArray())
@@ -604,6 +629,8 @@ public class TrayControl : MonoBehaviour
             //이거 성공인거임
             if (localsuccessscore == 6)
             {
+                print("완전성공ok");
+
                 gamemanager.iscompletesuccess = true;
                 gamemanager.score += 500;
                 if (gamemanager.stage < 4)
@@ -614,6 +641,8 @@ public class TrayControl : MonoBehaviour
             //이건 부분성공한거임
             else if (localsuccessscore != 6 && locallittlesuccessscore == 6)
             {
+                print("일부성공ok");
+
                 gamemanager.islittlesuccess = true;
                 gamemanager.score += 250;
                 if (gamemanager.stage < 4)
@@ -623,6 +652,8 @@ public class TrayControl : MonoBehaviour
             }
             else if (localsuccessscore != 6 && locallittlesuccessscore != 6)
             {
+                print("재료가 달라서 실패");
+
                 if (gamemanager.stage < 4)
                 {
                     Invoke("FailTray", 3f);
@@ -632,11 +663,11 @@ public class TrayControl : MonoBehaviour
         }
         void LocalMenuSeletionFourLevel(params string[] a)
         {
-            print("포레벨 체크함수는 들어옴");
             int localsuccessscore = 0;
             int locallittlesuccessscore = 0;
             if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || burgurs.GetChild(6).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false)
             {
+                print("재료 개수가 안맞아서 실패");
                 gamemanager.isfail = true;
                 if (gamemanager.stage <= 4)
                 {
@@ -647,36 +678,49 @@ public class TrayControl : MonoBehaviour
             //가장 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 양상추가 깔렸으면
             if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 새우가 깔렸으면
             if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(5).GetChild(0).gameObject.CompareTag(a[5]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(6).GetChild(0).gameObject.CompareTag(a[6]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             foreach (var item in stackcreateburgur.ToArray())
@@ -689,6 +733,7 @@ public class TrayControl : MonoBehaviour
             //이거 성공인거임
             if (localsuccessscore == 7)
             {
+                print("완전성공ok");
                 gamemanager.iscompletesuccess = true;
                 gamemanager.score += 500;
                 if (gamemanager.stage < 4)
@@ -699,6 +744,7 @@ public class TrayControl : MonoBehaviour
             //이건 부분성공한거임
             else if (localsuccessscore != 7 && locallittlesuccessscore == 7)
             {
+                print("부분성공ok");
                 gamemanager.islittlesuccess = true;
                 gamemanager.score += 250;
                 if (gamemanager.stage < 4)
@@ -708,6 +754,7 @@ public class TrayControl : MonoBehaviour
             }
             else if (localsuccessscore != 7 && locallittlesuccessscore != 7)
             {
+                print("재료가 안맞아서 실패");
                 if (gamemanager.stage < 4)
                 {
                     Invoke("FailTray", 3f);
@@ -734,22 +781,29 @@ public class TrayControl : MonoBehaviour
             //가장 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[0]))
             {
+                print("ok");
                 localsuccessscore++;
             }
 
             //그다음 아래에는 양상추가 깔렸으면
             if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[1]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 새우가 깔렸으면
             if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[2]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[3]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             foreach (var item in stackcreateburgur.ToArray())
@@ -762,12 +816,16 @@ public class TrayControl : MonoBehaviour
             //이거 성공인거임
             if (localsuccessscore == 4)
             {
+                print("완전성공ok");
+
                 gamemanager.iscompletesuccess2 = true;
                 gamemanager.score += 500;
             }
             //이건 부분성공한거임
             else if (localsuccessscore != 4 && locallittlesuccessscore == 4)
             {
+                print("일부성공ok");
+
                 gamemanager.islittlesuccess2 = true;
                 gamemanager.score += 250;
             }
@@ -784,32 +842,43 @@ public class TrayControl : MonoBehaviour
 
             if (burgurs.GetChild(15).childCount != 5 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false)
             {
+                print("재료개수가 안맞아서 실패");
                 gamemanager.isfail2 = true;
                 return;
             }
             //가장 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(4).gameObject.CompareTag(a[0]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 양상추가 깔렸으면
             if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[1]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 새우가 깔렸으면
             if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[2]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[3]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[4]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             foreach (var item in stackcreateburgur.ToArray())
@@ -822,18 +891,24 @@ public class TrayControl : MonoBehaviour
             //이거 성공인거임
             if (localsuccessscore == 5)
             {
+                print("완전성공ok");
+
                 gamemanager.iscompletesuccess2 = true;
                 gamemanager.score += 500;
             }
             //이건 부분성공한거임
             else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
             {
+                print("일부성공ok");
+
                 gamemanager.islittlesuccess2 = true;
                 gamemanager.score += 250;
             }
 
             else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
             {
+                print("재료가 안맞아서 실패");
+
                 gamemanager.isfail2 = true;
             }
         }
@@ -842,39 +917,51 @@ public class TrayControl : MonoBehaviour
             int localsuccessscore = 0;
             int locallittlesuccessscore = 0;
 
-            if (burgurs.GetChild(15).childCount == 6 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false)
+            if (burgurs.GetChild(15).childCount != 6 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false)
             {
+                print("재료 개수가 안맞아서 실패");
                 gamemanager.isfail2 = true;
                 return;
             }
             //가장 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(5).gameObject.CompareTag(a[0]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 양상추가 깔렸으면
             if (burgurs.GetChild(15).GetChild(4).gameObject.CompareTag(a[1]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 새우가 깔렸으면
             if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[2]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[3]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[4]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[5]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             foreach (var item in stackcreateburgur.ToArray())
@@ -887,17 +974,22 @@ public class TrayControl : MonoBehaviour
             //이거 성공인거임
             if (localsuccessscore == 6)
             {
+                print("완전성공ok");
+
                 gamemanager.iscompletesuccess2 = true;
                 gamemanager.score += 500;
             }
             //이건 부분성공한거임
             else if (localsuccessscore != 6 && locallittlesuccessscore == 6)
             {
+                print("일부성공ok");
+
                 gamemanager.islittlesuccess2 = true;
                 gamemanager.score += 250;
             }
             else if (localsuccessscore != 6 && locallittlesuccessscore != 6)
             {
+                print("재료가 안맞아서 실패");
                 gamemanager.isfail2 = true;
             }
         }
@@ -905,44 +997,58 @@ public class TrayControl : MonoBehaviour
         {
             int localsuccessscore = 0;
             int locallittlesuccessscore = 0;
-            if (burgurs.GetChild(15).childCount == 7 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false)
+            if (burgurs.GetChild(15).childCount != 7 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false)
             {
+                print("재료 개수가 안맞아서 실패");
                 gamemanager.isfail2 = true;
                 return;
             }
             //가장 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(6).gameObject.CompareTag(a[0]))
             {
+                print("ok");
                 localsuccessscore++;
             }
             //그다음 아래에는 양상추가 깔렸으면
             if (burgurs.GetChild(15).GetChild(5).gameObject.CompareTag(a[1]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 새우가 깔렸으면
             if (burgurs.GetChild(15).GetChild(4).gameObject.CompareTag(a[2]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[3]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[4]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[5]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             //그다음 아래에는 먹물빵이 깔렸으면
             if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[6]))
             {
+                print("ok");
+
                 localsuccessscore++;
             }
             foreach (var item in stackcreateburgur.ToArray())
@@ -955,17 +1061,22 @@ public class TrayControl : MonoBehaviour
             //이거 성공인거임
             if (localsuccessscore == 7)
             {
+                print("완전성공ok");
+
                 gamemanager.iscompletesuccess2 = true;
                 gamemanager.score += 500;
             }
             //이건 부분성공한거임
             else if (localsuccessscore != 7 && locallittlesuccessscore == 7)
             {
+                print("일부성공ok");
+
                 gamemanager.islittlesuccess2 = true;
                 gamemanager.score += 250;
             }
             else if (localsuccessscore != 7 && locallittlesuccessscore != 7)
             {
+                print("재료가 안맞아서 실패");
                 gamemanager.isfail2 = true;
             }
         }
@@ -981,6 +1092,7 @@ public class TrayControl : MonoBehaviour
             //실패시에
             else if (gamemanager.isfail == true || gamemanager.isfail2 == true)
             {
+                print("둘 중 하나라도 틀리면 틀린거");
                 Invoke("FailTray", 3f);
             }
         }

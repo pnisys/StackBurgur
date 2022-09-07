@@ -310,7 +310,7 @@ public class PeopleAnimator : MonoBehaviour
         foreach (var item in traycontrol.stackcreateburgur.ToArray())
         {
             item.transform.parent = traycontrol.gameObject.transform.GetChild(0).GetChild(0).GetChild(15).transform;
-            item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.348144f, 0);
+            item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.27f, 0);
             traycontrol.stackcreateburgur.Pop();
         }
         //소스가 남아 있다면?
