@@ -27,6 +27,12 @@ public class GameManager : MonoBehaviour
     public bool isTray = false;
 
     public GameObject[] people;
+
+    //현재 진행중인 사람
+    public GameObject currentpeople;
+    public string phase1selectedsource;
+    public string phase2selectedsource;
+
     public List<GameObject> uppeople = new List<GameObject>();
     public int tablepeoplenumbur = 0;
     public int peoplenumbur = 0;

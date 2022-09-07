@@ -51,6 +51,9 @@ public class PeopleAnimator : MonoBehaviour
 
     int ran = 0;
     int ran1 = 0;
+    bool testsuccess = true;
+    public bool phase1source = false;
+    public bool phase2source = false;
 
     private void Start()
     {
@@ -70,7 +73,8 @@ public class PeopleAnimator : MonoBehaviour
         clerkcollider = GameObject.FindGameObjectWithTag("CLERKCOLLIDER");
         agent.destination = clerkcollider.transform.position;
         mantray = gameObject.transform.GetChild(3);
-
+        gamemanager.currentpeople = gameObject;
+        phase1source = true;
         //게임매니저에, 출현한 사람 담기
         gamemanager.uppeople.Add(gameObject);
         gamemanager.peoplenumbur++;
@@ -114,7 +118,7 @@ public class PeopleAnimator : MonoBehaviour
             randomstage = UnityEngine.Random.Range(1, 4);
             gamemanager.level = randomstage;
             gamemanager.limitTime = 5f;
-            gamemanager.orderlimitTime = 5f;
+            gamemanager.orderlimitTime = 30f;
 
         }
         else if (gamemanager.stage == 5)
@@ -205,6 +209,8 @@ public class PeopleAnimator : MonoBehaviour
                 //스테이지가 4이상이면
                 if (gamemanager.stage >= 4)
                 {
+                    phase1source = false;
+                    phase2source = true;
                     StartCoroutine(Stage45());
                     yield break;
                 }
@@ -304,21 +310,21 @@ public class PeopleAnimator : MonoBehaviour
         foreach (var item in traycontrol.stackcreateburgur.ToArray())
         {
             item.transform.parent = traycontrol.gameObject.transform.GetChild(0).GetChild(0).GetChild(15).transform;
-            item.transform.localPosition = new Vector3(0, 0, 0);
+            item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.348144f, 0);
             traycontrol.stackcreateburgur.Pop();
         }
         //소스가 남아 있다면?
         if (traycontrol.gameObject.transform.GetChild(0).GetChild(0).GetChild(13).childCount == 1)
         {
             GameObject aa = traycontrol.gameObject.transform.GetChild(0).GetChild(0).GetChild(13).GetChild(0).gameObject;
-            aa.transform.parent = traycontrol.gameObject.transform.GetChild(0).GetChild(0).GetChild(15).transform;
+            aa.transform.parent = traycontrol.gameObject.transform.GetChild(0).GetChild(0).GetChild(16).transform;
             aa.transform.localPosition = new Vector3(0, 0, 0);
         }
 
         //4단계나 5단계는 한번 더 돌아야 함
         if (gamemanager.stage == 4)
         {
-            gamemanager.limitTime = 5f;
+            gamemanager.limitTime = 30f;
         }
         else if (gamemanager.stage == 5)
         {
@@ -331,11 +337,14 @@ public class PeopleAnimator : MonoBehaviour
             animator.gameObject.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(gamemanager.limitTime).ToString() + "초";
             if (gamemanager.limitTime < 0)
             {
+                phase2source = false;
+
                 //agent 꺼줬던거 켜죽
                 agent.isStopped = false;
                 //제한 시간 끄기
                 animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
-                animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+                //카드 보여주기 끄기
+                //animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
 
                 //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
                 OnLimitTimeComplete();
@@ -343,7 +352,7 @@ public class PeopleAnimator : MonoBehaviour
                 //초기화 시켜주기
                 gamemanager.isOrder = false;
                 //검사 후 성공이면
-                if ((gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true) && (gamemanager.iscompletesuccess2 == true || gamemanager.islittlesuccess2 == true))
+                if (((gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true) && (gamemanager.iscompletesuccess2 == true || gamemanager.islittlesuccess2 == true))/* || testsuccess == true*/)
                 {
                     //테이블 숫자 한명 늘려주고
                     gamemanager.tablepeoplenumbur++;
@@ -378,7 +387,6 @@ public class PeopleAnimator : MonoBehaviour
                         }
                     }
                     yield return new WaitForSeconds(2f);
-                    //이제 다른 사람 한명을 켜야됨
                     gamemanager.iscompletesuccess = false;
                     gamemanager.iscompletesuccess2 = false;
                     gamemanager.islittlesuccess = false;
@@ -390,6 +398,7 @@ public class PeopleAnimator : MonoBehaviour
                         StageUp();
                         yield break;
                     }
+                    //이제 다른 사람 한명을 켜야됨
                     gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
                 }
                 //둘 중 하나라도 실패하면
@@ -452,8 +461,8 @@ public class PeopleAnimator : MonoBehaviour
 
                 OneLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
                 OneLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
-                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
-                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
             }
             OneLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = OneLevelBurgerCard[hambugernumber[0]];
@@ -473,8 +482,8 @@ public class PeopleAnimator : MonoBehaviour
 
                 TwoLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
                 TwoLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
-                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
-                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
             }
             TwoLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = TwoLevelBurgerCard[hambugernumber[0]];
@@ -494,8 +503,8 @@ public class PeopleAnimator : MonoBehaviour
 
                 ThreeLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
                 ThreeLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
-                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
-                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
             }
             ThreeLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = ThreeLevelBurgerCard[hambugernumber[0]];
@@ -515,8 +524,8 @@ public class PeopleAnimator : MonoBehaviour
 
                 FourLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
                 FourLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
-                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
-                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(1.04f, 0.37f, 0);
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(1.04f, -0.73f, 0);
             }
             FourLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = FourLevelBurgerCard[hambugernumber[0]];
