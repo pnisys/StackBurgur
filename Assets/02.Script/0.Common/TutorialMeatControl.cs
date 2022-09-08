@@ -19,6 +19,7 @@ public class TutorialMeatControl : MonoBehaviour
     GameObject grill;
     public Transform[] grilltransform;
     Renderer meatrenderer;
+    public AudioSource audiosource;
 
     public delegate void Traying();
     public static event Traying OnTraying;
@@ -80,6 +81,7 @@ public class TutorialMeatControl : MonoBehaviour
                 if (ismeateffect == false)
                 {
                     saveffect = Instantiate(meateffect, gameObject.transform);
+                    StartCoroutine(StartAudioControl());
                     ismeateffect = true;
                 }
                 currentTime += Time.deltaTime;
@@ -149,14 +151,44 @@ public class TutorialMeatControl : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
+        //yield return new WaitForSeconds(1);
         if (other.gameObject.CompareTag("GRILL"))
         {
-            Destroy(saveffect);
-            print("그릴에서 나갔다고 판단하는건가?");
-            gameObject.GetComponent<FoodControl>().isGrill = false;
-            //gameObject.GetComponent<FoodControl>().isOnlyMeat = false;
-            gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-            gameObject.GetComponent<Rigidbody>().useGravity = true;
+            if (ismeateffect == true)
+            {
+                StartCoroutine(EndAudioControl());
+                Destroy(saveffect);
+                print("그릴에서 나갔다고 판단하는건가?");
+                gameObject.GetComponent<FoodControl>().isGrill = false;
+                gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                gameObject.GetComponent<Rigidbody>().useGravity = true;
+            }
         }
     }
+
+    IEnumerator StartAudioControl()
+    {
+        audiosource.enabled = true;
+        float audiocurrenttime = 0f;
+        while (audiocurrenttime < 2f)
+        {
+            audiocurrenttime += Time.deltaTime;
+            audiosource.volume = Mathf.Lerp(0, 1, currentTime / 2);
+            yield return null;
+        }
+    }
+    IEnumerator EndAudioControl()
+    {
+        print("이게 타버리니 문제야");
+        float audiocurrentTime = 2f;
+        while (audiocurrentTime > 0)
+        {
+            audiocurrentTime -= Time.deltaTime;
+            audiosource.volume = Mathf.Lerp(1, 0, currentTime / 2);
+            yield return null;
+        }
+        audiosource.enabled = false;
+        yield break;
+    }
+
 }

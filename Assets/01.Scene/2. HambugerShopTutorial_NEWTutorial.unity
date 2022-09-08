@@ -4403,7 +4403,7 @@ RectTransform:
   m_GameObject: {fileID: 304179718}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2969004, y: 1.0998143, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 747132784}
@@ -4411,7 +4411,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -28.5, y: 1.1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &304179720
@@ -35680,6 +35680,7 @@ MonoBehaviour:
   patty: {fileID: 0}
   grabstatus: {fileID: 0}
   audioclip: []
+  audioclip2: []
   audiosource: {fileID: 0}
 --- !u!1 &127022773558849541
 GameObject:
@@ -41739,6 +41740,7 @@ GameObject:
   - component: {fileID: 543450653361668969}
   - component: {fileID: 919132149358254549}
   - component: {fileID: 919132149358254548}
+  - component: {fileID: 919132149358254550}
   m_Layer: 0
   m_Name: kitchen_New
   m_TagString: TRAY
@@ -41775,6 +41777,10 @@ MonoBehaviour:
   tutorialgamemanager: {fileID: 281929761}
   grabstatus: {fileID: 8553364198841914600}
   tutorialpeopleanimator: {fileID: 6590741275123452060}
+  audioclips:
+  - {fileID: 8300000, guid: f435568a48181d24a91debb6c5841e67, type: 3}
+  audiosource: {fileID: 919132149358254550}
+  selectedsourceobject: {fileID: 0}
   burgursource: {fileID: 1926964979}
   empty: {fileID: 752012327}
   selectedsource: 
@@ -41807,6 +41813,102 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.35149944, y: 0.39413166, z: 0.19705959}
   m_Center: {x: -0.16302343, y: 0.9641241, z: -0.35165358}
+--- !u!82 &919132149358254550
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149358254547}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &919132149440329831
 GameObject:
   m_ObjectHideFlags: 0
@@ -63442,6 +63544,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cff5c691d756fa147a79d2661f9805bf, type: 3}
   - {fileID: 8300000, guid: 130637f46c50a3347b836336c03f1b79, type: 3}
   - {fileID: 8300000, guid: baeb186ee20c2df429a182972174f1d7, type: 3}
+  audioclip2:
+  - {fileID: 8300000, guid: 53e3f1c9eca4f324c85656443db20b00, type: 3}
+  - {fileID: 8300000, guid: 00e19646e9993004a8fa31a2ec6d3ac5, type: 3}
+  - {fileID: 8300000, guid: 1f27ff1f03d14f54c8b819c6395b5b8e, type: 3}
+  - {fileID: 8300000, guid: e05add9c942531a41bad9cb16a1df91d, type: 3}
+  - {fileID: 8300000, guid: dfd9e44166ea5e448a1a45c38aa0c567, type: 3}
+  - {fileID: 8300000, guid: a9ef7f23b09bd1a478df4ee514863713, type: 3}
+  - {fileID: 8300000, guid: aeb06aadeda1be84bae5fae64a909cb6, type: 3}
+  - {fileID: 8300000, guid: 123ee384767aa4a42a075018481b98c7, type: 3}
   audiosource: {fileID: 6590741275123452062}
 --- !u!65 &6590741275123452061
 BoxCollider:
@@ -70611,7 +70722,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTime: 0
   tutorialgamemanager: {fileID: 0}
+  meateffect: {fileID: 0}
+  saveffect: {fileID: 0}
   grilltransform: []
+  audiosource: {fileID: 0}
   ismeattrash: 0
 --- !u!23 &8760863851976906395
 MeshRenderer:

@@ -11,6 +11,9 @@ public class TutorialTrayControl : MonoBehaviour
     public TutorialGamemanager tutorialgamemanager;
     public HandGrabInteractor grabstatus;
     public TutorialPeopleAnimator tutorialpeopleanimator;
+    public AudioClip[] audioclips;
+    public AudioSource audiosource;
+    public GameObject selectedsourceobject;
     //트레이에서 소스 놓일곳
     public Transform burgursource;
     public Transform empty;
@@ -186,10 +189,20 @@ public class TutorialTrayControl : MonoBehaviour
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
     //적층
     IEnumerator OnTriggerEnter(Collider other)
     {
-
         //소스 집어 넣을 때
         if (other.gameObject.layer == LayerMask.NameToLayer("SOURCE"))
         {
@@ -207,6 +220,28 @@ public class TutorialTrayControl : MonoBehaviour
                     //여기서 잡기를 놓는다면
                     if (grabstatus.IsGrabbing == false)
                     {
+                        if (selectedsourceobject != null)
+                        {
+                            if (other.gameObject.CompareTag(bbqsource))
+                            {
+                                Instantiate(sourceprefab[0], source.GetChild(0));
+                            }
+                            else if (other.gameObject.CompareTag(mayonnaise))
+                            {
+                                Instantiate(sourceprefab[1], source.GetChild(1));
+                            }
+                            else if (other.gameObject.CompareTag(chillsource))
+                            {
+                                Instantiate(sourceprefab[2], source.GetChild(2));
+                            }
+                            else if (other.gameObject.CompareTag(mustadsource))
+                            {
+                                Instantiate(sourceprefab[3], source.GetChild(3));
+                            }
+                            Destroy(other.gameObject);
+                            yield break;
+                        }
+                        selectedsourceobject = other.gameObject;
 
                         Destroy(other.gameObject.GetComponent<Rigidbody>());
                         other.gameObject.transform.position = new Vector3(burgurs.transform.position.x, burgurs.transform.position.y + 0.4f, burgurs.transform.position.z);
@@ -304,6 +339,7 @@ public class TutorialTrayControl : MonoBehaviour
                 yield return null;
                 if (grabstatus.IsGrabbing == false)
                 {
+                    audiosource.PlayOneShot(audioclips[0]);
                     other.gameObject.GetComponent<FoodControl>().isOutGrab = false;
                     other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash = false;
 
@@ -370,19 +406,21 @@ public class TutorialTrayControl : MonoBehaviour
             }
         }
 
-        //안에 있을 때 잡을 때
-        if (other.gameObject.GetComponent<FoodControl>().isInGrab == true)
-        {
-            print("안에 있는데 잡을 때");
-            yield return new WaitForSeconds(0.2f);
-            other.gameObject.GetComponent<BoxCollider>().isTrigger = true;
-            other.gameObject.GetComponent<FoodControl>().isInGrab = false;
-            other.gameObject.GetComponent<FoodControl>().isOutGrab = true;
-        }
+
 
         //1. 밖에서 안으로 음식 넣을 때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
+            //안에 있을 때 잡을 때
+            if (other.gameObject.GetComponent<FoodControl>().isInGrab == true)
+            {
+                audiosource.PlayOneShot(audioclips[0]);
+                print("안에 있는데 잡을 때");
+                yield return new WaitForSeconds(0.2f);
+                other.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                other.gameObject.GetComponent<FoodControl>().isInGrab = false;
+                other.gameObject.GetComponent<FoodControl>().isOutGrab = true;
+            }
             //밖에서 안으로 들어온것일 때
             if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
             {
@@ -408,7 +446,7 @@ public class TutorialTrayControl : MonoBehaviour
                         {
                             other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                         }
-
+                        audiosource.PlayOneShot(audioclips[0]);
                         #region 1. 만약 13개보다 더 쌓는다면? 그냥 Destory 해버리기
                         try
                         {
@@ -474,6 +512,15 @@ public class TutorialTrayControl : MonoBehaviour
         //음식이 벗어날때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
+            if (grabstatus.IsGrabbing == true && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
+            {
+                //other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
+                other.gameObject.GetComponent<FoodControl>().isEntry = false;
+                other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                yield break;
+            }
+
             //잡고 있는 상태고 안놓고 바로 그릴쪽으로 가려면
             if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == false)
             {
@@ -534,7 +581,7 @@ public class TutorialTrayControl : MonoBehaviour
                     yield break;
                 }
             }
-
+            audiosource.PlayOneShot(audioclips[0]);
             print("나감");
             other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
             other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;

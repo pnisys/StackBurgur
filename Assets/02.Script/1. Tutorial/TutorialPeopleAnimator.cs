@@ -41,6 +41,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
     public TutorialTrayControl tutorialtraycontrol;
     public GameObject[] sourceCard;
 
+
     public GameObject selecthambugurcard;
     //public GameObject selectsourcecard;
     public TextMeshProUGUI guidetext;
@@ -72,6 +73,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
     }
 
     public AudioClip[] audioclip;
+    public AudioClip[] audioclip2;
+
     public AudioSource audiosource;
 
     int ran = 0;
@@ -84,6 +87,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
 
     private void Start()
     {
+        audiosource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         table[0] = GameObject.FindGameObjectWithTag("1TABLE");
@@ -93,7 +97,9 @@ public class TutorialPeopleAnimator : MonoBehaviour
         door = GameObject.FindGameObjectWithTag("DOOR");
         clerkcollider = GameObject.FindGameObjectWithTag("CLERKCOLLIDER");
         agent.destination = clerkcollider.transform.position;
-
+        audiosource.PlayOneShot(audioclip2[3]);
+        audiosource.clip = audioclip2[4];
+        audiosource.Play();
         //1. 손님 등판
         StartCoroutine(ClerkStateCheck());
         //2. 숫자 랜덤하게 섞기
@@ -109,6 +115,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             if (tutorialgamemanager.isClerk == true)
             {
+                audiosource.Stop();
                 //손님 Navagent 꺼주기
                 agent.isStopped = true;
                 //손님 서 있는 애니메이션 틀기
@@ -121,7 +128,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
     //2. 2초 대기하다가 주문함
     IEnumerator ThinkBallon()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        audiosource.PlayOneShot(audioclip2[5]);
 
 
         //손님이 주문하는 상태 켜기
@@ -136,6 +144,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
         LevelBurgurSetting();
         //제한시간 캔버스 켜기
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+
         //튜토리얼 안내캔버스 끝나야 제한시간 흐르게 하기
         yield return new WaitUntil(() => audioing == true);
         //주문하고 있으면 계속 반복 켜기
@@ -166,8 +175,11 @@ public class TutorialPeopleAnimator : MonoBehaviour
     //3. 주문 받음
     IEnumerator Order()
     {
+        audiosource.PlayOneShot(audioclip2[6]);
         //주문 상태 On
         tutorialgamemanager.isOrder = true;
+        audiosource.clip = audioclip2[0];
+        audiosource.Play();
 
         while (tutorialgamemanager.isOrder == true)
         {
@@ -180,6 +192,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
             //시간 끝나면
             if (tutorialgamemanager.limitTime < 0)
             {
+                audiosource.Stop();
+
                 //agent 꺼줬던거 켜죽
                 agent.isStopped = false;
                 //제한 시간 끄기
@@ -194,19 +208,24 @@ public class TutorialPeopleAnimator : MonoBehaviour
                 //검사 후 성공이면
                 if (tutorialgamemanager.iscompletesuccess == true || tutorialgamemanager.islittlesuccess == true)
                 {
-                    
+                    audiosource.PlayOneShot(audioclip2[2]);
+
                     //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
                     //다음 테이블로 넘어가기
                     for (int i = 0; i < 10; i++)
                     {
                         if (istable[i] == false)
                         {
+                            audiosource.clip = audioclip2[4];
+                            audiosource.Play();
                             //성공의 애니메이션
                             animator.SetBool(hashSuccess, true);
                             //테이블로 가게 하기
                             agent.destination = table[i].transform.position;
                             //근처 일정 범위안으로 들어가면
                             yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                            audiosource.Stop();
+
                             //agent가 멈추기
                             agent.isStopped = true;
                             agent.enabled = false;
@@ -230,11 +249,17 @@ public class TutorialPeopleAnimator : MonoBehaviour
                 {
                     //실패 애니메이션 설정
                     animator.SetBool(hashfail, true);
-                    yield return new WaitForSeconds(3.5f);
+                    yield return new WaitForSeconds(2f);
+                    audiosource.PlayOneShot(audioclip2[1]);
+                    yield return new WaitForSeconds(3f);
+
                     //문으로 간다.
                     agent.destination = door.transform.position;
+                    audiosource.clip = audioclip2[4];
+                    audiosource.Play();
                     //문 일정 범위 안으로 들어오면
                     yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                    audiosource.Stop();
 
                     agent.isStopped = true;
                     agent.enabled = false;

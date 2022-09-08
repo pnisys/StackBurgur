@@ -7,6 +7,8 @@ using System.Linq;
 using System;
 public class TrayControl : MonoBehaviour
 {
+    public AudioClip[] audioclips;
+    public AudioSource audiosource;
     public Transform[] combination;
     public GameManager gamemanager;
     public HandGrabInteractor grabstatus;
@@ -1323,10 +1325,9 @@ public class TrayControl : MonoBehaviour
                 yield return null;
                 if (grabstatus.IsGrabbing == false)
                 {
-
+                    audiosource.PlayOneShot(audioclips[0]);
                     other.gameObject.GetComponent<FoodControl>().isOutGrab = false;
                     other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash = false;
-
                     #region 1. 만약 13개보다 더 쌓는다면? 그냥 Destory 해버리기
                     try
                     {
@@ -1408,6 +1409,7 @@ public class TrayControl : MonoBehaviour
             //안에 있을 때 잡을 때
             if (other.gameObject.GetComponent<FoodControl>().isInGrab == true)
             {
+                audiosource.PlayOneShot(audioclips[0]);
                 print("안에 있는데 잡을 때");
                 yield return new WaitForSeconds(0.2f);
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = true;
@@ -1445,6 +1447,7 @@ public class TrayControl : MonoBehaviour
                         {
                             other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                         }
+                        audiosource.PlayOneShot(audioclips[0]);
 
                         #region 1. 만약 13개보다 더 쌓는다면? 그냥 Destory 해버리기
                         try
@@ -1511,7 +1514,6 @@ public class TrayControl : MonoBehaviour
         //음식이 벗어날때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
-            //잡고 있는 상태고 안놓고 바로 그릴쪽으로 가려면
             if (grabstatus.IsGrabbing == true && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
             {
                 //other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
@@ -1581,7 +1583,7 @@ public class TrayControl : MonoBehaviour
                     yield break;
                 }
             }
-
+            audiosource.PlayOneShot(audioclips[0]);
             print("나감");
             other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
             other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;

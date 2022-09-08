@@ -11,6 +11,9 @@ public class PeopleAnimator : MonoBehaviour
     NavMeshAgent agent;
     public GameObject[] table;
     public GameObject people;
+
+    AudioSource audiosource;
+    public AudioClip[] audioclip;
     GameObject door;
     GameObject clerkcollider;
 
@@ -57,6 +60,7 @@ public class PeopleAnimator : MonoBehaviour
 
     private void Start()
     {
+        audiosource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         table[0] = GameObject.FindGameObjectWithTag("1TABLE");
@@ -72,6 +76,9 @@ public class PeopleAnimator : MonoBehaviour
         door = GameObject.FindGameObjectWithTag("DOOR");
         clerkcollider = GameObject.FindGameObjectWithTag("CLERKCOLLIDER");
         agent.destination = clerkcollider.transform.position;
+        audiosource.PlayOneShot(audioclip[3]);
+        audiosource.clip = audioclip[4];
+        audiosource.Play();
         mantray = gameObject.transform.GetChild(3);
         gamemanager.currentpeople = gameObject;
         phase1source = true;
@@ -141,6 +148,7 @@ public class PeopleAnimator : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             if (gamemanager.isClerk == true)
             {
+                audiosource.Stop();
                 //손님 Navagent 꺼주기
                 agent.isStopped = true;
                 //손님 서 있는 애니메이션 틀기
@@ -154,6 +162,7 @@ public class PeopleAnimator : MonoBehaviour
     IEnumerator ThinkBallon()
     {
         yield return new WaitForSeconds(1f);
+        audiosource.PlayOneShot(audioclip[5]);
         //손님이 주문하는 상태 켜기
         gamemanager.isThinking = true;
         //손님이 주문하는 애니메이션 켜기
@@ -164,6 +173,8 @@ public class PeopleAnimator : MonoBehaviour
         LevelBurgurSetting();
         //제한시간 캔버스 켜기
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        audiosource.clip = audioclip[0];
+        audiosource.Play();
         //주문하고 있으면 계속 반복 켜기
         while (gamemanager.isThinking == true)
         {
@@ -177,6 +188,7 @@ public class PeopleAnimator : MonoBehaviour
             {
                 //초기화
                 //gamemanager.orderlimitTime = 20;
+                audiosource.Stop();
                 gamemanager.isThinking = false;
             }
         }
@@ -197,9 +209,11 @@ public class PeopleAnimator : MonoBehaviour
     //3. 주문 받음
     IEnumerator Order()
     {
+        audiosource.PlayOneShot(audioclip[6]);
         //주문 상태 On
         gamemanager.isOrder = true;
         animator.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        audiosource.Play();
         while (gamemanager.isOrder == true)
         {
             yield return null;
@@ -222,6 +236,7 @@ public class PeopleAnimator : MonoBehaviour
                 //스테이지가 4이하이면
                 else
                 {
+                    audiosource.Stop();
                     //agent 꺼줬던거 켜죽
                     agent.isStopped = false;
                     //제한 시간 끄기
@@ -235,6 +250,7 @@ public class PeopleAnimator : MonoBehaviour
                     //검사 후 성공이면
                     if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
                     {
+                        audiosource.PlayOneShot(audioclip[2]);
                         //테이블 숫자 한명 늘려주고
                         gamemanager.tablepeoplenumbur++;
                         mantray.gameObject.SetActive(true);
@@ -248,8 +264,11 @@ public class PeopleAnimator : MonoBehaviour
                                 animator.SetBool(hashSuccess, true);
                                 //테이블로 가게 하기
                                 agent.destination = table[i].transform.position;
+                                audiosource.clip = audioclip[4];
+                                audiosource.Play();
                                 //근처 일정 범위안으로 들어가면
                                 yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                                audiosource.Stop();
                                 //agent가 멈추기
                                 agent.isStopped = true;
                                 agent.enabled = false;
@@ -274,8 +293,16 @@ public class PeopleAnimator : MonoBehaviour
                         //테이블숫자가 5명이 되었으면
                         if (gamemanager.tablepeoplenumbur == 5)
                         {
-                            //스테이지 업 함수 호출
-                            StageUp();
+                            if (gamemanager.stage <= 4)
+                            {
+                                //스테이지 업 함수 호출
+                                StageUp();
+                            }
+                            //게임모두 클리어
+                            else
+                            {
+
+                            }
                             yield break;
                         }
                         gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
@@ -286,12 +313,18 @@ public class PeopleAnimator : MonoBehaviour
                         gamemanager.lifescore--;
                         //실패 애니메이션 설정
                         animator.SetBool(hashfail, true);
-                        yield return new WaitForSeconds(5f);
+                        yield return new WaitForSeconds(2f);
+                        audiosource.PlayOneShot(audioclip[1]);
+                        yield return new WaitForSeconds(3f);
                         //문으로 간다.
                         agent.destination = door.transform.position;
+                        audiosource.clip = audioclip[4];
+                        audiosource.Play();
 
                         //문 일정 범위 안으로 들어오면
                         yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                        audiosource.Stop();
+
                         agent.isStopped = true;
                         agent.enabled = false;
                         transform.position = new Vector3(100, 100, 100);
@@ -308,6 +341,7 @@ public class PeopleAnimator : MonoBehaviour
 
     IEnumerator Stage45()
     {
+        audiosource.Play();
         print("이거 왜 안탐?");
         foreach (var item in traycontrol.stackcreateburgur.ToArray())
         {
@@ -339,6 +373,7 @@ public class PeopleAnimator : MonoBehaviour
             animator.gameObject.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(gamemanager.limitTime).ToString() + "초";
             if (gamemanager.limitTime < 0)
             {
+                audiosource.Stop();
                 phase2source = false;
 
                 //agent 꺼줬던거 켜죽
@@ -369,8 +404,11 @@ public class PeopleAnimator : MonoBehaviour
                             animator.SetBool(hashSuccess, true);
                             //테이블로 가게 하기
                             agent.destination = table[i].transform.position;
+                            audiosource.clip = audioclip[4];
+                            audiosource.Play();
                             //근처 일정 범위안으로 들어가면
                             yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                            audiosource.Stop();
                             //agent가 멈추기
                             agent.isStopped = true;
                             agent.enabled = false;
@@ -396,8 +434,16 @@ public class PeopleAnimator : MonoBehaviour
                     //테이블숫자가 5명이 되었으면
                     if (gamemanager.tablepeoplenumbur == 5)
                     {
-                        //스테이지 업 함수 호출
-                        StageUp();
+                        if (gamemanager.stage <= 4)
+                        {
+                            //스테이지 업 함수 호출
+                            StageUp();
+                        }
+                        //게임 모두 클리어
+                        else
+                        {
+
+                        }
                         yield break;
                     }
                     //이제 다른 사람 한명을 켜야됨
@@ -412,9 +458,12 @@ public class PeopleAnimator : MonoBehaviour
                     yield return new WaitForSeconds(5f);
                     //문으로 간다.
                     agent.destination = door.transform.position;
+                    audiosource.clip = audioclip[4];
+                    audiosource.Play();
 
                     //문 일정 범위 안으로 들어오면
                     yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                    audiosource.Stop();
                     agent.isStopped = true;
                     agent.enabled = false;
                     transform.position = new Vector3(100, 100, 100);
@@ -432,6 +481,7 @@ public class PeopleAnimator : MonoBehaviour
 
     void StageUp()
     {
+        audiosource.PlayOneShot(audioclip[7]);
         if (gamemanager.istable[9] == true)
         {
             for (int i = 0; i < 10; i++)
