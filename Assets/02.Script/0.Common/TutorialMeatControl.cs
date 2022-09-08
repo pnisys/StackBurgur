@@ -11,6 +11,9 @@ public class TutorialMeatControl : MonoBehaviour
     public float currentTime = 0f;
 
     public TutorialGamemanager tutorialgamemanager;
+    public GameObject meateffect;
+    public GameObject saveffect;
+    bool ismeateffect = false;
     HandGrabInteractor grabstatus;
     Rigidbody rb;
     GameObject grill;
@@ -74,6 +77,11 @@ public class TutorialMeatControl : MonoBehaviour
             }
             if (grabstatus.IsGrabbing == false)
             {
+                if (ismeateffect == false)
+                {
+                    saveffect = Instantiate(meateffect, gameObject.transform);
+                    ismeateffect = true;
+                }
                 currentTime += Time.deltaTime;
                 if (isposition == false)
                 {
@@ -143,6 +151,7 @@ public class TutorialMeatControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GRILL"))
         {
+            Destroy(saveffect);
             print("그릴에서 나갔다고 판단하는건가?");
             gameObject.GetComponent<FoodControl>().isGrill = false;
             //gameObject.GetComponent<FoodControl>().isOnlyMeat = false;

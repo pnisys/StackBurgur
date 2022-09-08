@@ -228,6 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTime: 0
   tutorialgamemanager: {fileID: 0}
+  meateffect: {fileID: 6177881202862001985, guid: ace189e330df31947bbaeba2103d4135, type: 3}
   grilltransform: []
   ismeattrash: 0
 --- !u!54 &8557991198719814016
