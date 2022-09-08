@@ -280,11 +280,13 @@ public class TutorialPeopleAnimator : MonoBehaviour
     //음성 컨트롤 메서드
     IEnumerator VoiceControl()
     {
+        audiosource.PlayOneShot(audioclip[0]);
+        audiosource.PlayOneShot(audioclip2[8]);
         guidetext.transform.parent.gameObject.SetActive(true);
         guidetext.text = "카드를 보고\n\n햄버거 재료 순서를\n\n알 수 있습니다.";
-        audiosource.PlayOneShot(audioclip[0]);
 
         yield return new WaitForSeconds(10f);
+        audiosource.PlayOneShot(audioclip2[8]);
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         viedoplayer.transform.parent.GetChild(1).gameObject.SetActive(true);
         audiosource.PlayOneShot(audioclip[1]);
@@ -311,6 +313,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(2f);
+        audiosource.PlayOneShot(audioclip2[8]);
         audiosource.Stop();
         patty.GetComponent<HighlightEffect>().highlighted = false;
         guidetext.text = "고기를 구워보세요.\n\n5초가 지나면 구워지지만\n\n10초가 지나면 타게 됩니다.";
@@ -318,6 +321,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
         viedoplayer.clip = viedoclips[2];
         viedoplayer.transform.parent.GetChild(1).localPosition = new Vector3(-0.025f, 0.557f, 0);
         yield return new WaitForSeconds(10f);
+        audiosource.PlayOneShot(audioclip2[8]);
 
         audioing = true;
         audiosource.PlayOneShot(audioclip[5]);
