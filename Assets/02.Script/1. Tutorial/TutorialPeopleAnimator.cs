@@ -6,8 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.Video;
 using HighlightPlus;
 using Oculus.Interaction.HandGrab;
-using Oculus.Interaction;
-
+using UnityEngine.SceneManagement;
 public class TutorialPeopleAnimator : MonoBehaviour
 {
     Animator animator;
@@ -90,6 +89,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
         audiosource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        audiosource.volume = SoundManager.instance.anothersound;
         table[0] = GameObject.FindGameObjectWithTag("1TABLE");
         table[1] = GameObject.FindGameObjectWithTag("2TABLE");
         table[2] = GameObject.FindGameObjectWithTag("3TABLE");
@@ -243,6 +243,9 @@ public class TutorialPeopleAnimator : MonoBehaviour
                             break;
                         }
                     }
+                    yield return new WaitForSeconds(3f);
+                    //게임성공하면서 Ui뜨게 하기
+                    SceneManager.LoadScene(2);
                 }
                 //검사 후 실패면
                 else if (tutorialgamemanager.isfail)
@@ -267,6 +270,10 @@ public class TutorialPeopleAnimator : MonoBehaviour
                     animator.SetBool(hashfail, false);
                     Destroy(gameObject);
                 }
+                //게임실패하면서 Ui뜨게 하기
+                yield return new WaitForSeconds(3f);
+                //게임성공하면서 Ui뜨게 하기
+                SceneManager.LoadScene(2);
             }
         }
     }

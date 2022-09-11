@@ -33,4 +33,9 @@ public class TutorialGamemanager : MonoBehaviour
     public float orderlimitTime = 15;
     //주문 시간 30초
     public float limitTime = 30;
+
+    private void Start()
+    {
+        gameObject.GetComponent<AudioSource>().volume = SoundManager.instance.bgmSound;
+    }
 }

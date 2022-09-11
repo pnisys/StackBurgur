@@ -75,6 +75,7 @@ TagManager:
   - 8TABLE
   - 9TABLE
   - 10TABLE
+  - GAMEMANAGER
   layers:
   - Default
   - TransparentFX

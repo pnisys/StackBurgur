@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
 using Oculus.Interaction.HandGrab;
-
+using UnityEngine.SceneManagement;
 public class PeopleAnimator : MonoBehaviour
 {
     Animator animator;
@@ -61,6 +61,7 @@ public class PeopleAnimator : MonoBehaviour
     private void Start()
     {
         audiosource = GetComponent<AudioSource>();
+        audiosource.volume = SoundManager.instance.anothersound;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         table[0] = GameObject.FindGameObjectWithTag("1TABLE");
@@ -93,10 +94,10 @@ public class PeopleAnimator : MonoBehaviour
         //2.숫자 랜덤하게 섞기
         RandomNumberSelect();
 
-        //스테이지,난이도 판독 함수
         StageLevelRandom();
     }
 
+    //스테이지,난이도 판독 함수
     void StageLevelRandom()
     {
         int randomstage = 0;
@@ -134,7 +135,7 @@ public class PeopleAnimator : MonoBehaviour
         {
             randomstage = UnityEngine.Random.Range(3, 5);
             gamemanager.level = randomstage;
-            gamemanager.limitTime = 5f;
+            gamemanager.limitTime = 30f;
             gamemanager.orderlimitTime = 30f;
         }
     }
@@ -250,46 +251,8 @@ public class PeopleAnimator : MonoBehaviour
                     //검사 후 성공이면
                     if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
                     {
-                        audiosource.PlayOneShot(audioclip[2]);
-                        //테이블 숫자 한명 늘려주고
-                        gamemanager.tablepeoplenumbur++;
-                        mantray.gameObject.SetActive(true);
-                        //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
-                        //다음 테이블로 넘어가기
-                        for (int i = 0; i < 10; i++)
-                        {
-                            if (gamemanager.istable[i] == false)
-                            {
-                                //성공의 애니메이션
-                                animator.SetBool(hashSuccess, true);
-                                //테이블로 가게 하기
-                                agent.destination = table[i].transform.position;
-                                audiosource.clip = audioclip[4];
-                                audiosource.Play();
-                                //근처 일정 범위안으로 들어가면
-                                yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
-                                audiosource.Stop();
-                                //agent가 멈추기
-                                agent.isStopped = true;
-                                agent.enabled = false;
-                                //사람은 테이블 자식으로 들어간다.
-                                transform.parent = table[i].transform;
-                                //각 텡이블 포지션은 미리 설정해놓았던 곳으로 간다.
-                                transform.localPosition = gamemanager.tableposition[i];
-                                transform.localRotation = gamemanager.tablerotation[i];
-                                //먹는 애니메이션 실행
-                                animator.SetBool(hasheat, true);
-                                gameObject.transform.GetChild(3).localPosition = new Vector3(0, 0.879f, 0.579f);
-                                //들어간 테이블은 닫게 하기
-                                gamemanager.istable[i] = true;
-                                //반복 끝내기
-                                break;
-                            }
-                        }
-                        yield return new WaitForSeconds(2f);
-                        //이제 다른 사람 한명을 켜야됨
-                        gamemanager.iscompletesuccess = false;
-                        gamemanager.islittlesuccess = false;
+                        StartCoroutine(SucessTable());
+
                         //테이블숫자가 5명이 되었으면
                         if (gamemanager.tablepeoplenumbur == 5)
                         {
@@ -298,47 +261,27 @@ public class PeopleAnimator : MonoBehaviour
                                 //스테이지 업 함수 호출
                                 StageUp();
                             }
-                            //게임모두 클리어
+                            //게임 모두 클리어
                             else
                             {
-
+                                StartCoroutine(StageComplete5());
                             }
                             yield break;
                         }
+                        //이제 다른 사람 한명을 켜야됨
                         gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
                     }
                     //검사 후 실패면
                     else if (gamemanager.isfail)
                     {
-                        gamemanager.lifescore--;
-                        //실패 애니메이션 설정
-                        animator.SetBool(hashfail, true);
-                        yield return new WaitForSeconds(2f);
-                        audiosource.PlayOneShot(audioclip[1]);
-                        yield return new WaitForSeconds(3f);
-                        //문으로 간다.
-                        agent.destination = door.transform.position;
-                        audiosource.clip = audioclip[4];
-                        audiosource.Play();
-
-                        //문 일정 범위 안으로 들어오면
-                        yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
-                        audiosource.Stop();
-
-                        agent.isStopped = true;
-                        agent.enabled = false;
-                        transform.position = new Vector3(100, 100, 100);
-                        animator.SetBool(hashfail, false);
-                        yield return new WaitForSeconds(2f);
-                        //이제 다른 사람 한명을 켜야됨
-                        gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
-                        gamemanager.isfail = false;
+                        StartCoroutine(FailTable());
                     }
                 }
             }
         }
     }
 
+    //스테이지 4,5 따로 처리
     IEnumerator Stage45()
     {
         audiosource.Play();
@@ -380,8 +323,6 @@ public class PeopleAnimator : MonoBehaviour
                 agent.isStopped = false;
                 //제한 시간 끄기
                 animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
-                //카드 보여주기 끄기
-                //animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
 
                 //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
                 OnLimitTimeComplete();
@@ -391,46 +332,8 @@ public class PeopleAnimator : MonoBehaviour
                 //검사 후 성공이면
                 if (((gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true) && (gamemanager.iscompletesuccess2 == true || gamemanager.islittlesuccess2 == true))/* || testsuccess == true*/)
                 {
-                    //테이블 숫자 한명 늘려주고
-                    gamemanager.tablepeoplenumbur++;
-                    mantray.gameObject.SetActive(true);
-                    //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
-                    //다음 테이블로 넘어가기
-                    for (int i = 0; i < 10; i++)
-                    {
-                        if (gamemanager.istable[i] == false)
-                        {
-                            //성공의 애니메이션
-                            animator.SetBool(hashSuccess, true);
-                            //테이블로 가게 하기
-                            agent.destination = table[i].transform.position;
-                            audiosource.clip = audioclip[4];
-                            audiosource.Play();
-                            //근처 일정 범위안으로 들어가면
-                            yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
-                            audiosource.Stop();
-                            //agent가 멈추기
-                            agent.isStopped = true;
-                            agent.enabled = false;
-                            //사람은 테이블 자식으로 들어간다.
-                            transform.parent = table[i].transform;
-                            //각 테이블 포지션은 미리 설정해놓았던 곳으로 간다.
-                            transform.localPosition = gamemanager.tableposition[i];
-                            transform.localRotation = gamemanager.tablerotation[i];
-                            //먹는 애니메이션 실행
-                            animator.SetBool(hasheat, true);
-                            gameObject.transform.GetChild(3).localPosition = new Vector3(0, 0.879f, 0.579f);
-                            //들어간 테이블은 닫게 하기
-                            gamemanager.istable[i] = true;
-                            //반복 끝내기
-                            break;
-                        }
-                    }
-                    yield return new WaitForSeconds(2f);
-                    gamemanager.iscompletesuccess = false;
-                    gamemanager.iscompletesuccess2 = false;
-                    gamemanager.islittlesuccess = false;
-                    gamemanager.islittlesuccess2 = false;
+                    StartCoroutine(SucessTable());
+                    
                     //테이블숫자가 5명이 되었으면
                     if (gamemanager.tablepeoplenumbur == 5)
                     {
@@ -442,7 +345,7 @@ public class PeopleAnimator : MonoBehaviour
                         //게임 모두 클리어
                         else
                         {
-
+                            StartCoroutine(StageComplete5());
                         }
                         yield break;
                     }
@@ -452,46 +355,113 @@ public class PeopleAnimator : MonoBehaviour
                 //둘 중 하나라도 실패하면
                 else if (gamemanager.isfail == true || gamemanager.isfail2 == true)
                 {
-                    gamemanager.lifescore--;
-                    //실패 애니메이션 설정
-                    animator.SetBool(hashfail, true);
-                    yield return new WaitForSeconds(5f);
-                    //문으로 간다.
-                    agent.destination = door.transform.position;
-                    audiosource.clip = audioclip[4];
-                    audiosource.Play();
-
-                    //문 일정 범위 안으로 들어오면
-                    yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
-                    audiosource.Stop();
-                    agent.isStopped = true;
-                    agent.enabled = false;
-                    transform.position = new Vector3(100, 100, 100);
-                    animator.SetBool(hashfail, false);
-                    yield return new WaitForSeconds(2f);
-                    //이제 다른 사람 한명을 켜야됨
-                    gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
-                    gamemanager.isfail = false;
-                    gamemanager.isfail2 = false;
+                    StartCoroutine(FailTable());
                 }
                 yield break;
             }
         }
     }
-
-    void StageUp()
+    //실패시, 테이블, 캐릭터 애니메이션 처리
+    IEnumerator FailTable()
     {
-        audiosource.PlayOneShot(audioclip[7]);
-        if (gamemanager.istable[9] == true)
+        gamemanager.LifeScore--;
+        //실패 애니메이션 설정
+        animator.SetBool(hashfail, true);
+        //점수 다 깎였을 떄
+        if (gamemanager.lifescore == 0)
         {
-            for (int i = 0; i < 10; i++)
+            audiosource.PlayOneShot(audioclip[8]);
+            gamemanager.GuideUiText.text = "게임 오버";
+            gamemanager.GuideUiText.fontSize = 0.05f;
+            gamemanager.GuideUiText2.text = null;
+            gamemanager.GetComponent<AudioSource>().Stop();
+            yield return new WaitForSeconds(4f);
+            SceneManager.LoadScene(0);
+        }
+        yield return new WaitForSeconds(5f);
+        //문으로 간다.
+        agent.destination = door.transform.position;
+        audiosource.clip = audioclip[4];
+        audiosource.Play();
+
+        //문 일정 범위 안으로 들어오면
+        yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+        audiosource.Stop();
+        agent.isStopped = true;
+        agent.enabled = false;
+        transform.position = new Vector3(100, 100, 100);
+        animator.SetBool(hashfail, false);
+        yield return new WaitForSeconds(2f);
+        //이제 다른 사람 한명을 켜야됨
+        gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
+        gamemanager.isfail = false;
+        gamemanager.isfail2 = false;
+    }
+    //성공시, 테이블, 캐릭터 애니메이션 처리
+    IEnumerator SucessTable()
+    {
+        audiosource.PlayOneShot(audioclip[2]);
+        //테이블 숫자 한명 늘려주고
+        gamemanager.tablepeoplenumbur++;
+        mantray.gameObject.SetActive(true);
+        //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
+        //다음 테이블로 넘어가기
+        for (int i = 0; i < 10; i++)
+        {
+            if (gamemanager.istable[i] == false)
             {
-                gamemanager.istable[i] = false;
+                //성공의 애니메이션
+                animator.SetBool(hashSuccess, true);
+                //테이블로 가게 하기
+                agent.destination = table[i].transform.position;
+                audiosource.clip = audioclip[4];
+                audiosource.Play();
+                //근처 일정 범위안으로 들어가면
+                yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                audiosource.Stop();
+                //agent가 멈추기
+                agent.isStopped = true;
+                agent.enabled = false;
+                //사람은 테이블 자식으로 들어간다.
+                transform.parent = table[i].transform;
+                //각 테이블 포지션은 미리 설정해놓았던 곳으로 간다.
+                transform.localPosition = gamemanager.tableposition[i];
+                transform.localRotation = gamemanager.tablerotation[i];
+                //먹는 애니메이션 실행
+                animator.SetBool(hasheat, true);
+                gameObject.transform.GetChild(3).localPosition = new Vector3(0, 0.879f, 0.579f);
+                //들어간 테이블은 닫게 하기
+                gamemanager.istable[i] = true;
+                //반복 끝내기
+                break;
             }
         }
+        yield return new WaitForSeconds(2f);
+        gamemanager.iscompletesuccess = false;
+        gamemanager.iscompletesuccess2 = false;
+        gamemanager.islittlesuccess = false;
+        gamemanager.islittlesuccess2 = false;
+
+    }
+
+    //모든 5스테이지 완료
+    IEnumerator StageComplete5()
+    {
+        gamemanager.GetComponent<AudioSource>().Stop();
+        audiosource.PlayOneShot(audioclip[9]);
+        gamemanager.GuideUiText.text = "게임 모두 클리어";
+        gamemanager.GuideUiText.fontSize = 0.05f;
+        gamemanager.GuideUiText2.text = null;
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene(0);
+    }
+
+    //스테이지 업했을 때 함수
+    void StageUp()
+    {
 
         //스테이지 업!
-        gamemanager.stage++;
+        gamemanager.Stage++;
         gamemanager.tablepeoplenumbur = 0;
         gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
         //기존 테이블에 있던 손님들 다시 People에 넣고 초기화시키고
@@ -501,6 +471,14 @@ public class PeopleAnimator : MonoBehaviour
             item.transform.parent = people.transform;
             item.transform.localPosition = new Vector3(0, 0, 0);
             item.transform.localRotation = Quaternion.Euler(0, -90, 0);
+        }
+        audiosource.PlayOneShot(audioclip[7]);
+        if (gamemanager.istable[9] == true)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                gamemanager.istable[i] = false;
+            }
         }
     }
 

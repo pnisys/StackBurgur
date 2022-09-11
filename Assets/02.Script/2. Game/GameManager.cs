@@ -7,6 +7,7 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
+
     //1. 점원이 매대 앞에 서면
     public bool isClerk = false;
     //2. 점원이 생각하는 중
@@ -30,6 +31,9 @@ public class GameManager : MonoBehaviour
 
     //현재 진행중인 사람
     public GameObject currentpeople;
+    public TextMeshProUGUI GuideUiText;
+    public TextMeshProUGUI GuideUiText2;
+
     public string phase1selectedsource;
     public string phase2selectedsource;
 
@@ -41,6 +45,18 @@ public class GameManager : MonoBehaviour
 
     public int score = 0;
     public int lifescore = 5;
+    public int LifeScore
+    {
+        get
+        {
+            return lifescore;
+        }
+        set
+        {
+            lifescore = value;
+            GuideUiText2.text = "점수 : " + lifescore.ToString();
+        }
+    }
 
     //생각 풍선 보여주는 시간
     [HideInInspector]
@@ -51,8 +67,29 @@ public class GameManager : MonoBehaviour
 
     //level이 햄버거 난이도, 1난이도~ 4난이도까지 있음
     public int level = 1;
+
     //stage가 단계, 1단계~5단계까지 있음
     public int stage = 1;
+    public int Stage
+    {
+        get
+        {
+            return stage;
+        }
+        set
+        {
+            stage = value;
+            GuideUiText.text = "스테이지 : " + stage.ToString();
+        }
+    }
+    private void Start()
+    {
+        gameObject.GetComponent<AudioSource>().volume = SoundManager.instance.bgmSound;
+        GuideUiText = gameObject.transform.parent.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>();
+        GuideUiText2 = gameObject.transform.parent.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>();
+        GuideUiText.text = "스테이지 : " + stage.ToString();
+        GuideUiText2.text = "점수 : " + lifescore.ToString();
+    }
 
     public GameObject selecthambugurcard;
     public GameObject selecthambugurcard2;
