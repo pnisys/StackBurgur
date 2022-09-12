@@ -423,32 +423,38 @@ public class TrayControl : MonoBehaviour
                 }
                 return;
             }
+            for (int i = 0; i < 4; i++)
+            {
+                if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                {
+                    localsuccessscore++;
+                }
+            }
+            ////가장 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
 
-            //가장 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-
-            //그다음 아래에는 양상추가 깔렸으면
-            if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 새우가 깔렸으면
-            if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
+            ////그다음 아래에는 양상추가 깔렸으면
+            //if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 새우가 깔렸으면
+            //if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
             foreach (var item in stackcreateburgur.ToArray())
             {
                 if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]))
@@ -509,36 +515,43 @@ public class TrayControl : MonoBehaviour
                 }
                 return;
             }
-            //가장 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
+            for (int i = 0; i < 5; i++)
             {
-                print("ok");
-                localsuccessscore++;
+                if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                {
+                    localsuccessscore++;
+                }
             }
-            //그다음 아래에는 양상추가 깔렸으면
-            if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 새우가 깔렸으면
-            if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
+            ////가장 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 양상추가 깔렸으면
+            //if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 새우가 깔렸으면
+            //if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
             foreach (var item in stackcreateburgur.ToArray())
             {
                 if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
@@ -600,46 +613,54 @@ public class TrayControl : MonoBehaviour
                 }
                 return;
             }
-            //가장 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 양상추가 깔렸으면
-            if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 새우가 깔렸으면
-            if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
-            {
-                print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
+            for (int i = 0; i < 6; i++)
             {
-                print("ok");
-
-                localsuccessscore++;
+                if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                {
+                    localsuccessscore++;
+                }
             }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
-            {
-                print("ok");
+            ////가장 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 양상추가 깔렸으면
+            //if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 새우가 깔렸으면
+            //if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(5).GetChild(0).gameObject.CompareTag(a[5]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
+            //{
+            //    print("ok");
+
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(5).GetChild(0).gameObject.CompareTag(a[5]))
+            //{
+            //    print("ok");
+
+            //    localsuccessscore++;
+            //}
             foreach (var item in stackcreateburgur.ToArray())
             {
                 if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]))
@@ -702,53 +723,60 @@ public class TrayControl : MonoBehaviour
                 }
                 return;
             }
-            //가장 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
+            for (int i = 0; i < 7; i++)
             {
-                print("ok");
-                localsuccessscore++;
+                if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                {
+                    localsuccessscore++;
+                }
             }
-            //그다음 아래에는 양상추가 깔렸으면
-            if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 새우가 깔렸으면
-            if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
-            {
-                print("ok");
+            ////가장 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(0).GetChild(0).gameObject.CompareTag(a[0]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 양상추가 깔렸으면
+            //if (burgurs.GetChild(1).GetChild(0).gameObject.CompareTag(a[1]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 새우가 깔렸으면
+            //if (burgurs.GetChild(2).GetChild(0).gameObject.CompareTag(a[2]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(3).GetChild(0).gameObject.CompareTag(a[3]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(4).GetChild(0).gameObject.CompareTag(a[4]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(5).GetChild(0).gameObject.CompareTag(a[5]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(5).GetChild(0).gameObject.CompareTag(a[5]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(6).GetChild(0).gameObject.CompareTag(a[6]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(6).GetChild(0).gameObject.CompareTag(a[6]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
+            //    localsuccessscore++;
+            //}
             foreach (var item in stackcreateburgur.ToArray())
             {
                 if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]) || item.gameObject.CompareTag(a[6]))
@@ -816,34 +844,42 @@ public class TrayControl : MonoBehaviour
                 gamemanager.isfail2 = true;
                 return;
             }
-            //가장 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[0]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
 
-            //그다음 아래에는 양상추가 깔렸으면
-            if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[1]))
+            for (int i = 3; i >= 0; i--)
             {
-                print("ok");
-
-                localsuccessscore++;
+                if(burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i-3)]))
+                {
+                    localsuccessscore++;
+                }
             }
-            //그다음 아래에는 새우가 깔렸으면
-            if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[2]))
-            {
-                print("ok");
+            ////가장 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[0]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[3]))
-            {
-                print("ok");
+            ////그다음 아래에는 양상추가 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[1]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 새우가 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[2]))
+            //{
+            //    print("ok");
+
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[3]))
+            //{
+            //    print("ok");
+
+            //    localsuccessscore++;
+            //}
             foreach (var item in stackcreateburgur.ToArray())
             {
                 if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]))
@@ -893,41 +929,49 @@ public class TrayControl : MonoBehaviour
                 gamemanager.isfail2 = true;
                 return;
             }
-            //가장 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(4).gameObject.CompareTag(a[0]))
-            {
-                print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 양상추가 깔렸으면
-            if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[1]))
+            for (int i = 4; i >= 0; i--)
             {
-                print("ok");
-
-                localsuccessscore++;
+                if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 4)]))
+                {
+                    localsuccessscore++;
+                }
             }
-            //그다음 아래에는 새우가 깔렸으면
-            if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[2]))
-            {
-                print("ok");
+            ////가장 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(4).gameObject.CompareTag(a[0]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[3]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 양상추가 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[1]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[4]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 새우가 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[2]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[3]))
+            //{
+            //    print("ok");
+
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[4]))
+            //{
+            //    print("ok");
+
+            //    localsuccessscore++;
+            //}
             foreach (var item in stackcreateburgur.ToArray())
             {
                 if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
@@ -979,47 +1023,54 @@ public class TrayControl : MonoBehaviour
                 gamemanager.isfail2 = true;
                 return;
             }
-            //가장 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(5).gameObject.CompareTag(a[0]))
+            for (int i = 5; i >= 0; i--)
             {
-                print("ok");
-                localsuccessscore++;
+                if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 5)]))
+                {
+                    localsuccessscore++;
+                }
             }
-            //그다음 아래에는 양상추가 깔렸으면
-            if (burgurs.GetChild(15).GetChild(4).gameObject.CompareTag(a[1]))
-            {
-                print("ok");
+            ////가장 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(5).gameObject.CompareTag(a[0]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 양상추가 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(4).gameObject.CompareTag(a[1]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 새우가 깔렸으면
-            if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[2]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 새우가 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[2]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[3]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[3]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[4]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[4]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[5]))
-            {
-                print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[5]))
+            //{
+            //    print("ok");
 
-                localsuccessscore++;
-            }
+            //    localsuccessscore++;
+            //}
             foreach (var item in stackcreateburgur.ToArray())
             {
                 if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]))
@@ -1068,48 +1119,55 @@ public class TrayControl : MonoBehaviour
                 gamemanager.isfail2 = true;
                 return;
             }
-            //가장 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(6).gameObject.CompareTag(a[0]))
+            for (int i = 6; i >= 0; i--)
             {
-                print("ok");
-                localsuccessscore++;
+                if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 6)]))
+                {
+                    localsuccessscore++;
+                }
             }
-            //그다음 아래에는 양상추가 깔렸으면
-            if (burgurs.GetChild(15).GetChild(5).gameObject.CompareTag(a[1]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 새우가 깔렸으면
-            if (burgurs.GetChild(15).GetChild(4).gameObject.CompareTag(a[2]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[3]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[4]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[5]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
-            //그다음 아래에는 먹물빵이 깔렸으면
-            if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[6]))
-            {
-                print("ok");
-                localsuccessscore++;
-            }
+            ////가장 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(6).gameObject.CompareTag(a[0]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 양상추가 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(5).gameObject.CompareTag(a[1]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 새우가 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(4).gameObject.CompareTag(a[2]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(3).gameObject.CompareTag(a[3]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(2).gameObject.CompareTag(a[4]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(1).gameObject.CompareTag(a[5]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
+            ////그다음 아래에는 먹물빵이 깔렸으면
+            //if (burgurs.GetChild(15).GetChild(0).gameObject.CompareTag(a[6]))
+            //{
+            //    print("ok");
+            //    localsuccessscore++;
+            //}
             foreach (var item in stackcreateburgur.ToArray())
             {
                 if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]) || item.gameObject.CompareTag(a[6]))
@@ -1229,8 +1287,6 @@ public class TrayControl : MonoBehaviour
         }
 
     }
-
-
 
     #region 햄버거 재료, 소스 적층 물리작용 코드
     //적층
