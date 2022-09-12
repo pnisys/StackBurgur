@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class FisrtChoice : MonoBehaviour
 {
     public GameObject canvas;
+    public GameObject keyboard;
     public void TutorialStart()
     {
         SceneManager.LoadScene(1);
@@ -14,7 +15,11 @@ public class FisrtChoice : MonoBehaviour
 
     public void GameStart()
     {
-        SceneManager.LoadScene(2);
+        canvas.transform.GetChild(0).gameObject.SetActive(false);
+        canvas.transform.GetChild(1).gameObject.SetActive(false);
+        canvas.transform.GetChild(2).gameObject.SetActive(false);
+        keyboard.SetActive(true);
+        //SceneManager.LoadScene(2);
     }
 
     public void Setting()
