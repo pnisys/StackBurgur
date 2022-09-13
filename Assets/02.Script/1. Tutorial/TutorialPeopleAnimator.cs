@@ -6,12 +6,15 @@ using UnityEngine.AI;
 using UnityEngine.Video;
 using HighlightPlus;
 using Oculus.Interaction.HandGrab;
+using Oculus.Interaction;
 using UnityEngine.SceneManagement;
 public class TutorialPeopleAnimator : MonoBehaviour
 {
     Animator animator;
     NavMeshAgent agent;
     public GameObject[] table;
+    public GameObject[] foods;
+    public GameObject[] sources;
 
     GameObject door;
     GameObject clerkcollider;
@@ -209,7 +212,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                 if (tutorialgamemanager.iscompletesuccess == true || tutorialgamemanager.islittlesuccess == true)
                 {
                     audiosource.PlayOneShot(audioclip2[2]);
-
+                    audiosource.PlayOneShot(audioclip[6]);
                     //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
                     //다음 테이블로 넘어가기
                     for (int i = 0; i < 10; i++)
@@ -243,7 +246,10 @@ public class TutorialPeopleAnimator : MonoBehaviour
                             break;
                         }
                     }
+                    yield return new WaitForSeconds(1f);
+                    audiosource.PlayOneShot(audioclip[8]);
                     yield return new WaitForSeconds(3f);
+
                     //게임성공하면서 Ui뜨게 하기
                     SceneManager.LoadScene(2);
                 }
@@ -253,6 +259,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                     //실패 애니메이션 설정
                     animator.SetBool(hashfail, true);
                     yield return new WaitForSeconds(2f);
+                    audiosource.PlayOneShot(audioclip[7]);
                     audiosource.PlayOneShot(audioclip2[1]);
                     yield return new WaitForSeconds(3f);
 
@@ -261,6 +268,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
                     audiosource.clip = audioclip2[4];
                     audiosource.Play();
                     //문 일정 범위 안으로 들어오면
+                    yield return new WaitForSeconds(6f);
+                    audiosource.PlayOneShot(audioclip[8]);
                     yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
                     audiosource.Stop();
 
@@ -268,12 +277,11 @@ public class TutorialPeopleAnimator : MonoBehaviour
                     agent.enabled = false;
                     transform.position = new Vector3(100, 100, 100);
                     animator.SetBool(hashfail, false);
-                    Destroy(gameObject);
+                    SceneManager.LoadScene(2);
+                   
                 }
-                //게임실패하면서 Ui뜨게 하기
-                yield return new WaitForSeconds(3f);
-                //게임성공하면서 Ui뜨게 하기
-                SceneManager.LoadScene(2);
+                //yield return new WaitForSeconds(3f);
+                //SceneManager.LoadScene(2);
             }
         }
     }
@@ -293,11 +301,14 @@ public class TutorialPeopleAnimator : MonoBehaviour
         guidetext.text = "카드를 보고\n\n햄버거 재료 순서를\n\n알 수 있습니다.";
 
         yield return new WaitForSeconds(10f);
+        patty.GetComponent<Grabbable>().enabled = true;
+        patty.GetComponent<PhysicsGrabbable>().enabled = true;
+
         audiosource.PlayOneShot(audioclip2[8]);
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         viedoplayer.transform.parent.GetChild(1).gameObject.SetActive(true);
         audiosource.PlayOneShot(audioclip[1]);
-        guidetext.text = "버튼을 누르면\n\n재료를 집을 수 있습니다.\n\n버튼을 떼면 재료를 떨어뜨립니다.\n\n고기를 잡고 떼보세요";
+        guidetext.text = "고기를 잡고 떨어뜨려보세요";
         viedoplayer.clip = viedoclips[0];
         viedoplayer.Play();
         patty.GetComponent<HighlightEffect>().highlighted = true;
@@ -328,6 +339,15 @@ public class TutorialPeopleAnimator : MonoBehaviour
         viedoplayer.clip = viedoclips[2];
         viedoplayer.transform.parent.GetChild(1).localPosition = new Vector3(-0.025f, 0.557f, 0);
         yield return new WaitForSeconds(10f);
+        foreach (var item in foods)
+        {
+            item.GetComponent<Grabbable>().enabled = true;
+            item.GetComponent<PhysicsGrabbable>().enabled = true;
+        }
+        foreach (var item in sources)
+        {
+            item.GetComponent<Grabbable>().enabled = true;
+        }
         audiosource.PlayOneShot(audioclip2[8]);
 
         audioing = true;
@@ -337,24 +357,6 @@ public class TutorialPeopleAnimator : MonoBehaviour
 
         ////고기패티 강조하는 쉐이더
     }
-
-
-    //이건 소스 하나로 통일할 거임, 튜토리얼에선 없어도 됨
-    //public void RandomNumberSelect()
-    //{
-    //    for (int i = 0; i < 4; i++)
-    //    {
-    //        sourcenumber.Add(i);
-    //    }
-
-    //    for (int i = 0; i < 4; i++)
-    //    {
-    //        int temp1 = sourcenumber[i];
-    //        ran1 = UnityEngine.Random.Range(0, 3);
-    //        sourcenumber[i] = sourcenumber[ran1];
-    //        sourcenumber[ran1] = temp1;
-    //    }
-    //}
 
     //난이도에 맞는 카드를 Setactiove 하고, selecthambugurcard에 넣는 함수
     public void LevelBurgurSetting()

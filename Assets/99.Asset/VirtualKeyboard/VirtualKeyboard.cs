@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class VirtualKeyboard : MonoBehaviour {
 
@@ -128,16 +129,17 @@ public class VirtualKeyboard : MonoBehaviour {
                     {
                         if(OnReturnEventHandler != null)
                         {
-                            //OnReturnEventHandler(TextInputBox.TextField);
-                            
+                            SoundManager.instance.username = TextInputBox.TextField;
+                            SceneManager.LoadScene(2);
+                            //OnReturnEventHandler(TextInputBox.TextField)
                         }
                         //do somehing
                         //OnReturnEventHandler?.Invoke(TextInputBox.TextField);
 
-                        if((bool)OnReturnDelegate?.Invoke(TextInputBox.TextField))
-                        {
-                            PlayKeyAudio();
-                        }
+                        //if((bool)OnReturnDelegate?.Invoke(TextInputBox.TextField))
+                        //{
+                        //    PlayKeyAudio();
+                        //}
                     }
                     break;
                 case VirtualKey.kType.kCharacter:

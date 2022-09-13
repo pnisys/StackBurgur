@@ -16,7 +16,7 @@ public class PeopleAnimator : MonoBehaviour
     public AudioClip[] audioclip;
     GameObject door;
     GameObject clerkcollider;
-
+    public Ranking ranking;
 
     public List<int> sourcenumber = new List<int>();
     public List<int> hambugernumber = new List<int>();
@@ -104,23 +104,23 @@ public class PeopleAnimator : MonoBehaviour
         if (gamemanager.stage == 1)
         {
             gamemanager.level = 1;
-            gamemanager.limitTime = 5f;
-            gamemanager.orderlimitTime = 20f;
+            gamemanager.limitTime = 15f;
+            gamemanager.orderlimitTime = 30f;
         }
         else if (gamemanager.stage == 2)
         {
             randomstage = UnityEngine.Random.Range(1, 3);
             gamemanager.level = randomstage;
-            gamemanager.limitTime = 5f;
-            gamemanager.orderlimitTime = 20f;
+            gamemanager.limitTime = 15f;
+            gamemanager.orderlimitTime = 30f;
 
         }
         else if (gamemanager.stage == 3)
         {
             randomstage = UnityEngine.Random.Range(2, 4);
             gamemanager.level = randomstage;
-            gamemanager.limitTime = 5f;
-            gamemanager.orderlimitTime = 25f;
+            gamemanager.limitTime = 15f;
+            gamemanager.orderlimitTime = 30f;
 
         }
         else if (gamemanager.stage == 4)
@@ -149,6 +149,7 @@ public class PeopleAnimator : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             if (gamemanager.isClerk == true)
             {
+                print("멈춘다");
                 audiosource.Stop();
                 //손님 Navagent 꺼주기
                 agent.isStopped = true;
@@ -229,6 +230,7 @@ public class PeopleAnimator : MonoBehaviour
                 //스테이지가 4이상이면
                 if (gamemanager.stage >= 4)
                 {
+                    audiosource.PlayOneShot(audioclip[6]);
                     phase1source = false;
                     phase2source = true;
                     StartCoroutine(Stage45());
@@ -252,24 +254,6 @@ public class PeopleAnimator : MonoBehaviour
                     if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
                     {
                         StartCoroutine(SucessTable());
-
-                        //테이블숫자가 5명이 되었으면
-                        if (gamemanager.tablepeoplenumbur == 5)
-                        {
-                            if (gamemanager.stage <= 4)
-                            {
-                                //스테이지 업 함수 호출
-                                StageUp();
-                            }
-                            //게임 모두 클리어
-                            else
-                            {
-                                StartCoroutine(StageComplete5());
-                            }
-                            yield break;
-                        }
-                        //이제 다른 사람 한명을 켜야됨
-                        gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
                     }
                     //검사 후 실패면
                     else if (gamemanager.isfail)
@@ -333,24 +317,6 @@ public class PeopleAnimator : MonoBehaviour
                 if (((gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true) && (gamemanager.iscompletesuccess2 == true || gamemanager.islittlesuccess2 == true))/* || testsuccess == true*/)
                 {
                     StartCoroutine(SucessTable());
-                    
-                    //테이블숫자가 5명이 되었으면
-                    if (gamemanager.tablepeoplenumbur == 5)
-                    {
-                        if (gamemanager.stage <= 4)
-                        {
-                            //스테이지 업 함수 호출
-                            StageUp();
-                        }
-                        //게임 모두 클리어
-                        else
-                        {
-                            StartCoroutine(StageComplete5());
-                        }
-                        yield break;
-                    }
-                    //이제 다른 사람 한명을 켜야됨
-                    gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
                 }
                 //둘 중 하나라도 실패하면
                 else if (gamemanager.isfail == true || gamemanager.isfail2 == true)
@@ -361,6 +327,7 @@ public class PeopleAnimator : MonoBehaviour
             }
         }
     }
+
     //실패시, 테이블, 캐릭터 애니메이션 처리
     IEnumerator FailTable()
     {
@@ -370,13 +337,7 @@ public class PeopleAnimator : MonoBehaviour
         //점수 다 깎였을 떄
         if (gamemanager.lifescore == 0)
         {
-            audiosource.PlayOneShot(audioclip[8]);
-            gamemanager.GuideUiText.text = "게임 오버";
-            gamemanager.GuideUiText.fontSize = 0.05f;
-            gamemanager.GuideUiText2.text = null;
-            gamemanager.GetComponent<AudioSource>().Stop();
-            yield return new WaitForSeconds(4f);
-            SceneManager.LoadScene(0);
+            StartCoroutine(Died());
         }
         yield return new WaitForSeconds(5f);
         //문으로 간다.
@@ -393,9 +354,9 @@ public class PeopleAnimator : MonoBehaviour
         animator.SetBool(hashfail, false);
         yield return new WaitForSeconds(2f);
         //이제 다른 사람 한명을 켜야됨
+        GameManagerInit();
         gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
-        gamemanager.isfail = false;
-        gamemanager.isfail2 = false;
+
     }
     //성공시, 테이블, 캐릭터 애니메이션 처리
     IEnumerator SucessTable()
@@ -432,6 +393,26 @@ public class PeopleAnimator : MonoBehaviour
                 gameObject.transform.GetChild(3).localPosition = new Vector3(0, 0.879f, 0.579f);
                 //들어간 테이블은 닫게 하기
                 gamemanager.istable[i] = true;
+                GameManagerInit();
+                //테이블숫자가 5명이 되었으면
+                if (gamemanager.tablepeoplenumbur == 5)
+                {
+                    if (gamemanager.stage <= 4)
+                    {
+                        //스테이지 업 함수 호출
+                        StageUp();
+                        gamemanager.isClerk = false;
+                    }
+                    //게임 모두 클리어
+                    else
+                    {
+                        StartCoroutine(StageComplete5());
+                        gamemanager.isClerk = false;
+                    }
+                    yield break;
+                }
+
+
                 //반복 끝내기
                 break;
             }
@@ -444,9 +425,23 @@ public class PeopleAnimator : MonoBehaviour
 
     }
 
+    //죽을때
+    IEnumerator Died()
+    {
+        //ranking.ScoreSet(gamemanager.score, SoundManager.instance.username,gamemanager.stage);
+        audiosource.PlayOneShot(audioclip[8]);
+        gamemanager.GuideUiText.text = "게임 오버";
+        gamemanager.GuideUiText.fontSize = 0.05f;
+        gamemanager.GuideUiText2.text = null;
+        gamemanager.GetComponent<AudioSource>().Stop();
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene(0);
+    }
+
     //모든 5스테이지 완료
     IEnumerator StageComplete5()
     {
+        GameManagerInit();
         gamemanager.GetComponent<AudioSource>().Stop();
         audiosource.PlayOneShot(audioclip[9]);
         gamemanager.GuideUiText.text = "게임 모두 클리어";
@@ -459,7 +454,6 @@ public class PeopleAnimator : MonoBehaviour
     //스테이지 업했을 때 함수
     void StageUp()
     {
-
         //스테이지 업!
         gamemanager.Stage++;
         gamemanager.tablepeoplenumbur = 0;
@@ -480,8 +474,20 @@ public class PeopleAnimator : MonoBehaviour
                 gamemanager.istable[i] = false;
             }
         }
+        //이제 다른 사람 한명을 켜야됨
+        gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
+        GameManagerInit();
     }
 
+    public void GameManagerInit()
+    {
+        gamemanager.iscompletesuccess = false;
+        gamemanager.iscompletesuccess2 = false;
+        gamemanager.islittlesuccess = false;
+        gamemanager.islittlesuccess2 = false;
+        gamemanager.isfail = false;
+        gamemanager.isfail2 = false;
+    }
     //난이도에 맞는 카드를 Setactiove 하고, selecthambugurcard에 넣는 함수
     public void LevelBurgurSetting()
     {
@@ -497,8 +503,8 @@ public class PeopleAnimator : MonoBehaviour
                 selectsourcecard2 = sourceCard[sourcenumber[1]];
                 gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
 
-                OneLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
-                OneLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                OneLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                OneLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -0.73f, 0);
                 sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(0.057f, 0.37f, 0);
                 sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(0.057f, -0.73f, 0);
             }
@@ -518,8 +524,8 @@ public class PeopleAnimator : MonoBehaviour
                 selectsourcecard2 = sourceCard[sourcenumber[1]];
                 gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
 
-                TwoLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
-                TwoLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                TwoLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                TwoLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -0.73f, 0);
                 sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(0.057f, 0.37f, 0);
                 sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(0.057f, -0.73f, 0);
             }
@@ -539,8 +545,8 @@ public class PeopleAnimator : MonoBehaviour
                 selectsourcecard2 = sourceCard[sourcenumber[1]];
                 gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
 
-                ThreeLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
-                ThreeLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                ThreeLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                ThreeLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -0.73f, 0);
                 sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(0.057f, 0.37f, 0);
                 sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(0.057f, -0.73f, 0);
             }
@@ -560,8 +566,8 @@ public class PeopleAnimator : MonoBehaviour
                 selectsourcecard2 = sourceCard[sourcenumber[1]];
                 gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
 
-                FourLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, -0.73f, 0);
-                FourLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                FourLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 0.37f, 0);
+                FourLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -0.73f, 0);
                 sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(0.057f, 0.37f, 0);
                 sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(0.057f, -0.73f, 0);
             }

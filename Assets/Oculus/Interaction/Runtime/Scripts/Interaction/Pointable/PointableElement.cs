@@ -168,8 +168,16 @@ namespace Oculus.Interaction
             }
             else
             {
-                _pointIds.Add(evt.Identifier);
-                _points.Add(evt.Pose);
+                try
+                {
+                    _pointIds.Add(evt.Identifier);
+                    _points.Add(evt.Pose);
+                }
+                catch (NullReferenceException)
+                {
+                    print("임시적으로 막아놨음");
+                }
+
             }
 
             PointableElementUpdated(evt);
@@ -187,7 +195,13 @@ namespace Oculus.Interaction
             index = _selectingPointIds.IndexOf(evt.Identifier);
             if (index != -1)
             {
-                _selectingPoints[index] = evt.Pose;
+                try
+                {
+                    _selectingPoints[index] = evt.Pose;
+                }catch(NullReferenceException)
+                {
+                    print("임시적으로 막아놓음");
+                }
             }
 
             PointableElementUpdated(evt);
@@ -200,9 +214,16 @@ namespace Oculus.Interaction
             {
                 return;
             }
+            try
+            {
+                _pointIds.RemoveAt(index);
+                _points.RemoveAt(index);
+            }
+            catch (NullReferenceException)
+            {
+                print("임시적으로 막아놨음");
+            }
 
-            _pointIds.RemoveAt(index);
-            _points.RemoveAt(index);
 
             PointableElementUpdated(evt);
         }

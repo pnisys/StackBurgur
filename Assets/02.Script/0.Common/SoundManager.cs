@@ -23,5 +23,8 @@ public class SoundManager : MonoBehaviour
 
     public float bgmSound = 1;
     public float anothersound = 1;
+    public string username = null;
+
+
 
 }

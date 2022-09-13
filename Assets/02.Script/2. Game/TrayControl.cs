@@ -316,7 +316,7 @@ public class TrayControl : MonoBehaviour
             }
             else if (aa.CompareTag("HighcalorieBurger"))
             {
-                LocalMenuSeletionThreeLevel(blackbread, cheeze, bacon, shrimp, bulgogi, hamburgurbread);
+                LocalMenuSeletionThreeLevel(blackbread, cheeze, bacon, shrimp, bulgogi, blackbread);
             }
             else if (aa.CompareTag("DoubleShrimpBurger"))
             {
@@ -423,147 +423,697 @@ public class TrayControl : MonoBehaviour
 
         void LocalMenuSeletionOneLevel(params string[] a)
         {
-            int localsuccessscore = 0;
-            int locallittlesuccessscore = 0;
-
-            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+            if (gamemanager.stage >= 4)
             {
-                print("재료 개수가 안맞아서 실패");
+                int localsuccessscore = 0;
+                int locallittlesuccessscore = 0;
+
+                if (burgurs.GetChild(15).childCount != 4 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+                    print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
+                    print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
+                    print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
+
+                    gamemanager.isfail2 = true;
+                    return;
+                }
+
+                for (int i = 3; i >= 0; i--)
+                {
+                    if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 3)]))
+                    {
+                        localsuccessscore++;
+                    }
+                }
+
+                foreach (var item in stackcreateburgur.ToArray())
+                {
+                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]))
+                    {
+                        locallittlesuccessscore++;
+                    }
+                }
+                //이거 성공인거임
+                if (localsuccessscore == 4)
+                {
+                    print("완전성공ok");
+
+                    gamemanager.iscompletesuccess2 = true;
+                    gamemanager.score += 500;
+                }
+                //이건 부분성공한거임
+                else if (localsuccessscore != 4 && locallittlesuccessscore == 4)
+                {
+                    print("일부성공ok");
+
+                    gamemanager.islittlesuccess2 = true;
+                    gamemanager.score += 250;
+                }
+                else if (localsuccessscore != 4 || locallittlesuccessscore != 4)
+                {
+                    print(localsuccessscore);
+                    print(locallittlesuccessscore);
+                    print("재료가 달라서 실패");
+                    gamemanager.isfail2 = true;
+                }
+            }
+            else
+            {
+                int localsuccessscore = 0;
+                int locallittlesuccessscore = 0;
+
+                if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+                {
+                    print("재료 개수가 안맞아서 실패");
+                    for (int i = 0; i < 4; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+
+                    gamemanager.isfail = true;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    return;
+                }
                 for (int i = 0; i < 4; i++)
                 {
-                    print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                    {
+                        localsuccessscore++;
+                    }
                 }
-                print(gamemanager.selectsourcecard);
-                print(gamemanager.phase1selectedsource);
+                foreach (var item in stackcreateburgur.ToArray())
+                {
+                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]))
+                    {
+                        locallittlesuccessscore++;
+                    }
+                }
+                //이거 성공인거임
+                if (localsuccessscore == 4)
+                {
+                    print("완전성공ok");
+                    gamemanager.iscompletesuccess = true;
+                    gamemanager.score += 500;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
+                }
+                //이건 부분성공한거임
+                else if (localsuccessscore != 4 && locallittlesuccessscore == 4)
+                {
+                    print("부분성공ok");
+                    gamemanager.islittlesuccess = true;
+                    gamemanager.score += 250;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
+                }
+                else if (localsuccessscore != 4 || locallittlesuccessscore != 4)
+                {
+                    print("재료가 달라서 실패");
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    gamemanager.isfail = true;
+                }
+                //}
+            }
 
-                gamemanager.isfail = true;
-                if (gamemanager.stage < 4)
-                {
-                    Invoke("FailTray", 3f);
-                }
-                return;
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
-                {
-                    localsuccessscore++;
-                }
-            }
-            foreach (var item in stackcreateburgur.ToArray())
-            {
-                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]))
-                {
-                    locallittlesuccessscore++;
-                }
-            }
-            //이거 성공인거임
-            if (localsuccessscore == 4)
-            {
-                print("완전성공ok");
-                gamemanager.iscompletesuccess = true;
-                gamemanager.score += 500;
-                if (gamemanager.stage < 4)
-                {
-                    Invoke(nameof(SuccessTray), 1.1f);
-                }
-            }
-            //이건 부분성공한거임
-            else if (localsuccessscore != 4 && locallittlesuccessscore == 4)
-            {
-                print("부분성공ok");
-                gamemanager.islittlesuccess = true;
-                gamemanager.score += 250;
-                if (gamemanager.stage < 4)
-                {
-                    Invoke(nameof(SuccessTray), 1.1f);
-                }
-            }
-            else if (localsuccessscore != 4 || locallittlesuccessscore != 4)
-            {
-                print("재료가 달라서 실패");
-                if (gamemanager.stage < 4)
-                {
-                    Invoke("FailTray", 3f);
-                }
-                gamemanager.isfail = true;
-            }
         }
         void LocalMenuSeletionTwoLevel(params string[] a)
         {
-            int localsuccessscore = 0;
-            int locallittlesuccessscore = 0;
-
-            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+            if (gamemanager.stage >= 4)
             {
-                print("재료 개수가 안맞아서 실패");
+                int localsuccessscore = 0;
+                int locallittlesuccessscore = 0;
+
+                if (burgurs.GetChild(15).childCount != 5 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+                {
+                    print("재료개수가 안맞아서 실패");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject.name);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+                    print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
+                    print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
+                    print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
+                  
+                    gamemanager.isfail2 = true;
+                    return;
+                }
+
+                for (int i = 4; i >= 0; i--)
+                {
+                    if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 4)]))
+                    {
+                        localsuccessscore++;
+                    }
+                }
+                foreach (var item in stackcreateburgur.ToArray())
+                {
+                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
+                    {
+                        locallittlesuccessscore++;
+                    }
+                }
+                //이거 성공인거임
+                if (localsuccessscore == 5)
+                {
+                    print("완전성공ok");
+
+                    gamemanager.iscompletesuccess2 = true;
+                    gamemanager.score += 500;
+                }
+                //이건 부분성공한거임
+                else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
+                {
+                    print("일부성공ok");
+
+                    gamemanager.islittlesuccess2 = true;
+                    gamemanager.score += 250;
+                }
+                else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
+                {
+                    print("재료가 안맞아서 실패");
+
+                    gamemanager.isfail2 = true;
+                }
+            }
+            else
+            {
+                int localsuccessscore = 0;
+                int locallittlesuccessscore = 0;
+
+                if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+                {
+                    print("재료 개수가 안맞아서 실패");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+                    gamemanager.isfail = true;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    return;
+                }
                 for (int i = 0; i < 5; i++)
                 {
-                    print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                    {
+                        localsuccessscore++;
+                    }
                 }
-                print(gamemanager.selectsourcecard);
-                print(gamemanager.phase1selectedsource);
-                gamemanager.isfail = true;
-                if (gamemanager.stage < 4)
+
+                foreach (var item in stackcreateburgur.ToArray())
                 {
-                    Invoke("FailTray", 3f);
+                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
+                    {
+                        locallittlesuccessscore++;
+                    }
                 }
-                return;
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                //이거 성공인거임
+                if (localsuccessscore == 5)
                 {
-                    localsuccessscore++;
+                    print("완전성공ok");
+                    gamemanager.iscompletesuccess = true;
+                    gamemanager.score += 500;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
                 }
-            }
-          
-            foreach (var item in stackcreateburgur.ToArray())
-            {
-                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
+                //이건 부분성공한거임
+                else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
                 {
-                    locallittlesuccessscore++;
+                    print("부분성공ok");
+                    gamemanager.islittlesuccess = true;
+                    gamemanager.score += 250;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
                 }
-            }
-            //이거 성공인거임
-            if (localsuccessscore == 5)
-            {
-                print("완전성공ok");
-                gamemanager.iscompletesuccess = true;
-                gamemanager.score += 500;
-                if (gamemanager.stage < 4)
+
+                else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
                 {
-                    Invoke(nameof(SuccessTray), 1.1f);
-                }
-            }
-            //이건 부분성공한거임
-            else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
-            {
-                print("부분성공ok");
-                gamemanager.islittlesuccess = true;
-                gamemanager.score += 250;
-                if (gamemanager.stage < 4)
-                {
-                    Invoke(nameof(SuccessTray), 1.1f);
+                    print("재료가 달라서 실패");
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    gamemanager.isfail = true;
                 }
             }
 
-            else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
-            {
-                print("재료가 달라서 실패");
-                if (gamemanager.stage < 4)
-                {
-                    Invoke("FailTray", 3f);
-                }
-                gamemanager.isfail = true;
-            }
         }
         void LocalMenuSeletionThreeLevel(params string[] a)
+        {
+            if (gamemanager.stage >= 4)
+            {
+                int localsuccessscore = 0;
+                int locallittlesuccessscore = 0;
+
+                if (burgurs.GetChild(15).childCount != 6 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+                {
+                    print("재료 개수가 안맞아서 실패");
+                    for (int i = 0; i < 6; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject.name);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+                    print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
+                    print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
+                    print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
+                    gamemanager.isfail2 = true;
+                    return;
+                }
+                for (int i = 5; i >= 0; i--)
+                {
+                    if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 5)]))
+                    {
+                        localsuccessscore++;
+                    }
+                }
+
+                foreach (var item in stackcreateburgur.ToArray())
+                {
+                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]))
+                    {
+                        locallittlesuccessscore++;
+                    }
+                }
+                //이거 성공인거임
+                if (localsuccessscore == 6)
+                {
+                    print("완전성공ok");
+
+                    gamemanager.iscompletesuccess2 = true;
+                    gamemanager.score += 500;
+                }
+                //이건 부분성공한거임
+                else if (localsuccessscore != 6 && locallittlesuccessscore == 6)
+                {
+                    print("일부성공ok");
+
+                    gamemanager.islittlesuccess2 = true;
+                    gamemanager.score += 250;
+                }
+                else if (localsuccessscore != 6 && locallittlesuccessscore != 6)
+                {
+                    print("localsuccessscore" + localsuccessscore);
+                    print("locallittlesuccessscore" + locallittlesuccessscore);
+
+                    print("재료가 안맞아서 실패");
+                    gamemanager.isfail2 = true;
+                }
+            }
+            else
+            {
+                int localsuccessscore = 0;
+                int locallittlesuccessscore = 0;
+
+                if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+                {
+                    print("재료 개수가 안맞아서 실패");
+                    for (int i = 0; i < 6; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+                    gamemanager.isfail = true;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    return;
+                }
+
+                for (int i = 0; i < 6; i++)
+                {
+                    if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                    {
+                        localsuccessscore++;
+                    }
+                }
+
+                foreach (var item in stackcreateburgur.ToArray())
+                {
+                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]))
+                    {
+                        locallittlesuccessscore++;
+                    }
+                }
+                //이거 성공인거임
+                if (localsuccessscore == 6)
+                {
+                    print("완전성공ok");
+
+                    gamemanager.iscompletesuccess = true;
+                    gamemanager.score += 500;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
+                }
+                //이건 부분성공한거임
+                else if (localsuccessscore != 6 && locallittlesuccessscore == 6)
+                {
+                    print("일부성공ok");
+
+                    gamemanager.islittlesuccess = true;
+                    gamemanager.score += 250;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
+                }
+                else if (localsuccessscore != 6 && locallittlesuccessscore != 6)
+                {
+                    print("재료가 달라서 실패");
+
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    gamemanager.isfail = true;
+                }
+            }
+
+        }
+        void LocalMenuSeletionFourLevel(params string[] a)
+        {
+            if (gamemanager.stage >= 4)
+            {
+                int localsuccessscore = 0;
+                int locallittlesuccessscore = 0;
+                if (burgurs.GetChild(15).childCount != 7 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+                {
+                    print("재료 개수가 안맞아서 실패");
+                    for (int i = 0; i < 7; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject.name);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+                    print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
+                    print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
+                    print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
+                    gamemanager.isfail2 = true;
+                    return;
+                }
+                for (int i = 6; i >= 0; i--)
+                {
+                    if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 6)]))
+                    {
+                        localsuccessscore++;
+                    }
+                }
+
+                foreach (var item in stackcreateburgur.ToArray())
+                {
+                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]) || item.gameObject.CompareTag(a[6]))
+                    {
+                        locallittlesuccessscore++;
+                    }
+                }
+                //이거 성공인거임
+                if (localsuccessscore == 7)
+                {
+                    print("완전성공ok");
+
+                    gamemanager.iscompletesuccess2 = true;
+                    gamemanager.score += 500;
+                }
+                //이건 부분성공한거임
+                else if (localsuccessscore != 7 && locallittlesuccessscore == 7)
+                {
+                    print("일부성공ok");
+                    print(locallittlesuccessscore);
+                    print(localsuccessscore);
+
+                    for (int i = 0; i < 7; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+                    print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
+                    print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
+                    print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
+                    gamemanager.islittlesuccess2 = true;
+                    gamemanager.score += 250;
+                }
+                else if (localsuccessscore != 7 && locallittlesuccessscore != 7)
+                {
+                    print("재료가 안맞아서 실패");
+                    gamemanager.isfail2 = true;
+                }
+            }
+            else
+            {
+                int localsuccessscore = 0;
+                int locallittlesuccessscore = 0;
+                if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || burgurs.GetChild(6).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+                {
+                    print("재료 개수가 안맞아서 실패");
+                    for (int i = 0; i < 7; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+                    gamemanager.isfail = true;
+                    if (gamemanager.stage <= 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    return;
+                }
+                for (int i = 0; i < 7; i++)
+                {
+                    if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                    {
+                        localsuccessscore++;
+                    }
+                }
+
+                foreach (var item in stackcreateburgur.ToArray())
+                {
+                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]) || item.gameObject.CompareTag(a[6]))
+                    {
+                        locallittlesuccessscore++;
+                    }
+                }
+                //이거 성공인거임
+                if (localsuccessscore == 7)
+                {
+                    print("완전성공ok");
+                    gamemanager.iscompletesuccess = true;
+                    gamemanager.score += 500;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
+                }
+                //이건 부분성공한거임
+                else if (localsuccessscore != 7 && locallittlesuccessscore == 7)
+                {
+                    print("부분성공ok");
+                    gamemanager.islittlesuccess = true;
+                    gamemanager.score += 250;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
+                }
+                else if (localsuccessscore != 7 && locallittlesuccessscore != 7)
+                {
+                    print("재료가 안맞아서 실패");
+                    for (int i = 0; i < 7; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject.name);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    gamemanager.isfail = true;
+                }
+            }
+        }
+
+        void LocalMenuSeletionOneLevel2(params string[] a)
+        {
+            if (gamemanager.stage >= 4)
+            {
+                int localsuccessscore = 0;
+                int locallittlesuccessscore = 0;
+
+                if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false || gamemanager.selectsourcecard2 == null || gamemanager.phase2selectedsource == null)
+                {
+                    print("재료 개수가 안맞아서 실패");
+                    for (int i = 0; i < 4; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+
+                    gamemanager.isfail = true;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    return;
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                    {
+                        localsuccessscore++;
+                    }
+                }
+                foreach (var item in stackcreateburgur.ToArray())
+                {
+                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]))
+                    {
+                        locallittlesuccessscore++;
+                    }
+                }
+                //이거 성공인거임
+                if (localsuccessscore == 4)
+                {
+                    print("완전성공ok");
+                    gamemanager.iscompletesuccess = true;
+                    gamemanager.score += 500;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
+                }
+                //이건 부분성공한거임
+                else if (localsuccessscore != 4 && locallittlesuccessscore == 4)
+                {
+                    print("부분성공ok");
+                    gamemanager.islittlesuccess = true;
+                    gamemanager.score += 250;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
+                }
+                else if (localsuccessscore != 4 || locallittlesuccessscore != 4)
+                {
+                    print("재료가 달라서 실패");
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    gamemanager.isfail = true;
+                }
+            }
+
+        }
+        void LocalMenuSeletionTwoLevel2(params string[] a)
+        {
+            
+                int localsuccessscore = 0;
+                int locallittlesuccessscore = 0;
+
+                if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false || gamemanager.selectsourcecard2 == null || gamemanager.phase2selectedsource == null)
+                {
+                    print("재료 개수가 안맞아서 실패");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    }
+                    print(gamemanager.selectsourcecard);
+                    print(gamemanager.phase1selectedsource);
+                    gamemanager.isfail = true;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    return;
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                    {
+                        localsuccessscore++;
+                    }
+                }
+
+                foreach (var item in stackcreateburgur.ToArray())
+                {
+                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
+                    {
+                        locallittlesuccessscore++;
+                    }
+                }
+                //이거 성공인거임
+                if (localsuccessscore == 5)
+                {
+                    print("완전성공ok");
+                    gamemanager.iscompletesuccess = true;
+                    gamemanager.score += 500;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
+                }
+                //이건 부분성공한거임
+                else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
+                {
+                    print("부분성공ok");
+                    gamemanager.islittlesuccess = true;
+                    gamemanager.score += 250;
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke(nameof(SuccessTray), 1.1f);
+                    }
+                }
+
+                else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
+                {
+                    print("재료가 달라서 실패");
+                    if (gamemanager.stage < 4)
+                    {
+                        Invoke("FailTray", 3f);
+                    }
+                    gamemanager.isfail = true;
+                }
+        }
+        void LocalMenuSeletionThreeLevel2(params string[] a)
         {
             int localsuccessscore = 0;
             int locallittlesuccessscore = 0;
 
-            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false || gamemanager.selectsourcecard2 == null || gamemanager.phase2selectedsource == null)
             {
                 print("재료 개수가 안맞아서 실패");
                 for (int i = 0; i < 6; i++)
@@ -587,7 +1137,7 @@ public class TrayControl : MonoBehaviour
                     localsuccessscore++;
                 }
             }
-           
+
             foreach (var item in stackcreateburgur.ToArray())
             {
                 if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]))
@@ -629,12 +1179,13 @@ public class TrayControl : MonoBehaviour
                 }
                 gamemanager.isfail = true;
             }
+            
         }
-        void LocalMenuSeletionFourLevel(params string[] a)
+        void LocalMenuSeletionFourLevel2(params string[] a)
         {
             int localsuccessscore = 0;
             int locallittlesuccessscore = 0;
-            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || burgurs.GetChild(6).childCount == 0 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
+            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || burgurs.GetChild(5).childCount == 0 || burgurs.GetChild(6).childCount == 0 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false || gamemanager.selectsourcecard2 == null || gamemanager.phase2selectedsource == null)
             {
                 print("재료 개수가 안맞아서 실패");
                 for (int i = 0; i < 7; i++)
@@ -657,7 +1208,7 @@ public class TrayControl : MonoBehaviour
                     localsuccessscore++;
                 }
             }
-          
+
             foreach (var item in stackcreateburgur.ToArray())
             {
                 if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]) || item.gameObject.CompareTag(a[6]))
@@ -692,7 +1243,7 @@ public class TrayControl : MonoBehaviour
                 print("재료가 안맞아서 실패");
                 for (int i = 0; i < 7; i++)
                 {
-                    print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
+                    print("버거재료" + i + " " + burgurs.GetChild(i).gameObject.name);
                 }
                 print(gamemanager.selectsourcecard);
                 print(gamemanager.phase1selectedsource);
@@ -704,255 +1255,13 @@ public class TrayControl : MonoBehaviour
             }
         }
 
-        void LocalMenuSeletionOneLevel2(params string[] a)
-        {
-            int localsuccessscore = 0;
-            int locallittlesuccessscore = 0;
-
-            if (burgurs.GetChild(15).childCount != 4 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false || gamemanager.selectsourcecard2 == null || gamemanager.phase2selectedsource == null)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
-                }
-                print(gamemanager.selectsourcecard);
-                print(gamemanager.phase1selectedsource);
-                print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
-                print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
-                print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
-
-
-                gamemanager.isfail2 = true;
-                return;
-            }
-
-            for (int i = 3; i >= 0; i--)
-            {
-                if(burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i-3)]))
-                {
-                    localsuccessscore++;
-                }
-            }
-          
-            foreach (var item in stackcreateburgur.ToArray())
-            {
-                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]))
-                {
-                    locallittlesuccessscore++;
-                }
-            }
-            //이거 성공인거임
-            if (localsuccessscore == 4)
-            {
-                print("완전성공ok");
-
-                gamemanager.iscompletesuccess2 = true;
-                gamemanager.score += 500;
-            }
-            //이건 부분성공한거임
-            else if (localsuccessscore != 4 && locallittlesuccessscore == 4)
-            {
-                print("일부성공ok");
-
-                gamemanager.islittlesuccess2 = true;
-                gamemanager.score += 250;
-            }
-            else if (localsuccessscore != 4 || locallittlesuccessscore != 4)
-            {
-                print("재료가 달라서 실패");
-                gamemanager.isfail2 = true;
-            }
-        }
-        void LocalMenuSeletionTwoLevel2(params string[] a)
-        {
-            int localsuccessscore = 0;
-            int locallittlesuccessscore = 0;
-
-            if (burgurs.GetChild(15).childCount != 5 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false || gamemanager.selectsourcecard2 == null || gamemanager.phase2selectedsource == null)
-            {
-                print("재료개수가 안맞아서 실패");
-                for (int i = 0; i < 5; i++)
-                {
-                    print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
-                }
-                print(gamemanager.selectsourcecard);
-                print(gamemanager.phase1selectedsource);
-                print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
-                print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
-                print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
-                gamemanager.isfail2 = true;
-                return;
-            }
-
-            for (int i = 4; i >= 0; i--)
-            {
-                if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 4)]))
-                {
-                    localsuccessscore++;
-                }
-            }
-            foreach (var item in stackcreateburgur.ToArray())
-            {
-                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
-                {
-                    locallittlesuccessscore++;
-                }
-            }
-            //이거 성공인거임
-            if (localsuccessscore == 5)
-            {
-                print("완전성공ok");
-
-                gamemanager.iscompletesuccess2 = true;
-                gamemanager.score += 500;
-            }
-            //이건 부분성공한거임
-            else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
-            {
-                print("일부성공ok");
-
-                gamemanager.islittlesuccess2 = true;
-                gamemanager.score += 250;
-            }
-            else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
-            {
-                print("재료가 안맞아서 실패");
-
-                gamemanager.isfail2 = true;
-            }
-        }
-        void LocalMenuSeletionThreeLevel2(params string[] a)
-        {
-            int localsuccessscore = 0;
-            int locallittlesuccessscore = 0;
-
-            if (burgurs.GetChild(15).childCount != 6 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false || gamemanager.selectsourcecard2 == null || gamemanager.phase2selectedsource == null)
-            {
-                print("재료 개수가 안맞아서 실패");
-                for (int i = 0; i < 6; i++)
-                {
-                    print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
-                }
-                print(gamemanager.selectsourcecard);
-                print(gamemanager.phase1selectedsource);
-                print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
-                print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
-                print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
-                gamemanager.isfail2 = true;
-                return;
-            }
-            for (int i = 5; i >= 0; i--)
-            {
-                if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 5)]))
-                {
-                    localsuccessscore++;
-                }
-            }
-           
-            foreach (var item in stackcreateburgur.ToArray())
-            {
-                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]))
-                {
-                    locallittlesuccessscore++;
-                }
-            }
-            //이거 성공인거임
-            if (localsuccessscore == 6)
-            {
-                print("완전성공ok");
-
-                gamemanager.iscompletesuccess2 = true;
-                gamemanager.score += 500;
-            }
-            //이건 부분성공한거임
-            else if (localsuccessscore != 6 && locallittlesuccessscore == 6)
-            {
-                print("일부성공ok");
-
-                gamemanager.islittlesuccess2 = true;
-                gamemanager.score += 250;
-            }
-            else if (localsuccessscore != 6 && locallittlesuccessscore != 6)
-            {
-                print("재료가 안맞아서 실패");
-                gamemanager.isfail2 = true;
-            }
-        }
-        void LocalMenuSeletionFourLevel2(params string[] a)
-        {
-            int localsuccessscore = 0;
-            int locallittlesuccessscore = 0;
-            if (burgurs.GetChild(15).childCount != 7 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false || gamemanager.selectsourcecard2 == null || gamemanager.phase2selectedsource == null)
-            {
-                print("재료 개수가 안맞아서 실패");
-                for (int i = 0; i < 7; i++)
-                {
-                    print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
-                }
-                print(gamemanager.selectsourcecard);
-                print(gamemanager.phase1selectedsource);
-                print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
-                print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
-                print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
-                gamemanager.isfail2 = true;
-                return;
-            }
-            for (int i = 6; i >= 0; i--)
-            {
-                if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 6)]))
-                {
-                    localsuccessscore++;
-                }
-            }
-         
-            foreach (var item in stackcreateburgur.ToArray())
-            {
-                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]) || item.gameObject.CompareTag(a[6]))
-                {
-                    locallittlesuccessscore++;
-                }
-            }
-            //이거 성공인거임
-            if (localsuccessscore == 7)
-            {
-                print("완전성공ok");
-
-                gamemanager.iscompletesuccess2 = true;
-                gamemanager.score += 500;
-            }
-            //이건 부분성공한거임
-            else if (localsuccessscore != 7 && locallittlesuccessscore == 7)
-            {
-                print("일부성공ok");
-                print(locallittlesuccessscore);
-                print(localsuccessscore);
-
-                for (int i = 0; i < 7; i++)
-                {
-                    print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
-                }
-                print(gamemanager.selectsourcecard);
-                print(gamemanager.phase1selectedsource);
-                print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
-                print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
-                print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
-                gamemanager.islittlesuccess2 = true;
-                gamemanager.score += 250;
-            }
-            else if (localsuccessscore != 7 && locallittlesuccessscore != 7)
-            {
-                print("재료가 안맞아서 실패");
-                gamemanager.isfail2 = true;
-            }
-        }
-
         //스테이지가 4이상이면
         if (gamemanager.stage >= 4)
         {
             //성공시에
             if ((gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true) && (gamemanager.iscompletesuccess2 == true || gamemanager.islittlesuccess2 == true))
             {
-                Invoke(nameof(SuccessTray), 1.1f);
+                Invoke(nameof(SuccessTray), 0.5f);
             }
             //실패시에
             else if (gamemanager.isfail == true || gamemanager.isfail2 == true)

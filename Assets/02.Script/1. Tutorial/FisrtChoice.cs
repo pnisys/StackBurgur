@@ -19,7 +19,13 @@ public class FisrtChoice : MonoBehaviour
         canvas.transform.GetChild(1).gameObject.SetActive(false);
         canvas.transform.GetChild(2).gameObject.SetActive(false);
         keyboard.SetActive(true);
-        //SceneManager.LoadScene(2);
+    }
+
+    public void GameStartEnter(string a)
+    {
+        SoundManager.instance.username = a;
+        keyboard.SetActive(false);
+        SceneManager.LoadScene(2);
     }
 
     public void Setting()
@@ -46,5 +52,13 @@ public class FisrtChoice : MonoBehaviour
         canvas.transform.GetChild(1).gameObject.SetActive(true);
         canvas.transform.GetChild(2).gameObject.SetActive(true);
         canvas.transform.GetChild(3).gameObject.SetActive(false);
+    }
+
+    public void PreviousKeyboard()
+    {
+        keyboard.SetActive(false);
+        canvas.transform.GetChild(0).gameObject.SetActive(true);
+        canvas.transform.GetChild(1).gameObject.SetActive(true);
+        canvas.transform.GetChild(2).gameObject.SetActive(true);
     }
 }
