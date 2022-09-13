@@ -465,7 +465,7 @@ public class TrayControl : MonoBehaviour
                     print("완전성공ok");
 
                     gamemanager.iscompletesuccess2 = true;
-                    gamemanager.score += 500;
+                    gamemanager.Score += 500;
                 }
                 //이건 부분성공한거임
                 else if (localsuccessscore != 4 && locallittlesuccessscore == 4)
@@ -473,7 +473,7 @@ public class TrayControl : MonoBehaviour
                     print("일부성공ok");
 
                     gamemanager.islittlesuccess2 = true;
-                    gamemanager.score += 250;
+                    gamemanager.Score += 250;
                 }
                 else if (localsuccessscore != 4 || locallittlesuccessscore != 4)
                 {
@@ -524,7 +524,7 @@ public class TrayControl : MonoBehaviour
                 {
                     print("완전성공ok");
                     gamemanager.iscompletesuccess = true;
-                    gamemanager.score += 500;
+                    gamemanager.Score += 500;
                     if (gamemanager.stage < 4)
                     {
                         Invoke(nameof(SuccessTray), 1.1f);
@@ -535,7 +535,7 @@ public class TrayControl : MonoBehaviour
                 {
                     print("부분성공ok");
                     gamemanager.islittlesuccess = true;
-                    gamemanager.score += 250;
+                    gamemanager.Score += 250;
                     if (gamemanager.stage < 4)
                     {
                         Invoke(nameof(SuccessTray), 1.1f);
@@ -573,7 +573,7 @@ public class TrayControl : MonoBehaviour
                     print("재료 개수가 안맞아서 실패 : childcount : " + burgurs.GetChild(15).childCount);
                     print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
                     print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
-                  
+
                     gamemanager.isfail2 = true;
                     return;
                 }
@@ -598,7 +598,7 @@ public class TrayControl : MonoBehaviour
                     print("완전성공ok");
 
                     gamemanager.iscompletesuccess2 = true;
-                    gamemanager.score += 500;
+                    gamemanager.Score += 500;
                 }
                 //이건 부분성공한거임
                 else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
@@ -606,7 +606,7 @@ public class TrayControl : MonoBehaviour
                     print("일부성공ok");
 
                     gamemanager.islittlesuccess2 = true;
-                    gamemanager.score += 250;
+                    gamemanager.Score += 250;
                 }
                 else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
                 {
@@ -656,7 +656,7 @@ public class TrayControl : MonoBehaviour
                 {
                     print("완전성공ok");
                     gamemanager.iscompletesuccess = true;
-                    gamemanager.score += 500;
+                    gamemanager.Score += 500;
                     if (gamemanager.stage < 4)
                     {
                         Invoke(nameof(SuccessTray), 1.1f);
@@ -667,7 +667,7 @@ public class TrayControl : MonoBehaviour
                 {
                     print("부분성공ok");
                     gamemanager.islittlesuccess = true;
-                    gamemanager.score += 250;
+                    gamemanager.Score += 250;
                     if (gamemanager.stage < 4)
                     {
                         Invoke(nameof(SuccessTray), 1.1f);
@@ -729,7 +729,7 @@ public class TrayControl : MonoBehaviour
                     print("완전성공ok");
 
                     gamemanager.iscompletesuccess2 = true;
-                    gamemanager.score += 500;
+                    gamemanager.Score += 500;
                 }
                 //이건 부분성공한거임
                 else if (localsuccessscore != 6 && locallittlesuccessscore == 6)
@@ -737,7 +737,7 @@ public class TrayControl : MonoBehaviour
                     print("일부성공ok");
 
                     gamemanager.islittlesuccess2 = true;
-                    gamemanager.score += 250;
+                    gamemanager.Score += 250;
                 }
                 else if (localsuccessscore != 6 && locallittlesuccessscore != 6)
                 {
@@ -791,7 +791,7 @@ public class TrayControl : MonoBehaviour
                     print("완전성공ok");
 
                     gamemanager.iscompletesuccess = true;
-                    gamemanager.score += 500;
+                    gamemanager.Score += 500;
                     if (gamemanager.stage < 4)
                     {
                         Invoke(nameof(SuccessTray), 1.1f);
@@ -803,7 +803,7 @@ public class TrayControl : MonoBehaviour
                     print("일부성공ok");
 
                     gamemanager.islittlesuccess = true;
-                    gamemanager.score += 250;
+                    gamemanager.Score += 250;
                     if (gamemanager.stage < 4)
                     {
                         Invoke(nameof(SuccessTray), 1.1f);
@@ -864,7 +864,7 @@ public class TrayControl : MonoBehaviour
                     print("완전성공ok");
 
                     gamemanager.iscompletesuccess2 = true;
-                    gamemanager.score += 500;
+                    gamemanager.Score += 500;
                 }
                 //이건 부분성공한거임
                 else if (localsuccessscore != 7 && locallittlesuccessscore == 7)
@@ -883,7 +883,7 @@ public class TrayControl : MonoBehaviour
                     print("gamemanager.selectsourcecard2의 태그 : " + gamemanager.selectsourcecard2.tag);
                     print("gamemanager.phase2selectedsource 이름 : " + gamemanager.phase2selectedsource);
                     gamemanager.islittlesuccess2 = true;
-                    gamemanager.score += 250;
+                    gamemanager.Score += 250;
                 }
                 else if (localsuccessscore != 7 && locallittlesuccessscore != 7)
                 {
@@ -931,7 +931,7 @@ public class TrayControl : MonoBehaviour
                 {
                     print("완전성공ok");
                     gamemanager.iscompletesuccess = true;
-                    gamemanager.score += 500;
+                    gamemanager.Score += 500;
                     if (gamemanager.stage < 4)
                     {
                         Invoke(nameof(SuccessTray), 1.1f);
@@ -942,7 +942,7 @@ public class TrayControl : MonoBehaviour
                 {
                     print("부분성공ok");
                     gamemanager.islittlesuccess = true;
-                    gamemanager.score += 250;
+                    gamemanager.Score += 250;
                     if (gamemanager.stage < 4)
                     {
                         Invoke(nameof(SuccessTray), 1.1f);
@@ -1009,7 +1009,7 @@ public class TrayControl : MonoBehaviour
                 {
                     print("완전성공ok");
                     gamemanager.iscompletesuccess = true;
-                    gamemanager.score += 500;
+                    gamemanager.Score += 500;
                     if (gamemanager.stage < 4)
                     {
                         Invoke(nameof(SuccessTray), 1.1f);
@@ -1020,7 +1020,7 @@ public class TrayControl : MonoBehaviour
                 {
                     print("부분성공ok");
                     gamemanager.islittlesuccess = true;
-                    gamemanager.score += 250;
+                    gamemanager.Score += 250;
                     if (gamemanager.stage < 4)
                     {
                         Invoke(nameof(SuccessTray), 1.1f);
@@ -1040,73 +1040,73 @@ public class TrayControl : MonoBehaviour
         }
         void LocalMenuSeletionTwoLevel2(params string[] a)
         {
-            
-                int localsuccessscore = 0;
-                int locallittlesuccessscore = 0;
 
-                if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false || gamemanager.selectsourcecard2 == null || gamemanager.phase2selectedsource == null)
-                {
-                    print("재료 개수가 안맞아서 실패");
-                    for (int i = 0; i < 5; i++)
-                    {
-                        print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
-                    }
-                    print(gamemanager.selectsourcecard);
-                    print(gamemanager.phase1selectedsource);
-                    gamemanager.isfail = true;
-                    if (gamemanager.stage < 4)
-                    {
-                        Invoke("FailTray", 3f);
-                    }
-                    return;
-                }
+            int localsuccessscore = 0;
+            int locallittlesuccessscore = 0;
+
+            if (burgurs.GetChild(0).childCount == 0 || burgurs.GetChild(1).childCount == 0 || burgurs.GetChild(2).childCount == 0 || burgurs.GetChild(3).childCount == 0 || burgurs.GetChild(4).childCount == 0 || gamemanager.selectsourcecard2.CompareTag(gamemanager.phase2selectedsource) == false || gamemanager.selectsourcecard2 == null || gamemanager.phase2selectedsource == null)
+            {
+                print("재료 개수가 안맞아서 실패");
                 for (int i = 0; i < 5; i++)
                 {
-                    if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
-                    {
-                        localsuccessscore++;
-                    }
+                    print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
                 }
+                print(gamemanager.selectsourcecard);
+                print(gamemanager.phase1selectedsource);
+                gamemanager.isfail = true;
+                if (gamemanager.stage < 4)
+                {
+                    Invoke("FailTray", 3f);
+                }
+                return;
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                if (burgurs.GetChild(i).GetChild(0).gameObject.CompareTag(a[i]))
+                {
+                    localsuccessscore++;
+                }
+            }
 
-                foreach (var item in stackcreateburgur.ToArray())
+            foreach (var item in stackcreateburgur.ToArray())
+            {
+                if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
                 {
-                    if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
-                    {
-                        locallittlesuccessscore++;
-                    }
+                    locallittlesuccessscore++;
                 }
-                //이거 성공인거임
-                if (localsuccessscore == 5)
+            }
+            //이거 성공인거임
+            if (localsuccessscore == 5)
+            {
+                print("완전성공ok");
+                gamemanager.iscompletesuccess = true;
+                gamemanager.Score += 500;
+                if (gamemanager.stage < 4)
                 {
-                    print("완전성공ok");
-                    gamemanager.iscompletesuccess = true;
-                    gamemanager.score += 500;
-                    if (gamemanager.stage < 4)
-                    {
-                        Invoke(nameof(SuccessTray), 1.1f);
-                    }
+                    Invoke(nameof(SuccessTray), 1.1f);
                 }
-                //이건 부분성공한거임
-                else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
+            }
+            //이건 부분성공한거임
+            else if (localsuccessscore != 5 && locallittlesuccessscore == 5)
+            {
+                print("부분성공ok");
+                gamemanager.islittlesuccess = true;
+                gamemanager.Score += 250;
+                if (gamemanager.stage < 4)
                 {
-                    print("부분성공ok");
-                    gamemanager.islittlesuccess = true;
-                    gamemanager.score += 250;
-                    if (gamemanager.stage < 4)
-                    {
-                        Invoke(nameof(SuccessTray), 1.1f);
-                    }
+                    Invoke(nameof(SuccessTray), 1.1f);
                 }
+            }
 
-                else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
+            else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
+            {
+                print("재료가 달라서 실패");
+                if (gamemanager.stage < 4)
                 {
-                    print("재료가 달라서 실패");
-                    if (gamemanager.stage < 4)
-                    {
-                        Invoke("FailTray", 3f);
-                    }
-                    gamemanager.isfail = true;
+                    Invoke("FailTray", 3f);
                 }
+                gamemanager.isfail = true;
+            }
         }
         void LocalMenuSeletionThreeLevel2(params string[] a)
         {
@@ -1151,7 +1151,7 @@ public class TrayControl : MonoBehaviour
                 print("완전성공ok");
 
                 gamemanager.iscompletesuccess = true;
-                gamemanager.score += 500;
+                gamemanager.Score += 500;
                 if (gamemanager.stage < 4)
                 {
                     Invoke(nameof(SuccessTray), 1.1f);
@@ -1163,7 +1163,7 @@ public class TrayControl : MonoBehaviour
                 print("일부성공ok");
 
                 gamemanager.islittlesuccess = true;
-                gamemanager.score += 250;
+                gamemanager.Score += 250;
                 if (gamemanager.stage < 4)
                 {
                     Invoke(nameof(SuccessTray), 1.1f);
@@ -1179,7 +1179,7 @@ public class TrayControl : MonoBehaviour
                 }
                 gamemanager.isfail = true;
             }
-            
+
         }
         void LocalMenuSeletionFourLevel2(params string[] a)
         {
@@ -1221,7 +1221,7 @@ public class TrayControl : MonoBehaviour
             {
                 print("완전성공ok");
                 gamemanager.iscompletesuccess = true;
-                gamemanager.score += 500;
+                gamemanager.Score += 500;
                 if (gamemanager.stage < 4)
                 {
                     Invoke(nameof(SuccessTray), 1.1f);
@@ -1232,7 +1232,7 @@ public class TrayControl : MonoBehaviour
             {
                 print("부분성공ok");
                 gamemanager.islittlesuccess = true;
-                gamemanager.score += 250;
+                gamemanager.Score += 250;
                 if (gamemanager.stage < 4)
                 {
                     Invoke(nameof(SuccessTray), 1.1f);
@@ -1334,6 +1334,37 @@ public class TrayControl : MonoBehaviour
 
     }
 
+    IEnumerator TooFast(Collider other)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            Vector3 offset = burgurs.position - other.gameObject.transform.position;
+            float sqrLen = offset.magnitude;
+            print(offset);
+            print(sqrLen);
+
+            if (sqrLen > 0.3f)
+            {
+                if (traystatus != 0)
+                {
+                    stackcreateburgur.Pop();
+                    print("여긴타냐?");
+                    //8. 남아 있는 가장 최상단에 있는 것들을 다시 잡을 수 있게 만들어 놓음
+                    stackcreateburgur.ToArray()[0].gameObject.GetComponent<Grabbable>().enabled = true;
+                    stackcreateburgur.ToArray()[0].gameObject.GetComponent<PhysicsGrabbable>().enabled = true;
+                    stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    stackcreateburgur.ToArray()[0].gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                    stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabInteractable>().enabled = true;
+                    stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabInteractable>().enabled = true;
+                    stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = true;
+                    stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabPose>().enabled = true;
+                }
+                Destroy(other.gameObject);
+                yield break;
+            }
+        }
+    }
     #region 햄버거 재료, 소스 적층 물리작용 코드
     //적층
     IEnumerator OnTriggerEnter(Collider other)
@@ -1566,6 +1597,7 @@ public class TrayControl : MonoBehaviour
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = true;
                 other.gameObject.GetComponent<FoodControl>().isInGrab = false;
                 other.gameObject.GetComponent<FoodControl>().isOutGrab = true;
+                StartCoroutine(TooFast(other));
             }
 
             //밖에서 안으로 들어온것일 때

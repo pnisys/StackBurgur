@@ -331,6 +331,7 @@ public class PeopleAnimator : MonoBehaviour
     //실패시, 테이블, 캐릭터 애니메이션 처리
     IEnumerator FailTable()
     {
+        audiosource.PlayOneShot(audioclip[1]);
         gamemanager.LifeScore--;
         //실패 애니메이션 설정
         animator.SetBool(hashfail, true);
@@ -411,8 +412,7 @@ public class PeopleAnimator : MonoBehaviour
                     }
                     yield break;
                 }
-
-
+                gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
                 //반복 끝내기
                 break;
             }

@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     public GameObject currentpeople;
     public TextMeshProUGUI GuideUiText;
     public TextMeshProUGUI GuideUiText2;
+    public TextMeshProUGUI GuideUiText3;
+
 
     public string phase1selectedsource;
     public string phase2selectedsource;
@@ -44,6 +46,18 @@ public class GameManager : MonoBehaviour
     //public Animator animator;
 
     public int score = 0;
+    public int Score
+    {
+        get
+        {
+            return score;
+        }
+        set
+        {
+            score = value;
+            GuideUiText3.text = "점수 : " + score.ToString();
+        }
+    }
     public int lifescore = 5;
     public int LifeScore
     {
@@ -54,7 +68,7 @@ public class GameManager : MonoBehaviour
         set
         {
             lifescore = value;
-            GuideUiText2.text = "점수 : " + lifescore.ToString();
+            GuideUiText2.text = "몫 : " + lifescore.ToString();
         }
     }
 
@@ -87,8 +101,12 @@ public class GameManager : MonoBehaviour
         gameObject.GetComponent<AudioSource>().volume = SoundManager.instance.bgmSound;
         GuideUiText = gameObject.transform.parent.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>();
         GuideUiText2 = gameObject.transform.parent.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>();
+        GuideUiText3 = gameObject.transform.parent.GetChild(3).GetChild(2).GetComponent<TextMeshProUGUI>();
+
         GuideUiText.text = "스테이지 : " + stage.ToString();
-        GuideUiText2.text = "점수 : " + lifescore.ToString();
+        GuideUiText2.text = "몫 : " + lifescore.ToString();
+        GuideUiText3.text = "점수 : " + score.ToString();
+
     }
 
     public GameObject selecthambugurcard;

@@ -312,8 +312,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
         viedoplayer.clip = viedoclips[0];
         viedoplayer.Play();
         patty.GetComponent<HighlightEffect>().highlighted = true;
-        patty.GetComponent<HighlightEffect>().outline = 0.07f;
-        patty.GetComponent<HighlightEffect>().innerGlow = 0.07f;
+        patty.GetComponent<HighlightEffect>().outline = 0.05f;
+        patty.GetComponent<HighlightEffect>().innerGlow = 0.1f;
         while (grabstatus.IsGrabbing == false)
         {
             yield return null;

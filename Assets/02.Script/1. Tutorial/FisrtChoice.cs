@@ -3,11 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+
 
 public class FisrtChoice : MonoBehaviour
 {
     public GameObject canvas;
     public GameObject keyboard;
+    public AudioSource audiosource;
+    public AudioClip audioclip;
+
+
+    public void ClickSound()
+    {
+        audiosource.PlayOneShot(audioclip);
+    }
+    
     public void TutorialStart()
     {
         SceneManager.LoadScene(1);
