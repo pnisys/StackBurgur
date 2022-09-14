@@ -1557,13 +1557,10 @@ public class TrayControl : MonoBehaviour
                     }
 
                     #endregion
-
-                    //if (!(other.gameObject.CompareTag(hamburgurbread) || other.gameObject.CompareTag(blackbread)))
-                    //{
+                 
                     //적층한 게임오브젝트의 position과 rotation 값을 초기화시킨다.
                     other.gameObject.transform.localRotation = Quaternion.Euler(180, 0, 0);
                     other.gameObject.transform.localPosition = new Vector3(0, 0.08f, 0);
-                    //}
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                     yield return new WaitForSeconds(0.3f);
@@ -1832,6 +1829,5 @@ public class TrayControl : MonoBehaviour
         }
     }
     #endregion
-
 
 }
