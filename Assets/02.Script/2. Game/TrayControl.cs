@@ -1339,7 +1339,7 @@ public class TrayControl : MonoBehaviour
     {
         while (other.gameObject != null)
         {
-            yield return null;
+            yield return new WaitForSeconds(1);
             Vector3 offset = burgurs.position - other.gameObject.transform.position;
             float sqrLen = offset.magnitude;
             print(offset);
@@ -1381,6 +1381,10 @@ public class TrayControl : MonoBehaviour
                     print("딱히 작동시킬것 없음");
                     yield break;
                 }
+            }
+            else
+            {
+                print("아직 거리 못넘음");
             }
         }
     }
@@ -1518,7 +1522,6 @@ public class TrayControl : MonoBehaviour
             }
         }
 
-
         //트레이를 벗어나서 버릴 때는 이 함수가 맞음
         //고기가 불판을 갔다가, 다시 입장할 때
         //다시 쌓을 때가 있고, 버릴 때가 있다.
@@ -1577,7 +1580,7 @@ public class TrayControl : MonoBehaviour
                         stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = false;
                         stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabPose>().enabled = false;
                     }
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.3f);
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                     other.gameObject.GetComponent<FoodControl>().isInGrab = true;
 
@@ -1593,12 +1596,14 @@ public class TrayControl : MonoBehaviour
             //안에 있을 때 잡을 때
             if (other.gameObject.GetComponent<FoodControl>().isInGrab == true)
             {
-                audiosource.PlayOneShot(audioclips[0]);
                 print("안에 있는데 잡을 때");
+                audiosource.PlayOneShot(audioclips[0]);
                 yield return new WaitForSeconds(0.2f);
+                print(other.gameObject);
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = true;
                 other.gameObject.GetComponent<FoodControl>().isInGrab = false;
                 other.gameObject.GetComponent<FoodControl>().isOutGrab = true;
+                print(other.gameObject);
                 StartCoroutine(TooFast(other));
                 yield break;
             }
@@ -1627,12 +1632,13 @@ public class TrayControl : MonoBehaviour
                         {
                             yield break;
                         }
-                        //놓는데 트레이밖, 그릴도 아니면
+                        //놓는데 트레이밖이고, 그릴도 아니면
                         else if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
                         {
                             other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                             yield break;
                         }
+
                         audiosource.PlayOneShot(audioclips[0]);
 
                         #region 1. 만약 13개보다 더 쌓는다면? 그냥 Destory 해버리기
@@ -1686,7 +1692,7 @@ public class TrayControl : MonoBehaviour
                             stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = false;
                             stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabPose>().enabled = false;
                         }
-                        yield return new WaitForSeconds(1f);
+                        yield return new WaitForSeconds(0.3f);
                         other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                         other.gameObject.GetComponent<FoodControl>().isInGrab = true;
 
