@@ -202,19 +202,24 @@ public class TutorialTrayControl : MonoBehaviour
                 print(sqrLen);
                 if (sqrLen > 0.3f)
                 {
+                    print(traystatus);
                     if (traystatus == 1)
                     {
+                        print("여기탐?");
+                        Destroy(other.gameObject);
                         stackcreateburgur.Pop();
+                        traystatus = stackcreateburgur.ToArray().Length;
                         if (burgursource.GetChild(0).gameObject != null)
                         {
                             burgursource.GetChild(0).gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             burgursource.GetChild(0).gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                         }
-                        Destroy(other.gameObject);
                     }
                     else if (traystatus >= 1)
                     {
+                        Destroy(other.gameObject);
                         stackcreateburgur.Pop();
+                        traystatus = stackcreateburgur.ToArray().Length;
                         if (burgursource.GetChild(0).gameObject != null)
                         {
                             burgursource.GetChild(0).gameObject.GetComponent<BoxCollider>().isTrigger = false;
@@ -230,7 +235,6 @@ public class TutorialTrayControl : MonoBehaviour
                         stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabInteractable>().enabled = true;
                         stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = true;
                         stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabPose>().enabled = true;
-                        Destroy(other.gameObject);
                     }
                 }
             }
@@ -598,26 +602,30 @@ public class TutorialTrayControl : MonoBehaviour
             {
                 Vector3 offset = burgurs.position - other.gameObject.transform.position;
                 float sqrLen = offset.magnitude;
-                if (sqrLen > 1f)
+                if (sqrLen > 0.3f)
                 {
-                    print("나간거?" + sqrLen);
-                    other.gameObject.GetComponent<FoodControl>().isEntry = false;
-                    other.gameObject.GetComponent<FoodControl>().isOutGrab = false;
-                }
-                else
-                {
-                    Destroy(other.gameObject);
-                    //3. stack에서 빼버린다.
-                    stackcreateburgur.Pop();
-                    //6.  stack의 배열길이를 트레이상태로 업데이트
-                    traystatus = stackcreateburgur.ToArray().Length;
-                    if (traystatus != 0)
+                    if (traystatus == 1)
                     {
+                        print("여기탐?");
+                        Destroy(other.gameObject);
+                        stackcreateburgur.Pop();
                         if (burgursource.GetChild(0).gameObject != null)
                         {
                             burgursource.GetChild(0).gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             burgursource.GetChild(0).gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                         }
+                    }
+                    else if (traystatus >= 1)
+                    {
+                        print("여기탐?");
+                        Destroy(other.gameObject);
+                        stackcreateburgur.Pop();
+                        if (burgursource.GetChild(0).gameObject != null)
+                        {
+                            burgursource.GetChild(0).gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                            burgursource.GetChild(0).gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                        }
+                        print("여긴타냐?");
                         //8. 남아 있는 가장 최상단에 있는 것들을 다시 잡을 수 있게 만들어 놓음
                         stackcreateburgur.ToArray()[0].gameObject.GetComponent<Grabbable>().enabled = true;
                         stackcreateburgur.ToArray()[0].gameObject.GetComponent<PhysicsGrabbable>().enabled = true;
@@ -628,7 +636,6 @@ public class TutorialTrayControl : MonoBehaviour
                         stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = true;
                         stackcreateburgur.ToArray()[0].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabPose>().enabled = true;
                     }
-                    yield break;
                 }
             }
             audiosource.PlayOneShot(audioclips[0]);
