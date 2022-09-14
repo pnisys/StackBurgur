@@ -1590,7 +1590,6 @@ public class TrayControl : MonoBehaviour
                     //10.  처음 쌓는 거 말고, 두번 째부터 쌓을 때
                     if (traystatus != 1)
                     {
-
                         //11.  놓은 것 직전의 것은 못집게 잡는 컴포넌트 모두 Off시킴
                         stackcreateburgur.ToArray()[1].gameObject.GetComponent<Grabbable>().enabled = false;
                         stackcreateburgur.ToArray()[1].gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;

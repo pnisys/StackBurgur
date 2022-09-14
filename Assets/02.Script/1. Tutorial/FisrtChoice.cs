@@ -13,6 +13,7 @@ public class FisrtChoice : MonoBehaviour
     public GameObject keyboard;
     public AudioSource audiosource;
     public AudioClip audioclip;
+    public AudioSource bgmsource;
 
 
     public void ClickSound()
@@ -53,10 +54,12 @@ public class FisrtChoice : MonoBehaviour
     public void BgmSoundControl()
     {
         SoundManager.instance.bgmSound = canvas.transform.GetChild(3).GetChild(2).GetComponent<Slider>().value;
+        bgmsource.volume = SoundManager.instance.bgmSound;
     }
     public void AnotherSound()
     {
         SoundManager.instance.anothersound = canvas.transform.GetChild(3).GetChild(3).GetComponent<Slider>().value;
+        audiosource.volume = SoundManager.instance.anothersound;
     }
     public void Previous()
     {
