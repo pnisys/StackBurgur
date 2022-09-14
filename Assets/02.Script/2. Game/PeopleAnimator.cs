@@ -104,7 +104,7 @@ public class PeopleAnimator : MonoBehaviour
         if (gamemanager.stage == 1)
         {
             gamemanager.level = 1;
-            gamemanager.limitTime = 15f;
+            gamemanager.limitTime = 30f;
             gamemanager.orderlimitTime = 30f;
         }
         else if (gamemanager.stage == 2)

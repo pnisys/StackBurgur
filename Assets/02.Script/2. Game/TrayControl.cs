@@ -29,7 +29,7 @@ public class TrayControl : MonoBehaviour
     public int traystatus = 0;
     //public int successscore = 0;
     //public int littlesuccessscore = 0;
-    public float between = 0.02f;
+    public float between = 0.01f;
 
     public Stack<GameObject> stackcreateburgur = new Stack<GameObject>();
 
@@ -1339,7 +1339,7 @@ public class TrayControl : MonoBehaviour
     {
         while (other.gameObject != null)
         {
-            yield return new WaitForSeconds(1f);
+            yield return null;
             Vector3 offset = burgurs.position - other.gameObject.transform.position;
             float sqrLen = offset.magnitude;
             print(offset);
@@ -1347,6 +1347,7 @@ public class TrayControl : MonoBehaviour
             if (sqrLen > 0.3f)
             {
                 Destroy(other.gameObject);
+                print("여기서 삭제");
                 stackcreateburgur.Pop();
                 traystatus = stackcreateburgur.ToArray().Length;
                 if (traystatus != 0)
@@ -1553,21 +1554,18 @@ public class TrayControl : MonoBehaviour
                     else
                     {
                         Destroy(other.gameObject);
+                        print("여기서 삭제");
                         yield break;
                     }
 
                     #endregion
-                 
+
                     //적층한 게임오브젝트의 position과 rotation 값을 초기화시킨다.
                     other.gameObject.transform.localRotation = Quaternion.Euler(180, 0, 0);
                     other.gameObject.transform.localPosition = new Vector3(0, 0.08f, 0);
+
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                    yield return new WaitForSeconds(0.3f);
-                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    other.gameObject.GetComponent<FoodControl>().isInGrab = true;
-
-                    //10.  처음 쌓는 거 말고, 두번 째부터 쌓을 때
                     if (traystatus != 1)
                     {
                         //11.  놓은 것 직전의 것은 못집게 잡는 컴포넌트 모두 Off시킴
@@ -1579,6 +1577,11 @@ public class TrayControl : MonoBehaviour
                         stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = false;
                         stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabPose>().enabled = false;
                     }
+                    yield return new WaitForSeconds(1f);
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    other.gameObject.GetComponent<FoodControl>().isInGrab = true;
+
+                    //10.  처음 쌓는 거 말고, 두번 째부터 쌓을 때
                     yield break;
                 }
             }
@@ -1646,6 +1649,7 @@ public class TrayControl : MonoBehaviour
                         else
                         {
                             Destroy(other.gameObject);
+                            print("여기서 삭제");
                             yield break;
                         }
 
@@ -1670,10 +1674,6 @@ public class TrayControl : MonoBehaviour
                         }
                         other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                         other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                        yield return new WaitForSeconds(0.3f);
-                        other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                        other.gameObject.GetComponent<FoodControl>().isInGrab = true;
-
                         //10.  처음 쌓는 거 말고, 두번 째부터 쌓을 때
                         if (traystatus != 1)
                         {
@@ -1686,6 +1686,10 @@ public class TrayControl : MonoBehaviour
                             stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(0).gameObject.GetComponent<HandGrabPose>().enabled = false;
                             stackcreateburgur.ToArray()[1].gameObject.transform.GetChild(1).gameObject.GetComponent<HandGrabPose>().enabled = false;
                         }
+                        yield return new WaitForSeconds(1f);
+                        other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                        other.gameObject.GetComponent<FoodControl>().isInGrab = true;
+
                     }
                 }
             }
@@ -1746,6 +1750,7 @@ public class TrayControl : MonoBehaviour
             else if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isOutGrab == true)
             {
                 Destroy(other.gameObject);
+                print("여기서 삭제");
                 stackcreateburgur.Pop();
                 traystatus = stackcreateburgur.ToArray().Length;
                 if (traystatus != 0)
