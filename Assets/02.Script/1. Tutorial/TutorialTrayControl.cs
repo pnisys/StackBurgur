@@ -151,8 +151,6 @@ public class TutorialTrayControl : MonoBehaviour
                 tutorialgamemanager.iscompletesuccess = true;
                 print("완벽한성공");
                 Invoke(nameof(SuccessTray), 1.1f);
-
-
             }
             //이건 부분성공한거임
             else if (successscore != 3 && littlesuccessscore == 3 && sourcecorrect == true)
@@ -176,14 +174,15 @@ public class TutorialTrayControl : MonoBehaviour
         mantray.gameObject.SetActive(true);
         foreach (var item in stackcreateburgur.ToArray())
         {
-            if (burgursource.GetChild(0) == null)
-            {
-                return;
-            }
-            else
+            if (burgurs.childCount != 0)
             {
                 Destroy(burgursource.GetChild(0).gameObject);
             }
+            else
+            {
+                return;
+            }
+            
             item.transform.parent = mantray;
             item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.4219f, 0);
         }
@@ -373,6 +372,7 @@ public class TutorialTrayControl : MonoBehaviour
                 //들어왔다가 다시나가면?
                 if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
                 {
+                    other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
                     yield break;
                 }
                 yield return null;

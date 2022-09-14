@@ -20,7 +20,7 @@ public class FisrtChoice : MonoBehaviour
     {
         audiosource.PlayOneShot(audioclip);
     }
-    
+
     public void TutorialStart()
     {
         SceneManager.LoadScene(1);
@@ -31,7 +31,8 @@ public class FisrtChoice : MonoBehaviour
         canvas.transform.GetChild(0).gameObject.SetActive(false);
         canvas.transform.GetChild(1).gameObject.SetActive(false);
         canvas.transform.GetChild(2).gameObject.SetActive(false);
-        keyboard.SetActive(true);
+        SceneManager.LoadScene(2);
+        //keyboard.SetActive(true);
     }
 
     public void GameStartEnter(string a)

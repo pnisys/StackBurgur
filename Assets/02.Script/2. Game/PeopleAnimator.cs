@@ -534,10 +534,17 @@ public class PeopleAnimator : MonoBehaviour
                 selectsourcecard2 = sourceCard[sourcenumber[1]];
                 gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
 
-                OneLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 0.37f, 0);
-                OneLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -0.73f, 0);
-                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(0.057f, 0.37f, 0);
-                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(0.057f, -0.73f, 0);
+                OneLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 52.4f, 0);
+                OneLevelBurgerCard[hambugernumber[0]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                OneLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -67.89999f, 0);
+                OneLevelBurgerCard[hambugernumber[1]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(48, 52.4f, 0);
+                sourceCard[sourcenumber[0]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(48, -67.89999f, 0);
+                sourceCard[sourcenumber[1]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
             }
             OneLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = OneLevelBurgerCard[hambugernumber[0]];
@@ -555,10 +562,17 @@ public class PeopleAnimator : MonoBehaviour
                 selectsourcecard2 = sourceCard[sourcenumber[1]];
                 gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
 
-                TwoLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 0.37f, 0);
-                TwoLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -0.73f, 0);
-                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(0.057f, 0.37f, 0);
-                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(0.057f, -0.73f, 0);
+                TwoLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 52.4f, 0);
+                TwoLevelBurgerCard[hambugernumber[0]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                TwoLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -67.89999f, 0);
+                TwoLevelBurgerCard[hambugernumber[1]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(48, 52.4f, 0);
+                sourceCard[sourcenumber[0]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(48, -67.89999f, 0);
+                sourceCard[sourcenumber[1]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
             }
             TwoLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = TwoLevelBurgerCard[hambugernumber[0]];
@@ -576,10 +590,17 @@ public class PeopleAnimator : MonoBehaviour
                 selectsourcecard2 = sourceCard[sourcenumber[1]];
                 gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
 
-                ThreeLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 0.37f, 0);
-                ThreeLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -0.73f, 0);
-                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(0.057f, 0.37f, 0);
-                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(0.057f, -0.73f, 0);
+                ThreeLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 52.4f, 0);
+                ThreeLevelBurgerCard[hambugernumber[0]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                ThreeLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -67.89999f, 0);
+                ThreeLevelBurgerCard[hambugernumber[1]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(48, 52.4f, 0);
+                sourceCard[sourcenumber[0]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(48, -67.89999f, 0);
+                sourceCard[sourcenumber[1]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
             }
             ThreeLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = ThreeLevelBurgerCard[hambugernumber[0]];
@@ -597,10 +618,17 @@ public class PeopleAnimator : MonoBehaviour
                 selectsourcecard2 = sourceCard[sourcenumber[1]];
                 gamemanager.selectsourcecard2 = sourceCard[sourcenumber[1]];
 
-                FourLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 0.37f, 0);
-                FourLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -0.73f, 0);
-                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(0.057f, 0.37f, 0);
-                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(0.057f, -0.73f, 0);
+                FourLevelBurgerCard[hambugernumber[0]].transform.localPosition = new Vector3(0, 52.4f, 0);
+                FourLevelBurgerCard[hambugernumber[0]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                FourLevelBurgerCard[hambugernumber[1]].transform.localPosition = new Vector3(0, -67.89999f, 0);
+                FourLevelBurgerCard[hambugernumber[1]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                sourceCard[sourcenumber[0]].transform.localPosition = new Vector3(48, 52.4f, 0);
+                sourceCard[sourcenumber[0]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
+
+                sourceCard[sourcenumber[1]].transform.localPosition = new Vector3(48, -67.89999f, 0);
+                sourceCard[sourcenumber[1]].transform.localScale = new Vector3(1.686302f, 1.302871f, 1.686302f);
             }
             FourLevelBurgerCard[hambugernumber[0]].SetActive(true);
             selecthambugurcard = FourLevelBurgerCard[hambugernumber[0]];

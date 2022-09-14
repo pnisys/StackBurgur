@@ -43,7 +43,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
     public TutorialTrayControl tutorialtraycontrol;
     public GameObject[] sourceCard;
 
-
+    GameObject mood;
     public GameObject selecthambugurcard;
     //public GameObject selectsourcecard;
     public TextMeshProUGUI guidetext;
@@ -89,6 +89,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
 
     private void Start()
     {
+        mood= transform.GetChild(4).gameObject;
         audiosource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -211,6 +212,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
                 //검사 후 성공이면
                 if (tutorialgamemanager.iscompletesuccess == true || tutorialgamemanager.islittlesuccess == true)
                 {
+                    mood.SetActive(true);
+                    mood.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
                     audiosource.PlayOneShot(audioclip2[2]);
                     audiosource.PlayOneShot(audioclip[6]);
                     //테이블 10개 중 순차적으로 앉고, 만약 이전 손님이 테이블에 앉았으면
@@ -227,6 +230,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
                             agent.destination = table[i].transform.position;
                             //근처 일정 범위안으로 들어가면
                             yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                            mood.SetActive(false);
+                            mood.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
                             audiosource.Stop();
 
                             //agent가 멈추기
@@ -239,7 +244,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                             transform.localRotation = tablerotation[i];
                             //먹는 애니메이션 실행
                             animator.SetBool(hasheat, true);
-                            gameObject.transform.GetChild(16).localPosition = new Vector3(0, 0.831f, 0.579f);
+                            gameObject.transform.GetChild(17).localPosition = new Vector3(0, 0.831f, 0.579f);
                             //들어간 테이블은 닫게 하기
                             istable[i] = true;
                             //반복 끝내기
@@ -256,13 +261,16 @@ public class TutorialPeopleAnimator : MonoBehaviour
                 //검사 후 실패면
                 else if (tutorialgamemanager.isfail)
                 {
+                    mood.SetActive(true);
+                    mood.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                     //실패 애니메이션 설정
                     animator.SetBool(hashfail, true);
                     yield return new WaitForSeconds(2f);
                     audiosource.PlayOneShot(audioclip[7]);
                     audiosource.PlayOneShot(audioclip2[1]);
                     yield return new WaitForSeconds(3f);
-
+                    mood.SetActive(false);
+                    mood.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                     //문으로 간다.
                     agent.destination = door.transform.position;
                     audiosource.clip = audioclip2[4];

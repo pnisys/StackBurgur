@@ -1275,7 +1275,7 @@ public class TrayControl : MonoBehaviour
     //성공시 트레이에 햄버거 놓이는 함수
     void SuccessTray()
     {
-        if (burgursource.GetChild(0) == null)
+        if (burgursource.childCount == 0)
         {
             return;
         }
@@ -1283,6 +1283,7 @@ public class TrayControl : MonoBehaviour
         {
             Destroy(burgursource.GetChild(0).gameObject);
         }
+     
         if (gamemanager.stage >= 4)
         {
             int childcount = burgurs.GetChild(15).childCount;
@@ -1535,6 +1536,7 @@ public class TrayControl : MonoBehaviour
                 //들어왔다가 다시나가면?
                 if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
                 {
+                    other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
                     yield break;
                 }
                 if (grabstatus.IsGrabbing == false)
