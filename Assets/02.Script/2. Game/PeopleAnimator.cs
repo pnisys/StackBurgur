@@ -60,6 +60,26 @@ public class PeopleAnimator : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < OneLevelBurgerCard.Length; i++)
+        {
+            OneLevelBurgerCard[i] = transform.GetChild(2).GetChild(0).GetChild(1).GetChild(i).gameObject;
+        }
+        for (int i = 0; i < TwoLevelBurgerCard.Length; i++)
+        {
+            TwoLevelBurgerCard[i] = transform.GetChild(2).GetChild(0).GetChild(2).GetChild(i).gameObject;
+        }
+        for (int i = 0; i < ThreeLevelBurgerCard.Length; i++)
+        {
+            ThreeLevelBurgerCard[i] = transform.GetChild(2).GetChild(0).GetChild(3).GetChild(i).gameObject;
+        }
+        for (int i = 0; i < FourLevelBurgerCard.Length; i++)
+        {
+            FourLevelBurgerCard[i] = transform.GetChild(2).GetChild(0).GetChild(4).GetChild(i).gameObject;
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            sourceCard[i] = transform.GetChild(2).GetChild(1).GetChild(i).gameObject;
+        }
         audiosource = GetComponent<AudioSource>();
         audiosource.volume = SoundManager.instance.anothersound;
         animator = GetComponent<Animator>();
