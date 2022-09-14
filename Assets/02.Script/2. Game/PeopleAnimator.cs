@@ -16,6 +16,7 @@ public class PeopleAnimator : MonoBehaviour
     public AudioClip[] audioclip;
     GameObject door;
     GameObject clerkcollider;
+    GameObject mood;
     public Ranking ranking;
 
     public List<int> sourcenumber = new List<int>();
@@ -80,6 +81,7 @@ public class PeopleAnimator : MonoBehaviour
         {
             sourceCard[i] = transform.GetChild(2).GetChild(1).GetChild(i).gameObject;
         }
+        mood = transform.GetChild(4).gameObject;
         audiosource = GetComponent<AudioSource>();
         audiosource.volume = SoundManager.instance.anothersound;
         animator = GetComponent<Animator>();
@@ -355,12 +357,16 @@ public class PeopleAnimator : MonoBehaviour
         gamemanager.LifeScore--;
         //실패 애니메이션 설정
         animator.SetBool(hashfail, true);
+        mood.SetActive(true);
+        mood.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
         //점수 다 깎였을 떄
         if (gamemanager.lifescore == 0)
         {
             StartCoroutine(Died());
         }
         yield return new WaitForSeconds(5f);
+        mood.SetActive(false);
+        mood.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
         //문으로 간다.
         agent.destination = door.transform.position;
         audiosource.clip = audioclip[4];
@@ -382,6 +388,8 @@ public class PeopleAnimator : MonoBehaviour
     //성공시, 테이블, 캐릭터 애니메이션 처리
     IEnumerator SucessTable()
     {
+        mood.SetActive(true);
+        mood.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
         audiosource.PlayOneShot(audioclip[2]);
         //테이블 숫자 한명 늘려주고
         gamemanager.tablepeoplenumbur++;
@@ -392,14 +400,17 @@ public class PeopleAnimator : MonoBehaviour
         {
             if (gamemanager.istable[i] == false)
             {
-                //성공의 애니메이션
                 animator.SetBool(hashSuccess, true);
+                //yield return new WaitForSeconds(3f);
+                //성공의 애니메이션
                 //테이블로 가게 하기
                 agent.destination = table[i].transform.position;
                 audiosource.clip = audioclip[4];
                 audiosource.Play();
                 //근처 일정 범위안으로 들어가면
                 yield return new WaitUntil(() => agent.velocity.sqrMagnitude >= 0.2f && agent.remainingDistance <= 1);
+                mood.SetActive(false);
+                mood.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
                 audiosource.Stop();
                 //agent가 멈추기
                 agent.isStopped = true;
