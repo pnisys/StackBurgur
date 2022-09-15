@@ -14,6 +14,7 @@ public class TutorialMeatControl : MonoBehaviour
     public GameObject meateffect;
     public GameObject saveffect;
     bool ismeateffect = false;
+    bool full;
     HandGrabInteractor grabstatus;
     Rigidbody rb;
     GameObject grill;
@@ -91,6 +92,7 @@ public class TutorialMeatControl : MonoBehaviour
                     {
                         if (grilltransform[i].childCount == 0)
                         {
+                            full = true;
                             gameObject.transform.parent = grilltransform[i];
                             gameObject.GetComponent<Rigidbody>().useGravity = false;
                             gameObject.transform.localPosition = new Vector3(0, 0, 0);
@@ -99,6 +101,10 @@ public class TutorialMeatControl : MonoBehaviour
                             isposition = true;
                             break;
                         }
+                    }
+                    if(full==false)
+                    {
+                        Destroy(gameObject);
                     }
                 }
             }
@@ -127,6 +133,23 @@ public class TutorialMeatControl : MonoBehaviour
                     OnBadMeeting();
                 }
             }
+        }
+    }
+
+    void FullChecking()
+    {
+        print("Ǯüŷ");
+        int fullcheck = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            if (grilltransform[i].childCount == 1)
+            {
+                fullcheck++;
+            }
+        }
+        if (fullcheck == 4)
+        {
+            Destroy(gameObject);
         }
     }
     IEnumerator OnTriggerEnter(Collider other)

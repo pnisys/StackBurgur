@@ -32,7 +32,7 @@ public class TutorialGamemanager : MonoBehaviour
     //생각 풍선 보여주는 시간
     public float orderlimitTime = 15;
     //주문 시간 30초
-    public float limitTime = 30;
+    public float limitTime = 90;
 
     private void Start()
     {

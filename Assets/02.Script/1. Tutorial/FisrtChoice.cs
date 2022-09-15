@@ -55,7 +55,10 @@ public class FisrtChoice : MonoBehaviour
     public void BgmSoundControl()
     {
         SoundManager.instance.bgmSound = canvas.transform.GetChild(3).GetChild(2).GetComponent<Slider>().value;
-        bgmsource.volume = SoundManager.instance.bgmSound;
+        if (SoundManager.instance.bgmSound <= 0.8)
+        {
+            bgmsource.volume = SoundManager.instance.bgmSound;
+        }
     }
     public void AnotherSound()
     {

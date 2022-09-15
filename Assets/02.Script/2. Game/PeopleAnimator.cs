@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.AI;
 using Oculus.Interaction.HandGrab;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class PeopleAnimator : MonoBehaviour
 {
     Animator animator;
@@ -32,11 +33,21 @@ public class PeopleAnimator : MonoBehaviour
     public GameManager gamemanager;
     public Transform mantray;
 
+
     public delegate void LimitTimeComplete();
     public static event LimitTimeComplete OnLimitTimeComplete;
 
     public delegate void MeatHighlight();
     public static event MeatHighlight OnMeatHighlight;
+
+    public delegate void StageChange();
+    public static event StageChange OnStageChange;
+
+    public delegate void LifeDie();
+    public static event LifeDie OnLifeDie;
+
+    public delegate void GameClear();
+    public static event GameClear OnClear;
 
     public GameObject selecthambugurcard;
     public GameObject selecthambugurcard2;
@@ -59,7 +70,7 @@ public class PeopleAnimator : MonoBehaviour
     public bool phase1source = false;
     public bool phase2source = false;
 
-    private void Start()
+    void Start()
     {
         for (int i = 0; i < OneLevelBurgerCard.Length; i++)
         {
@@ -98,7 +109,6 @@ public class PeopleAnimator : MonoBehaviour
         table[9] = GameObject.FindGameObjectWithTag("10TABLE");
         door = GameObject.FindGameObjectWithTag("DOOR");
         clerkcollider = GameObject.FindGameObjectWithTag("CLERKCOLLIDER");
-        agent.destination = clerkcollider.transform.position;
         audiosource.PlayOneShot(audioclip[3]);
         audiosource.clip = audioclip[4];
         audiosource.Play();
@@ -117,6 +127,7 @@ public class PeopleAnimator : MonoBehaviour
         RandomNumberSelect();
 
         StageLevelRandom();
+        agent.destination = clerkcollider.transform.position;
     }
 
     //스테이지,난이도 판독 함수
@@ -126,15 +137,15 @@ public class PeopleAnimator : MonoBehaviour
         if (gamemanager.stage == 1)
         {
             gamemanager.level = 1;
-            gamemanager.limitTime = 30f;
-            gamemanager.orderlimitTime = 30f;
+            gamemanager.limitTime = 15f;
+            gamemanager.orderlimitTime = 90f;
         }
         else if (gamemanager.stage == 2)
         {
             randomstage = UnityEngine.Random.Range(1, 3);
             gamemanager.level = randomstage;
             gamemanager.limitTime = 15f;
-            gamemanager.orderlimitTime = 30f;
+            gamemanager.orderlimitTime = 90f;
 
         }
         else if (gamemanager.stage == 3)
@@ -142,15 +153,15 @@ public class PeopleAnimator : MonoBehaviour
             randomstage = UnityEngine.Random.Range(2, 4);
             gamemanager.level = randomstage;
             gamemanager.limitTime = 15f;
-            gamemanager.orderlimitTime = 30f;
+            gamemanager.orderlimitTime = 90f;
 
         }
         else if (gamemanager.stage == 4)
         {
             randomstage = UnityEngine.Random.Range(1, 4);
             gamemanager.level = randomstage;
-            gamemanager.limitTime = 5f;
-            gamemanager.orderlimitTime = 30f;
+            gamemanager.limitTime = 30f;
+            gamemanager.orderlimitTime = 150f;
 
         }
         else if (gamemanager.stage == 5)
@@ -158,7 +169,7 @@ public class PeopleAnimator : MonoBehaviour
             randomstage = UnityEngine.Random.Range(3, 5);
             gamemanager.level = randomstage;
             gamemanager.limitTime = 30f;
-            gamemanager.orderlimitTime = 30f;
+            gamemanager.orderlimitTime = 150f;
         }
     }
 
@@ -362,6 +373,7 @@ public class PeopleAnimator : MonoBehaviour
         //점수 다 깎였을 떄
         if (gamemanager.lifescore == 0)
         {
+            OnLifeDie();
             StartCoroutine(Died());
         }
         yield return new WaitForSeconds(5f);
@@ -438,6 +450,7 @@ public class PeopleAnimator : MonoBehaviour
                     //게임 모두 클리어
                     else
                     {
+                        OnClear();
                         StartCoroutine(StageComplete5());
                         gamemanager.isClerk = false;
                     }
@@ -461,9 +474,6 @@ public class PeopleAnimator : MonoBehaviour
     {
         //ranking.ScoreSet(gamemanager.score, SoundManager.instance.username,gamemanager.stage);
         audiosource.PlayOneShot(audioclip[8]);
-        gamemanager.GuideUiText.text = "게임 오버";
-        gamemanager.GuideUiText.fontSize = 0.05f;
-        gamemanager.GuideUiText2.text = null;
         gamemanager.GetComponent<AudioSource>().Stop();
         yield return new WaitForSeconds(4f);
         SceneManager.LoadScene(0);
@@ -475,9 +485,9 @@ public class PeopleAnimator : MonoBehaviour
         GameManagerInit();
         gamemanager.GetComponent<AudioSource>().Stop();
         audiosource.PlayOneShot(audioclip[9]);
-        gamemanager.GuideUiText.text = "게임 모두 클리어";
-        gamemanager.GuideUiText.fontSize = 0.05f;
-        gamemanager.GuideUiText2.text = null;
+        //gamemanager.GuideUiText.text = "게임 모두 클리어";
+        //gamemanager.GuideUiText.fontSize = 0.05f;
+        //gamemanager.GuideUiText2.text = null;
         yield return new WaitForSeconds(4);
         SceneManager.LoadScene(0);
     }
@@ -487,8 +497,9 @@ public class PeopleAnimator : MonoBehaviour
     {
         //스테이지 업!
         gamemanager.Stage++;
+        OnStageChange();
         gamemanager.tablepeoplenumbur = 0;
-        gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
+        //gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
         //기존 테이블에 있던 손님들 다시 People에 넣고 초기화시키고
         foreach (var item in gamemanager.uppeople)
         {
@@ -505,8 +516,6 @@ public class PeopleAnimator : MonoBehaviour
                 gamemanager.istable[i] = false;
             }
         }
-        //이제 다른 사람 한명을 켜야됨
-        gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
         GameManagerInit();
     }
 
