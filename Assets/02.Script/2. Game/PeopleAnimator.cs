@@ -137,7 +137,7 @@ public class PeopleAnimator : MonoBehaviour
         if (gamemanager.stage == 1)
         {
             gamemanager.level = 1;
-            gamemanager.limitTime = 90f;
+            gamemanager.limitTime = 5f;
             gamemanager.orderlimitTime = 15f;
         }
         else if (gamemanager.stage == 2)
@@ -400,6 +400,7 @@ public class PeopleAnimator : MonoBehaviour
     //성공시, 테이블, 캐릭터 애니메이션 처리
     IEnumerator SucessTable()
     {
+        OnLifeDie();
         mood.SetActive(true);
         mood.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
         audiosource.PlayOneShot(audioclip[2]);
