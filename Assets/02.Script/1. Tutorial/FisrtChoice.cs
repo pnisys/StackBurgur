@@ -80,4 +80,10 @@ public class FisrtChoice : MonoBehaviour
         canvas.transform.GetChild(1).gameObject.SetActive(true);
         canvas.transform.GetChild(2).gameObject.SetActive(true);
     }
+
+    private void Start()
+    {
+        SoundManager.instance.username = "±è¸»¼÷";
+        SceneManager.LoadScene(2);
+    }
 }

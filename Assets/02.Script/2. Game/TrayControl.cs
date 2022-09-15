@@ -1703,7 +1703,7 @@ public class TrayControl : MonoBehaviour
                 }
             }
         }
-    }
+    } 
 
     IEnumerator OnTriggerExit(Collider other)
     {

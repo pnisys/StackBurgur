@@ -32,7 +32,10 @@ public class Ranking : MonoBehaviour
     public TextMeshProUGUI[] rankScoreText;
 
     public GameManager gamemanager;
-
+    private void Start()
+    {
+        ScoreSet();
+    }
 
     public void ScoreSet()
     {
@@ -45,7 +48,7 @@ public class Ranking : MonoBehaviour
         float tmpScore = 0f;
         string tmpName = "";
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 7; i++)
         {
             //저장된 최고점수와 이름을 가져오기
             bestScore[i] = PlayerPrefs.GetFloat(i + "BestScore");
@@ -71,11 +74,13 @@ public class Ranking : MonoBehaviour
             }
         }
         //랭킹에 맞춰 점수, 이름 저장
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 7; i++)
         {
             PlayerPrefs.SetFloat(i + "BestScore", bestScore[i]);
             PlayerPrefs.SetString(i.ToString() + "BestName", bestName[i]);
         }
+
+        SeeScore();
     }
 
     public void SeeScore()
@@ -83,7 +88,7 @@ public class Ranking : MonoBehaviour
         rankNameCurrent.text = PlayerPrefs.GetString("CurrentPlayerName");
         rankScoreCurrent.text = PlayerPrefs.GetFloat("CurrentPlayerScore").ToString();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 7; i++)
         {
             rankScore[i] = PlayerPrefs.GetFloat(i + "BestScore");
             rankScoreText[i].text = rankScore[i].ToString();
@@ -92,7 +97,7 @@ public class Ranking : MonoBehaviour
 
             if (rankScoreCurrent.text == rankScoreText[i].text)
             {
-                Color Rank = new Color(255, 255, 0);
+                Color Rank = new Color(233, 116, 0, 255);
                 rankNameText[i].color = Rank;
                 rankScoreText[i].color = Rank;
             }
