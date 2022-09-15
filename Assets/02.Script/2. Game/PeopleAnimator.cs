@@ -162,18 +162,14 @@ public class PeopleAnimator : MonoBehaviour
             gamemanager.level = randomstage;
             gamemanager.limitTime = 75f;
             gamemanager.orderlimitTime = 30f;
-            //gamemanager.limitTime = 10f;
-            //gamemanager.orderlimitTime = 30f;
 
         }
         else if (gamemanager.stage == 5)
         {
             randomstage = UnityEngine.Random.Range(3, 5);
             gamemanager.level = randomstage;
-            gamemanager.limitTime = 10f;
+            gamemanager.limitTime = 60f;
             gamemanager.orderlimitTime = 30f;
-            //gamemanager.limitTime = 60f;
-            //gamemanager.orderlimitTime = 30f;
         }
     }
 
@@ -328,7 +324,7 @@ public class PeopleAnimator : MonoBehaviour
         }
         else if (gamemanager.stage == 5)
         {
-            gamemanager.limitTime = 30f;
+            gamemanager.limitTime = 60f;
         }
         while (true)
         {

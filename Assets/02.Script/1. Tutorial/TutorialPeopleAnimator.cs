@@ -151,27 +151,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
 
         //튜토리얼 안내캔버스 끝나야 제한시간 흐르게 하기
         yield return new WaitUntil(() => audioing == true);
-        //주문하고 있으면 계속 반복 켜기
-        //while (tutorialgamemanager.isThinking == true)
-        //{
-        //    yield return null;
-        //    //주문하는 시간 15초 생성
-        //    tutorialgamemanager.orderlimitTime -= Time.deltaTime;
-        //    animator.gameObject.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(tutorialgamemanager.orderlimitTime).ToString() + "초";
-
-        //    //15초 지나면 다음단계로 넘어감
-        //    if (tutorialgamemanager.orderlimitTime < 0)
-        //    {
-        //        //초기화
-        //        tutorialgamemanager.orderlimitTime = 15;
-        //        tutorialgamemanager.isThinking = false;
-        //    }
-        //}
-
-        //카드 Setactive(false); 시키기
-        //animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        //TutorialLevelBurgerCard.SetActive(false);
-        //sourceCard[0].SetActive(false);
+   
         animator.SetBool(hashTalk, false);
         StartCoroutine(Order());
     }
