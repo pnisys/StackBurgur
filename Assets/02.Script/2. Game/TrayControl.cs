@@ -338,68 +338,68 @@ public class TrayControl : MonoBehaviour
             {
                 if (bb.CompareTag("GuinnessBurger"))
                 {
-                    LocalMenuSeletionFourLevel(blackbread, bulgogi, cheeze, cheeze, bulgogi, onion, blackbread);
+                    LocalMenuSeletionFourLevel2(blackbread, bulgogi, cheeze, cheeze, bulgogi, onion, blackbread);
                 }
                 else if (bb.CompareTag("MoistureBurger"))
                 {
-                    LocalMenuSeletionFourLevel(hamburgurbread, bacon, onion, lettuce, shrimp, mushroom, hamburgurbread);
+                    LocalMenuSeletionFourLevel2(hamburgurbread, bacon, onion, lettuce, shrimp, mushroom, hamburgurbread);
                 }
                 else if (bb.CompareTag("BigBurger"))
                 {
-                    LocalMenuSeletionFourLevel(bulgogi, lettuce, onion, bacon, shrimp, mushroom, bulgogi);
+                    LocalMenuSeletionFourLevel2(bulgogi, lettuce, onion, bacon, shrimp, mushroom, bulgogi);
                 }
                 else if (bb.CompareTag("VisualBurger"))
                 {
-                    LocalMenuSeletionFourLevel(hamburgurbread, lettuce, cheeze, bacon, bulgogi, onion, sandwichbreadbread);
+                    LocalMenuSeletionFourLevel2(hamburgurbread, lettuce, cheeze, bacon, bulgogi, onion, sandwichbreadbread);
                 }
                 else if (bb.CompareTag("BombcalorieBurger"))
                 {
-                    LocalMenuSeletionFourLevel(blackbread, lettuce, cheeze, bulgogi, cheeze, bulgogi, blackbread);
+                    LocalMenuSeletionFourLevel2(blackbread, lettuce, cheeze, bulgogi, cheeze, bulgogi, blackbread);
                 }
                 else if (bb.CompareTag("SingleHeartBurger"))
                 {
-                    LocalMenuSeletionFourLevel(lettuce, bulgogi, onion, shrimp, onion, bulgogi, lettuce);
+                    LocalMenuSeletionFourLevel2(lettuce, bulgogi, onion, shrimp, onion, bulgogi, lettuce);
                 }
                 else if (bb.CompareTag("EnergyBoosterBurger"))
                 {
-                    LocalMenuSeletionFourLevel(sandwichbreadbread, mushroom, bacon, onion, shrimp, mushroom, sandwichbreadbread);
+                    LocalMenuSeletionFourLevel2(sandwichbreadbread, mushroom, bacon, onion, shrimp, mushroom, sandwichbreadbread);
                 }
                 else if (bb.CompareTag("ManyBreadBurger"))
                 {
-                    LocalMenuSeletionFourLevel(blackbread, cheeze, bacon, onion, sandwichbreadbread, bulgogi, hamburgurbread);
+                    LocalMenuSeletionFourLevel2(blackbread, cheeze, bacon, onion, sandwichbreadbread, bulgogi, hamburgurbread);
                 }
             }
             if (aa.CompareTag("GuinnessBurger"))
             {
-                LocalMenuSeletionFourLevel2(blackbread, bulgogi, cheeze, cheeze, bulgogi, onion, blackbread);
+                LocalMenuSeletionFourLevel(blackbread, bulgogi, cheeze, cheeze, bulgogi, onion, blackbread);
             }
             else if (aa.CompareTag("MoistureBurger"))
             {
-                LocalMenuSeletionFourLevel2(hamburgurbread, bacon, onion, lettuce, shrimp, mushroom, hamburgurbread);
+                LocalMenuSeletionFourLevel(hamburgurbread, bacon, onion, lettuce, shrimp, mushroom, hamburgurbread);
             }
             else if (aa.CompareTag("BigBurger"))
             {
-                LocalMenuSeletionFourLevel2(bulgogi, lettuce, onion, bacon, shrimp, mushroom, bulgogi);
+                LocalMenuSeletionFourLevel(bulgogi, lettuce, onion, bacon, shrimp, mushroom, bulgogi);
             }
             else if (aa.CompareTag("VisualBurger"))
             {
-                LocalMenuSeletionFourLevel2(hamburgurbread, lettuce, cheeze, bacon, bulgogi, onion, sandwichbreadbread);
+                LocalMenuSeletionFourLevel(hamburgurbread, lettuce, cheeze, bacon, bulgogi, onion, sandwichbreadbread);
             }
             else if (aa.CompareTag("BombcalorieBurger"))
             {
-                LocalMenuSeletionFourLevel2(blackbread, lettuce, cheeze, bulgogi, cheeze, bulgogi, blackbread);
+                LocalMenuSeletionFourLevel(blackbread, lettuce, cheeze, bulgogi, cheeze, bulgogi, blackbread);
             }
             else if (aa.CompareTag("SingleHeartBurger"))
             {
-                LocalMenuSeletionFourLevel2(lettuce, bulgogi, onion, shrimp, onion, bulgogi, lettuce);
+                LocalMenuSeletionFourLevel(lettuce, bulgogi, onion, shrimp, onion, bulgogi, lettuce);
             }
             else if (aa.CompareTag("EnergyBoosterBurger"))
             {
-                LocalMenuSeletionFourLevel2(sandwichbreadbread, mushroom, bacon, onion, shrimp, mushroom, sandwichbreadbread);
+                LocalMenuSeletionFourLevel(sandwichbreadbread, mushroom, bacon, onion, shrimp, mushroom, sandwichbreadbread);
             }
             else if (aa.CompareTag("ManyBreadBurger"))
             {
-                LocalMenuSeletionFourLevel2(blackbread, cheeze, bacon, onion, sandwichbreadbread, bulgogi, hamburgurbread);
+                LocalMenuSeletionFourLevel(blackbread, cheeze, bacon, onion, sandwichbreadbread, bulgogi, hamburgurbread);
             }
         }
 
@@ -611,7 +611,6 @@ public class TrayControl : MonoBehaviour
                 else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
                 {
                     print("재료가 안맞아서 실패");
-
                     gamemanager.isfail2 = true;
                 }
             }
@@ -1240,6 +1239,9 @@ public class TrayControl : MonoBehaviour
             }
             else if (localsuccessscore != 7 && locallittlesuccessscore != 7)
             {
+                print(localsuccessscore);
+                print(locallittlesuccessscore);
+
                 print("재료가 안맞아서 실패");
                 for (int i = 0; i < 7; i++)
                 {
@@ -1697,7 +1699,6 @@ public class TrayControl : MonoBehaviour
                         yield return new WaitForSeconds(0.3f);
                         other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                         other.gameObject.GetComponent<FoodControl>().isInGrab = true;
-
                     }
                 }
             }

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class StageCanvasControl : MonoBehaviour
 {
+    public AudioSource audiosource;
+    public AudioClip audioclip;
     public GameObject stageCanvas;
     public Sprite[] stagesprite;
     public GameManager gamemanager;
@@ -23,7 +25,7 @@ public class StageCanvasControl : MonoBehaviour
     }
     public void Clear()
     {
-        stageCanvas.transform.GetChild(0).GetComponent<Image>().sprite = stagesprite[6];
+        stageCanvas.transform.GetChild(0).GetComponent<Image>().sprite = stagesprite[5];
         stageCanvas.SetActive(true);
     }
     public void StageUp()
@@ -33,12 +35,13 @@ public class StageCanvasControl : MonoBehaviour
 
     public void Die()
     {
-        stageCanvas.transform.GetChild(0).GetComponent<Image>().sprite = stagesprite[5];
+        stageCanvas.transform.GetChild(0).GetComponent<Image>().sprite = stagesprite[6];
         stageCanvas.SetActive(true);
     }
     IEnumerator Start()
     {
-        yield return new WaitForSeconds(2.5f);
+        audiosource.PlayOneShot(audioclip);
+        yield return new WaitForSeconds(1.5f);
         stageCanvas.SetActive(false);
         gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
     }
@@ -55,6 +58,7 @@ public class StageCanvasControl : MonoBehaviour
         {
             stageCanvas.transform.GetChild(0).GetComponent<Image>().sprite = stagesprite[1];
             stageCanvas.SetActive(true);
+            audiosource.PlayOneShot(audioclip);
             yield return new WaitForSeconds(2.5f);
             //이제 다른 사람 한명을 켜야됨
             gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
@@ -64,6 +68,7 @@ public class StageCanvasControl : MonoBehaviour
         {
             stageCanvas.transform.GetChild(0).GetComponent<Image>().sprite = stagesprite[2];
             stageCanvas.SetActive(true);
+            audiosource.PlayOneShot(audioclip);
             yield return new WaitForSeconds(2.5f);
             //이제 다른 사람 한명을 켜야됨
             gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
@@ -73,6 +78,7 @@ public class StageCanvasControl : MonoBehaviour
         {
             stageCanvas.transform.GetChild(0).GetComponent<Image>().sprite = stagesprite[3];
             stageCanvas.SetActive(true);
+            audiosource.PlayOneShot(audioclip);
             yield return new WaitForSeconds(2.5f);
             //이제 다른 사람 한명을 켜야됨
             gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
@@ -82,6 +88,7 @@ public class StageCanvasControl : MonoBehaviour
         {
             stageCanvas.transform.GetChild(0).GetComponent<Image>().sprite = stagesprite[4];
             stageCanvas.SetActive(true);
+            audiosource.PlayOneShot(audioclip);
             yield return new WaitForSeconds(2.5f);
             //이제 다른 사람 한명을 켜야됨
             gamemanager.people[gamemanager.peoplenumbur].SetActive(true);

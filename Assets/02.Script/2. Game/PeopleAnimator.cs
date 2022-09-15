@@ -137,39 +137,43 @@ public class PeopleAnimator : MonoBehaviour
         if (gamemanager.stage == 1)
         {
             gamemanager.level = 1;
-            gamemanager.limitTime = 15f;
-            gamemanager.orderlimitTime = 90f;
+            gamemanager.limitTime = 90f;
+            gamemanager.orderlimitTime = 15f;
         }
         else if (gamemanager.stage == 2)
         {
             randomstage = UnityEngine.Random.Range(1, 3);
             gamemanager.level = randomstage;
-            gamemanager.limitTime = 15f;
-            gamemanager.orderlimitTime = 90f;
+            gamemanager.limitTime = 90f;
+            gamemanager.orderlimitTime = 15f;
 
         }
         else if (gamemanager.stage == 3)
         {
             randomstage = UnityEngine.Random.Range(2, 4);
             gamemanager.level = randomstage;
-            gamemanager.limitTime = 15f;
-            gamemanager.orderlimitTime = 90f;
+            gamemanager.limitTime = 90f;
+            gamemanager.orderlimitTime = 15f;
 
         }
         else if (gamemanager.stage == 4)
         {
             randomstage = UnityEngine.Random.Range(1, 4);
             gamemanager.level = randomstage;
-            gamemanager.limitTime = 30f;
-            gamemanager.orderlimitTime = 150f;
+            gamemanager.limitTime = 75f;
+            gamemanager.orderlimitTime = 30f;
+            //gamemanager.limitTime = 10f;
+            //gamemanager.orderlimitTime = 30f;
 
         }
         else if (gamemanager.stage == 5)
         {
             randomstage = UnityEngine.Random.Range(3, 5);
             gamemanager.level = randomstage;
-            gamemanager.limitTime = 30f;
-            gamemanager.orderlimitTime = 150f;
+            gamemanager.limitTime = 10f;
+            gamemanager.orderlimitTime = 30f;
+            //gamemanager.limitTime = 60f;
+            //gamemanager.orderlimitTime = 30f;
         }
     }
 
@@ -320,11 +324,11 @@ public class PeopleAnimator : MonoBehaviour
         //4단계나 5단계는 한번 더 돌아야 함
         if (gamemanager.stage == 4)
         {
-            gamemanager.limitTime = 30f;
+            gamemanager.limitTime = 75f;
         }
         else if (gamemanager.stage == 5)
         {
-            gamemanager.limitTime = 60f;
+            gamemanager.limitTime = 30f;
         }
         while (true)
         {
