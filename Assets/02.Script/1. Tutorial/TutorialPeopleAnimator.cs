@@ -233,7 +233,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                     }
                     yield return new WaitForSeconds(1f);
                     audiosource.PlayOneShot(audioclip[8]);
-                    yield return new WaitForSeconds(3f);
+                    yield return new WaitForSeconds(6f);
 
                     //게임성공하면서 Ui뜨게 하기
                     SceneManager.LoadScene(2);
