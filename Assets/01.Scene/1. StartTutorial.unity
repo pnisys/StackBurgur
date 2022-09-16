@@ -55641,7 +55641,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1971175785}
         m_TargetAssemblyTypeName: RankAvatarManager, Assembly-CSharp
         m_MethodName: _NextAccNum
         m_Mode: 1
@@ -55946,7 +55946,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1971175785}
         m_TargetAssemblyTypeName: RankAvatarManager, Assembly-CSharp
         m_MethodName: _NextHairNum
         m_Mode: 1
@@ -56093,7 +56093,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1971175785}
         m_TargetAssemblyTypeName: RankAvatarManager, Assembly-CSharp
         m_MethodName: _NextFaceNum
         m_Mode: 1
@@ -56240,7 +56240,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1971175785}
         m_TargetAssemblyTypeName: RankAvatarManager, Assembly-CSharp
         m_MethodName: _PrevHairNum
         m_Mode: 1
@@ -56812,7 +56812,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1971175785}
         m_TargetAssemblyTypeName: RankAvatarManager, Assembly-CSharp
         m_MethodName: _NextEyeNum
         m_Mode: 1
@@ -57012,7 +57012,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1971175785}
         m_TargetAssemblyTypeName: RankAvatarManager, Assembly-CSharp
         m_MethodName: _PrevAccNum
         m_Mode: 1
@@ -57068,7 +57068,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1971175785}
         m_TargetAssemblyTypeName: RankAvatarManager, Assembly-CSharp
         m_MethodName: _PrevEyeNum
         m_Mode: 1
@@ -57500,7 +57500,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1971175785}
         m_TargetAssemblyTypeName: RankAvatarManager, Assembly-CSharp
         m_MethodName: _PrevFaceNum
         m_Mode: 1
