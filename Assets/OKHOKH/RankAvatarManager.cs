@@ -378,7 +378,8 @@ public class RankAvatarManager : MonoBehaviour
     }
     void FindObjects()
     {
-        ranking = GameObject.Find("Ranking").GetComponent<Ranking>();
+        //ranking = GameObject.Find("Ranking").GetComponent<Ranking>();
+        ranking = GameObject.FindGameObjectWithTag("RANKING").GetComponent<Ranking>();
 
 
         _faceObjects = GameObject.FindGameObjectsWithTag("FACEIMAGE");

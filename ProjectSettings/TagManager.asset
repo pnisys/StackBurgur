@@ -83,6 +83,7 @@ TagManager:
   - BACKHAIRIMAGE
   - EYEIMAGE
   - ACCIMAGE
+  - RANKING
   layers:
   - Default
   - TransparentFX

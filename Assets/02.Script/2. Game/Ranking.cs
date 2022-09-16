@@ -13,13 +13,11 @@ public class Ranking : MonoBehaviour
     private void OnEnable()
     {
         PeopleAnimator.OnLifeDie += this.ScoreSet;
-        PeopleAnimator.OnLifeDie += this.SeeScore;
 
     }
     private void OnDisable()
     {
         PeopleAnimator.OnLifeDie -= this.ScoreSet;
-        PeopleAnimator.OnLifeDie -= this.SeeScore;
     }
     public int[] bestScore = new int[5];
     public string[] bestName = new string[5];
@@ -38,8 +36,6 @@ public class Ranking : MonoBehaviour
     {
         avatarManager = GameObject.Find("SoundManager");
         yield return new WaitUntil(() => avatarManager != null);
-
-        ScoreSet();
     }
     private void Update()
     {

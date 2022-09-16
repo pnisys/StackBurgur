@@ -400,7 +400,6 @@ public class PeopleAnimator : MonoBehaviour
     //성공시, 테이블, 캐릭터 애니메이션 처리
     IEnumerator SucessTable()
     {
-        OnLifeDie();
         mood.SetActive(true);
         mood.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
         audiosource.PlayOneShot(audioclip[2]);
@@ -475,8 +474,9 @@ public class PeopleAnimator : MonoBehaviour
     {
         //ranking.ScoreSet(gamemanager.score, SoundManager.instance.username,gamemanager.stage);
         audiosource.PlayOneShot(audioclip[8]);
+        ranking.gameObject.transform.position = new Vector3(-67.705f, 0.871083f, 34.055f);
         gamemanager.GetComponent<AudioSource>().Stop();
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(10f);
         SceneManager.LoadScene(0);
     }
 
