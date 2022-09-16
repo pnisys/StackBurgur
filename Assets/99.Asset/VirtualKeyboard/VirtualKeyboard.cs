@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -130,7 +131,7 @@ public class VirtualKeyboard : MonoBehaviour {
                         if(OnReturnEventHandler != null)
                         {
                             SoundManager.instance.username = TextInputBox.TextField;
-                            SceneManager.LoadScene(2);
+                            
                             //OnReturnEventHandler(TextInputBox.TextField)
                         }
                         //do somehing

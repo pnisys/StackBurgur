@@ -10,10 +10,12 @@ using UnityEngine.EventSystems;
 public class FisrtChoice : MonoBehaviour
 {
     public GameObject canvas;
-    public GameObject keyboard;
     public AudioSource audiosource;
     public AudioClip audioclip;
     public AudioSource bgmsource;
+    public GameObject keyboard;
+    public GameObject avatarselect;
+    public GameObject logoCanvas;
 
 
     public void ClickSound()
@@ -28,11 +30,13 @@ public class FisrtChoice : MonoBehaviour
 
     public void GameStart()
     {
+        canvas.SetActive(false);
         canvas.transform.GetChild(0).gameObject.SetActive(false);
         canvas.transform.GetChild(1).gameObject.SetActive(false);
         canvas.transform.GetChild(2).gameObject.SetActive(false);
-        //SceneManager.LoadScene(2);
-        keyboard.SetActive(true);
+        logoCanvas.SetActive(false);
+        avatarselect.SetActive(true);
+        //keyboard.SetActive(true);
     }
 
     public void GameStartEnter(string a)
@@ -76,14 +80,28 @@ public class FisrtChoice : MonoBehaviour
     public void PreviousKeyboard()
     {
         keyboard.SetActive(false);
+        avatarselect.SetActive(true);
+    }
+
+    public void PreviousAvatar()
+    {
+        avatarselect.SetActive(false);
+        logoCanvas.SetActive(true);
+        canvas.SetActive(true);
         canvas.transform.GetChild(0).gameObject.SetActive(true);
         canvas.transform.GetChild(1).gameObject.SetActive(true);
         canvas.transform.GetChild(2).gameObject.SetActive(true);
     }
-
-    private void Start()
+    public void KeyboardEnter()
     {
-        SoundManager.instance.username = "±è¸»¼÷";
-        SceneManager.LoadScene(2);
+        SoundManager.instance.username = keyboard.transform.GetChild(1).GetComponent<InputField>().text;
+        keyboard.SetActive(false);
+        avatarselect.SetActive(true);
+    }
+
+    public void AvatarEnter()
+    {
+        avatarselect.SetActive(false);
+        keyboard.SetActive(true);
     }
 }

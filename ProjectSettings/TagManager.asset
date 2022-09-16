@@ -76,6 +76,13 @@ TagManager:
   - 9TABLE
   - 10TABLE
   - GAMEMANAGER
+  - KEYBOARD
+  - AVATARBUTTON
+  - FACEIMAGE
+  - HAIRIMAGE
+  - BACKHAIRIMAGE
+  - EYEIMAGE
+  - ACCIMAGE
   layers:
   - Default
   - TransparentFX

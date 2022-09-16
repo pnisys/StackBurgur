@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class SoundManager : MonoBehaviour
 {
@@ -24,4 +25,5 @@ public class SoundManager : MonoBehaviour
     public float bgmSound = 1;
     public float anothersound = 1;
     public string username = null;
+
 }
