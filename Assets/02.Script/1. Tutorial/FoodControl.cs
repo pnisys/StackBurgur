@@ -16,9 +16,11 @@ public class FoodControl : MonoBehaviour
     public bool isOutGrab = false;
     public bool isInOutGrab = false;
     public bool isOnlyMeat = false;
+    public bool islgrabstatus = false;
+    public bool isrgrabstatus = false;
 
-
-    HandGrabInteractor grabstatus;
+    GameObject[] hands;
+    HandGrabInteractor[] grabstatus = new HandGrabInteractor[2];
     Transform empty;
     Rigidbody rb;
     public delegate void Dishing();
@@ -29,7 +31,12 @@ public class FoodControl : MonoBehaviour
 
     private void Start()
     {
-        grabstatus = GameObject.FindGameObjectWithTag("HANDGRAB").GetComponent<HandGrabInteractor>();
+        hands = GameObject.FindGameObjectsWithTag("HANDGRAB");
+        for (int i = 0; i < 2; i++)
+        {
+            grabstatus[i] = hands[i].GetComponent<HandGrabInteractor>();
+            print(grabstatus[i]);
+        }
         empty = GameObject.FindGameObjectWithTag("EMPTY").transform;
         rb = GetComponent<Rigidbody>();
     }
@@ -63,8 +70,16 @@ public class FoodControl : MonoBehaviour
 
     private void Update()
     {
+        if (grabstatus[0].IsGrabbing == true && islgrabstatus == false)
+        {
+            islgrabstatus = true;
+        }
+        else if (grabstatus[1].IsGrabbing == true && isrgrabstatus == false)
+        {
+            isrgrabstatus = true;
+        }
         //접시에서 뺐고, 손을 놓아야하며, 쓰레기통에 닿으면 음식이 사라진다.
-        if (isOk == true && grabstatus.IsGrabbing == false && isTrash == true)
+        if (isOk == true && ((grabstatus[0].IsGrabbing == false && islgrabstatus == true) || (grabstatus[1].IsGrabbing == false && isrgrabstatus == true)) && isTrash == true)
         {
             StartCoroutine(FoodDestory());
         }

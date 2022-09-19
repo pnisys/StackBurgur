@@ -15,7 +15,8 @@ public class TutorialMeatControl : MonoBehaviour
     public GameObject saveffect;
     bool ismeateffect = false;
     bool full;
-    HandGrabInteractor grabstatus;
+    GameObject[] hands;
+    HandGrabInteractor[] grabstatus = new HandGrabInteractor[2];
     Rigidbody rb;
     GameObject grill;
     public Transform[] grilltransform;
@@ -36,10 +37,18 @@ public class TutorialMeatControl : MonoBehaviour
     bool isbadmeat = false;
     bool isposition = false;
     public bool ismeattrash = false;
+    public bool islgrabstatus = false;
+    public bool isrgrabstatus = false;
     private void Start()
     {
         meatrenderer = GetComponent<Renderer>();
-        grabstatus = GameObject.FindGameObjectWithTag("HANDGRAB").GetComponent<HandGrabInteractor>();
+        hands = GameObject.FindGameObjectsWithTag("HANDGRAB");
+        for (int i = 0; i < 2; i++)
+        {
+            grabstatus[i] = hands[i].GetComponent<HandGrabInteractor>();
+            print(grabstatus[i]);
+        }
+
         rb = GetComponent<Rigidbody>();
         grill = GameObject.FindGameObjectWithTag("GRILL");
         rb.sleepThreshold = 0;
@@ -77,7 +86,8 @@ public class TutorialMeatControl : MonoBehaviour
                 gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 gameObject.GetComponent<BoxCollider>().isTrigger = false;
             }
-            if (grabstatus.IsGrabbing == false)
+
+            if ((islgrabstatus == true && grabstatus[0].IsGrabbing == false) || (grabstatus[1].IsGrabbing == false && isrgrabstatus == true))
             {
                 if (ismeateffect == false)
                 {
@@ -102,7 +112,7 @@ public class TutorialMeatControl : MonoBehaviour
                             break;
                         }
                     }
-                    if(full==false)
+                    if (full == false)
                     {
                         Destroy(gameObject);
                     }
@@ -156,14 +166,22 @@ public class TutorialMeatControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GRILL"))
         {
-            while (grabstatus.IsGrabbing == true)
+            while (grabstatus[0].IsGrabbing == true || grabstatus[1].IsGrabbing == true)
             {
+                if (grabstatus[0].IsGrabbing == true && islgrabstatus == false)
+                {
+                    islgrabstatus = true;
+                }
+                else if (grabstatus[1].IsGrabbing == true && isrgrabstatus == false)
+                {
+                    isrgrabstatus = true;
+                }
                 yield return null;
                 if (gameObject.GetComponent<FoodControl>().isGrill == false)
                 {
                     yield break;
                 }
-                if (grabstatus.IsGrabbing == false)
+                if ((grabstatus[1].IsGrabbing == false && isrgrabstatus == true) || (grabstatus[0].IsGrabbing == false && islgrabstatus == true))
                 {
                     yield return new WaitForSeconds(0.5f);
                     ismeattrash = true;

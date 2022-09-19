@@ -8,6 +8,7 @@ using TMPro;
 public class RankAvatarManager : MonoBehaviour
 {
     public string avatarAlpha;
+    public Text LegacyText;
 
     [Space(10)]
     [Header("Avatar Image Element")]
@@ -335,8 +336,9 @@ public class RankAvatarManager : MonoBehaviour
     // 결정 버튼 클릭
     public void _PushCheck()
     {
-        if (nameInput.text.Length < 3)
+        if (nameInput.text.Length != 3)
         {
+            LegacyText.text = "이름을 세글자로 맞춰주세요";
             return;
         }
         PlayerPrefs.SetString("AvatarNumber", $"{faceAlpha}{hairAlpha}{eyeAlpha}{acceAlpha}");

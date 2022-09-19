@@ -24915,6 +24915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avatarAlpha: 
+  LegacyText: {fileID: 7246158080714066706}
   manImg: {fileID: 4520714176437952821}
   manFaceImg: {fileID: 4520714176437952820}
   manFaceText: {fileID: 170757490984584231}

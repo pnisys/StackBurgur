@@ -39,7 +39,7 @@ public class Ranking : MonoBehaviour
     }
     private void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger, OVRInput.Controller.LTouch))
+        if (OVRInput.GetDown(OVRInput.Button.Start, OVRInput.Controller.LTouch))
         {
             PlayerPrefs.DeleteAll();
             Debug.Log("´ÙÁö¿ò");
