@@ -1306,6 +1306,11 @@ public class TrayControl : MonoBehaviour
         {
             Destroy(burgursource.GetChild(0).gameObject);
         }
+        if (burgurs.GetChild(16).childCount != 0)
+        {
+            Destroy(burgurs.GetChild(16).GetChild(0).gameObject);
+        }
+        
 
         if (gamemanager.stage >= 4)
         {
@@ -1342,11 +1347,25 @@ public class TrayControl : MonoBehaviour
     //실패시 트레이 햄버거 없애주는 함수
     void FailTray()
     {
+        List<GameObject> checkinglist = new List<GameObject>();
+        for (int i = 0; i < burgurs.GetChild(15).childCount; i++)
+        {
+            checkinglist.Add(burgurs.GetChild(15).GetChild(i).gameObject);
+        }
         foreach (var item in stackcreateburgur.ToArray())
         {
             stackcreateburgur.Pop();
             Destroy(item);
         }
+        foreach (var item in checkinglist.ToArray())
+        {
+            Destroy(item);
+        }
+        if (burgurs.GetChild(16).childCount != 0)
+        {
+            Destroy(burgurs.GetChild(16).GetChild(0).gameObject);
+        }
+
         if (burgursource.childCount == 0)
         {
             return;

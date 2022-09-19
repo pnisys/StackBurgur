@@ -641,3 +641,5 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
