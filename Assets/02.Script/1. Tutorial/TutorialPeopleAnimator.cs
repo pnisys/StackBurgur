@@ -50,8 +50,10 @@ public class TutorialPeopleAnimator : MonoBehaviour
     public VideoClip[] viedoclips;
     public VideoPlayer viedoplayer;
     public GameObject patty;
-    public HandGrabInteractor grabstatus;
-
+    public HandGrabInteractor lgrabstatus;
+    public HandGrabInteractor rgrabstatus;
+    public bool islgrabstatus = false;
+    public bool isrgrabstatus = false;
     private void OnEnable()
     {
         TutorialMeatControl.OnGoodMeeting += GoodMeeting;
@@ -89,7 +91,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
 
     private void Start()
     {
-        mood= transform.GetChild(4).gameObject;
+        mood = transform.GetChild(4).gameObject;
         audiosource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -151,7 +153,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
 
         //튜토리얼 안내캔버스 끝나야 제한시간 흐르게 하기
         yield return new WaitUntil(() => audioing == true);
-   
+
         animator.SetBool(hashTalk, false);
         StartCoroutine(Order());
     }
@@ -266,7 +268,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                     transform.position = new Vector3(100, 100, 100);
                     animator.SetBool(hashfail, false);
                     SceneManager.LoadScene(2);
-                   
+
                 }
                 //yield return new WaitForSeconds(3f);
                 //SceneManager.LoadScene(2);
@@ -302,18 +304,26 @@ public class TutorialPeopleAnimator : MonoBehaviour
         patty.GetComponent<HighlightEffect>().highlighted = true;
         patty.GetComponent<HighlightEffect>().outline = 0.05f;
         patty.GetComponent<HighlightEffect>().innerGlow = 0.1f;
-        while (grabstatus.IsGrabbing == false)
+        while (lgrabstatus.IsGrabbing == false || rgrabstatus.IsGrabbing == false)
         {
             yield return null;
-            if (grabstatus.IsGrabbing == true)
+            if (lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true)
             {
                 break;
             }
         }
-        while (grabstatus.IsGrabbing == true)
+        while (lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true)
         {
+            if (lgrabstatus.IsGrabbing == true && islgrabstatus == false)
+            {
+                islgrabstatus = true;
+            }
+            else if (rgrabstatus.IsGrabbing == true && isrgrabstatus == false)
+            {
+                isrgrabstatus = true;
+            }
             yield return null;
-            if (grabstatus.IsGrabbing == false)
+            if ((lgrabstatus.IsGrabbing == false && lgrabstatus == true) || (rgrabstatus.IsGrabbing == false && rgrabstatus == true))
             {
                 break;
             }

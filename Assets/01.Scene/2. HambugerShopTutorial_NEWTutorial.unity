@@ -1344,6 +1344,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!1001 &80818114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4138,7 +4140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291487122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.05999756, y: -0.0062177777, z: -0.037000656}
+  m_LocalPosition: {x: -0.086, y: -0.0062177777, z: -0.073}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4172,7 +4174,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourcebottleentry: 1
-  grabstatus: {fileID: 8553364198841914600}
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!1 &294166303
 GameObject:
   m_ObjectHideFlags: 0
@@ -7590,7 +7593,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483356751}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.055999756, y: -0.0062177777, z: 0.044000626}
+  m_LocalPosition: {x: -0.08200073, y: -0.0062177777, z: 0.044000626}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7624,7 +7627,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourcebottleentry: 1
-  grabstatus: {fileID: 8553364198841914600}
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!1 &485500085
 GameObject:
   m_ObjectHideFlags: 0
@@ -9545,7 +9549,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621830775}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.027000427, y: -0.0062177777, z: -0.044000626}
+  m_LocalPosition: {x: 0.027000427, y: -0.0062177777, z: -0.07999992}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9579,7 +9583,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourcebottleentry: 1
-  grabstatus: {fileID: 8553364198841914600}
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!1 &629276310
 GameObject:
   m_ObjectHideFlags: 0
@@ -16168,7 +16173,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourcebottleentry: 1
-  grabstatus: {fileID: 8553364198841914600}
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!1 &1011698042
 GameObject:
   m_ObjectHideFlags: 0
@@ -35200,7 +35206,10 @@ MonoBehaviour:
   viedoclips: []
   viedoplayer: {fileID: 0}
   patty: {fileID: 0}
-  grabstatus: {fileID: 0}
+  lgrabstatus: {fileID: 0}
+  rgrabstatus: {fileID: 0}
+  islgrabstatus: 0
+  isrgrabstatus: 0
   audioclip: []
   audioclip2: []
   audiosource: {fileID: 0}
@@ -41297,7 +41306,6 @@ MonoBehaviour:
   - {fileID: 605091828}
   - {fileID: 1619883060}
   tutorialgamemanager: {fileID: 281929761}
-  grabstatus: {fileID: 8553364198841914600}
   tutorialpeopleanimator: {fileID: 6590741275123452060}
   audioclips:
   - {fileID: 8300000, guid: f435568a48181d24a91debb6c5841e67, type: 3}
@@ -41321,6 +41329,10 @@ MonoBehaviour:
   successscore: 0
   littlesuccessscore: 0
   between: 0.02
+  islgrabstatus: 0
+  isrgrabstatus: 0
+  lgrabstatus: {fileID: 8553364197522708004}
+  rgrabstatus: {fileID: 8553364198841914600}
   mantray: {fileID: 243975797}
 --- !u!65 &919132149358254549
 BoxCollider:
@@ -48056,7 +48068,7 @@ GameObject:
   - component: {fileID: 3988025341408074956}
   m_Layer: 0
   m_Name: HandGrabInteractor
-  m_TagString: Untagged
+  m_TagString: HANDGRAB
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50909,6 +50921,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!33 &3469287836800980801
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -50938,6 +50952,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!33 &3469287836834721913
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -50967,6 +50983,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!33 &3469287837230656888
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51058,6 +51076,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!33 &3469287837247522589
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51149,6 +51169,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!33 &3469287837499193079
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51178,6 +51200,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!33 &3469287838118630894
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51207,6 +51231,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!33 &3469287838198055670
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51236,6 +51262,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!33 &3469287838598625856
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51265,6 +51293,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!4 &3474302132474153574
 Transform:
   m_ObjectHideFlags: 0
@@ -64604,7 +64634,10 @@ MonoBehaviour:
   - {fileID: 32900000, guid: 59e991636e0dfde4eaf8e9005acf6e02, type: 3}
   viedoplayer: {fileID: 1483798271}
   patty: {fileID: 1455645635}
-  grabstatus: {fileID: 8553364198841914600}
+  lgrabstatus: {fileID: 8553364197522708004}
+  rgrabstatus: {fileID: 8553364198841914600}
+  islgrabstatus: 0
+  isrgrabstatus: 0
   audioclip:
   - {fileID: 8300000, guid: 40d756b6cbea1344ba07703e0b414d7e, type: 3}
   - {fileID: 8300000, guid: 6314b64a45c962342b9fee5262dcd8a5, type: 3}
@@ -72291,6 +72324,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!4 &8713951000347518733
 Transform:
   m_ObjectHideFlags: 0
@@ -72420,6 +72455,8 @@ MonoBehaviour:
   grilltransform: []
   audiosource: {fileID: 0}
   ismeattrash: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!23 &8760863851976906395
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -72659,6 +72696,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!114 &8760863851976906401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72680,6 +72719,8 @@ MonoBehaviour:
   isOutGrab: 0
   isInOutGrab: 0
   isOnlyMeat: 0
+  islgrabstatus: 0
+  isrgrabstatus: 0
 --- !u!114 &8803387606621262093
 MonoBehaviour:
   m_ObjectHideFlags: 0

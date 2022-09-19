@@ -9,7 +9,6 @@ public class TutorialTrayControl : MonoBehaviour
 {
     public Transform[] combination;
     public TutorialGamemanager tutorialgamemanager;
-    public HandGrabInteractor grabstatus;
     public TutorialPeopleAnimator tutorialpeopleanimator;
     public AudioClip[] audioclips;
     public AudioSource audiosource;
@@ -30,6 +29,10 @@ public class TutorialTrayControl : MonoBehaviour
     public int littlesuccessscore = 0;
     public float between = 0.02f;
     bool sourcecorrect = false;
+    public bool islgrabstatus = false;
+    public bool isrgrabstatus = false;
+    public HandGrabInteractor lgrabstatus;
+    public HandGrabInteractor rgrabstatus;
 
     public Stack<GameObject> stackcreateburgur = new Stack<GameObject>();
 
@@ -252,13 +255,23 @@ public class TutorialTrayControl : MonoBehaviour
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
                 other.gameObject.GetComponent<SourceControl>().isEntry = true;
                 //잡고 있으면 계속 검사하다가
-                while (grabstatus.IsGrabbing == true)
+                while (lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true)
                 {
+                    if (lgrabstatus.IsGrabbing == true && islgrabstatus == false)
+                    {
+                        islgrabstatus = true;
+                    }
+                    else if (rgrabstatus.IsGrabbing == true && isrgrabstatus == false)
+                    {
+                        isrgrabstatus = true;
+                    }
                     ////0.3초마다 검사를 할 것
                     yield return null;
                     //여기서 잡기를 놓는다면
-                    if (grabstatus.IsGrabbing == false)
+                    if ((rgrabstatus.IsGrabbing == false && isrgrabstatus == true) || (lgrabstatus.IsGrabbing == false && islgrabstatus == true))
                     {
+                        islgrabstatus = false;
+                        isrgrabstatus = false;
                         if (selectedsourceobject != null)
                         {
                             if (other.gameObject.CompareTag(bbqsource))
@@ -367,8 +380,16 @@ public class TutorialTrayControl : MonoBehaviour
         {
             other.gameObject.GetComponent<FoodControl>().isEntry = true;
             //들어왔어!
-            while (grabstatus.IsGrabbing == true)
+            while (lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true)
             {
+                if (lgrabstatus.IsGrabbing == true && islgrabstatus == false)
+                {
+                    islgrabstatus = true;
+                }
+                else if (rgrabstatus.IsGrabbing == true && isrgrabstatus == false)
+                {
+                    isrgrabstatus = true;
+                }
                 //들어왔다가 다시나가면?
                 if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
                 {
@@ -376,8 +397,10 @@ public class TutorialTrayControl : MonoBehaviour
                     yield break;
                 }
                 yield return null;
-                if (grabstatus.IsGrabbing == false)
+                if ((rgrabstatus.IsGrabbing == false && isrgrabstatus == true) || (lgrabstatus.IsGrabbing == false && islgrabstatus == true))
                 {
+                    isrgrabstatus = false;
+                    islgrabstatus = false;
                     audiosource.PlayOneShot(audioclips[0]);
                     other.gameObject.GetComponent<FoodControl>().isOutGrab = false;
                     other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash = false;
@@ -449,8 +472,16 @@ public class TutorialTrayControl : MonoBehaviour
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
                 other.gameObject.GetComponent<FoodControl>().isEntry = true;
                 //잡고 있으면 계속 검사하다가
-                while (grabstatus.IsGrabbing == true)
+                while (lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true)
                 {
+                    if (lgrabstatus.IsGrabbing == true && islgrabstatus == false)
+                    {
+                        islgrabstatus = true;
+                    }
+                    else if (rgrabstatus.IsGrabbing == true && isrgrabstatus == false)
+                    {
+                        isrgrabstatus = true;
+                    }
                     //0.3초마다 검사를 할 것
                     yield return null;
                     //들어왔다가 다시나가면?
@@ -460,8 +491,10 @@ public class TutorialTrayControl : MonoBehaviour
                         yield break;
                     }
                     //여기서 잡기를 놓는다면
-                    if (grabstatus.IsGrabbing == false)
+                    if ((rgrabstatus.IsGrabbing == false && isrgrabstatus == true) || (lgrabstatus.IsGrabbing == false && islgrabstatus == true))
                     {
+                        isrgrabstatus = false;
+                        islgrabstatus = false;
                         //놓는데 트레이밖으로 나가서 그릴에 있으면
                         if (other.gameObject.GetComponent<FoodControl>().isGrill == true)
                         {
@@ -538,7 +571,7 @@ public class TutorialTrayControl : MonoBehaviour
         //음식이 벗어날때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
-            if (grabstatus.IsGrabbing == true && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
+            if ((lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
             {
                 //other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
                 other.gameObject.GetComponent<FoodControl>().isEntry = false;
@@ -548,7 +581,7 @@ public class TutorialTrayControl : MonoBehaviour
             }
 
             //잡고 있는 상태고 안놓고 바로 그릴쪽으로 가려면
-            if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == false)
+            if ((lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true) && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == false)
             {
                 //other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
                 other.gameObject.GetComponent<FoodControl>().isEntry = false;
@@ -556,7 +589,7 @@ public class TutorialTrayControl : MonoBehaviour
                 other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 yield break;
             }
-            else if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == true)
+            else if ((lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true) && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == true)
             {
                 print("이건 뭐지?");
                 other.gameObject.GetComponent<FoodControl>().isEntry = false;
