@@ -84,6 +84,7 @@ TagManager:
   - EYEIMAGE
   - ACCIMAGE
   - RANKING
+  - BIGBUTTON
   layers:
   - Default
   - TransparentFX

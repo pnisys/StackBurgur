@@ -39,7 +39,7 @@ namespace Oculus.Interaction
         [SerializeField]
         private UnityEvent _whenUnhover;
         [SerializeField]
-        private UnityEvent _whenSelect;
+        public UnityEvent _whenSelect;
         [SerializeField]
         private UnityEvent _whenUnselect;
         [SerializeField]

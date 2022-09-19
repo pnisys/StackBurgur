@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
 using Oculus.Interaction.HandGrab;
+using Oculus.Interaction;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class PeopleAnimator : MonoBehaviour
@@ -69,7 +70,8 @@ public class PeopleAnimator : MonoBehaviour
     bool testsuccess = true;
     public bool phase1source = false;
     public bool phase2source = false;
-
+    bool buttonclick = false;
+    InteractableUnityEventWrapper buttonevent;
     void Start()
     {
         for (int i = 0; i < OneLevelBurgerCard.Length; i++)
@@ -109,6 +111,8 @@ public class PeopleAnimator : MonoBehaviour
         table[9] = GameObject.FindGameObjectWithTag("10TABLE");
         door = GameObject.FindGameObjectWithTag("DOOR");
         clerkcollider = GameObject.FindGameObjectWithTag("CLERKCOLLIDER");
+        buttonevent = GameObject.FindGameObjectWithTag("BIGBUTTON").GetComponent<InteractableUnityEventWrapper>();
+        buttonevent.WhenSelect.AddListener(ButtonControl);
         audiosource.PlayOneShot(audioclip[3]);
         audiosource.clip = audioclip[4];
         audiosource.Play();
@@ -260,44 +264,127 @@ public class PeopleAnimator : MonoBehaviour
             //시간 끝나면
             if (gamemanager.limitTime < 0)
             {
-                //스테이지가 4이상이면
-                if (gamemanager.stage >= 4)
-                {
-                    audiosource.PlayOneShot(audioclip[6]);
-                    phase1source = false;
-                    phase2source = true;
-                    StartCoroutine(Stage45());
-                    yield break;
-                }
-                //스테이지가 4이하이면
-                else
-                {
-                    audiosource.Stop();
-                    //agent 꺼줬던거 켜죽
-                    agent.isStopped = false;
-                    //제한 시간 끄기
-                    animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
-                    animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
-                    //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
-                    OnLimitTimeComplete();
-                    yield return new WaitForSeconds(1f);
-                    //초기화 시켜주기
-                    gamemanager.isOrder = false;
-                    //검사 후 성공이면
-                    if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
-                    {
-                        StartCoroutine(SucessTable());
-                    }
-                    //검사 후 실패면
-                    else if (gamemanager.isfail)
-                    {
-                        StartCoroutine(FailTable());
-                    }
-                }
+                ////스테이지가 4이상이면
+                //if (gamemanager.stage >= 4)
+                //{
+                //    audiosource.PlayOneShot(audioclip[6]);
+                //    phase1source = false;
+                //    phase2source = true;
+                //    StartCoroutine(Stage45());
+                //    yield break;
+                //}
+                ////스테이지가 4이하이면
+                //else
+                //{
+                //    audiosource.Stop();
+                //    //agent 꺼줬던거 켜죽
+                //    agent.isStopped = false;
+                //    //제한 시간 끄기
+                //    animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                //    animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+                //    //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
+                //    OnLimitTimeComplete();
+                //    yield return new WaitForSeconds(1f);
+                //    //초기화 시켜주기
+                //    gamemanager.isOrder = false;
+                //    //검사 후 성공이면
+                //    if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
+                //    {
+                //        StartCoroutine(SucessTable());
+                //    }
+                //    //검사 후 실패면
+                //    else if (gamemanager.isfail)
+                //    {
+                //        StartCoroutine(FailTable());
+                //    }
+                //}
+                StartCoroutine(RealButtonControl());
             }
         }
     }
+    public void ButtonControl()
+    {
+        StartCoroutine(RealButtonControl());
+    }
+    IEnumerator RealButtonControl()
+    {
+        print("몆번 먹음?");
+        if (gamemanager.stage < 4 && gamemanager.isOrder == false)
+        {
+            yield break;
+        }
+        else if (gamemanager.stage >= 4 && gamemanager.isOrder == false && gamemanager.isOrder2 == false)
+        {
+            yield break;
+        }
+        //스테이지가 4이상이면
+        if (gamemanager.stage >= 4 && gamemanager.isOrder2 == false && gamemanager.isOrder == true)
+        {
+            gamemanager.isOrder = false;
+            gamemanager.isOrder2 = true;
+            audiosource.PlayOneShot(audioclip[6]);
+            phase1source = false;
+            phase2source = true;
+            StartCoroutine(Stage45());
+            yield break;
+        }
+        //스테이지가 4이하이면
+        else if (gamemanager.stage < 4 && gamemanager.isOrder == true)
+        {
+            gamemanager.isOrder = false;
+            audiosource.Stop();
+            //agent 꺼줬던거 켜죽
+            agent.isStopped = false;
+            //제한 시간 끄기
+            animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+            animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+            //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
+            OnLimitTimeComplete();
+            yield return new WaitForSeconds(1f);
+            ////초기화 시켜주기
+            //gamemanager.isOrder = false;
+            //검사 후 성공이면
+            if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
+            {
+                StartCoroutine(SucessTable());
+            }
+            //검사 후 실패면
+            else if (gamemanager.isfail)
+            {
+                StartCoroutine(FailTable());
+            }
+            buttonevent.WhenSelect.RemoveListener(ButtonControl);
+        }
+        else if (gamemanager.isOrder2 == true && gamemanager.isOrder == false && gamemanager.stage >= 4)
+        {
+            buttonclick = true;
+            gamemanager.isOrder2 = false;
+            audiosource.Stop();
+            phase2source = false;
 
+            //agent 꺼줬던거 켜죽
+            agent.isStopped = false;
+            //제한 시간 끄기
+            animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+
+            //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
+            OnLimitTimeComplete();
+            yield return new WaitForSeconds(1f);
+            //초기화 시켜주기
+            gamemanager.isOrder = false;
+            //검사 후 성공이면
+            if (((gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true) && (gamemanager.iscompletesuccess2 == true || gamemanager.islittlesuccess2 == true)))
+            {
+                StartCoroutine(SucessTable());
+            }
+            //둘 중 하나라도 실패하면
+            else if (gamemanager.isfail == true || gamemanager.isfail2 == true)
+            {
+                StartCoroutine(FailTable());
+            }
+            buttonevent.WhenSelect.RemoveListener(ButtonControl);
+        }
+    }
     //스테이지 4,5 따로 처리
     IEnumerator Stage45()
     {
@@ -356,6 +443,10 @@ public class PeopleAnimator : MonoBehaviour
                 {
                     StartCoroutine(FailTable());
                 }
+                yield break;
+            }
+            else if (buttonclick == true)
+            {
                 yield break;
             }
         }

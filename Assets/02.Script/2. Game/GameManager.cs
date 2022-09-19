@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class GameManager : MonoBehaviour
     public bool isThinking = false;
     //3. 주문 들어옴
     public bool isOrder = false;
+    //4. 4라운드, 5라운드 주문
+    public bool isOrder2 = false;
+
     //4. 선택한 버거 순간
     public bool isSelect = false;
 
@@ -114,6 +118,10 @@ public class GameManager : MonoBehaviour
     public GameObject selectsourcecard;
     public GameObject selectsourcecard2;
 
+    public void Lobby()
+    {
+        SceneManager.LoadScene(2);
+    }
 
     public bool[] istable = new bool[10] { false, false, false, false, false, false, false, false, false, false };
     public Vector3[] tableposition = new Vector3[10] { new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0, 0.17f, 0), new Vector3(0.051f, 0.32f, -0.075f), new Vector3(0, 0.278f, 0) };

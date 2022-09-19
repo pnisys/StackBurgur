@@ -119,6 +119,7 @@ public class TrayControl : MonoBehaviour
     {
         GameObject selectburgur = gamemanager.selecthambugurcard;
         GameObject selectburgur2 = gamemanager.selecthambugurcard2;
+        //List<GameObject> checking = new List<GameObject>();
         void Checking1(GameObject aa, GameObject bb)
         {
             //스테이지가 4이상일 때
@@ -428,7 +429,7 @@ public class TrayControl : MonoBehaviour
             {
                 int localsuccessscore = 0;
                 int locallittlesuccessscore = 0;
-
+                List<GameObject> checkinglist = new List<GameObject>();
                 if (burgurs.GetChild(15).childCount != 4 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
                 {
                     for (int i = 0; i < 4; i++)
@@ -444,7 +445,10 @@ public class TrayControl : MonoBehaviour
                     gamemanager.isfail2 = true;
                     return;
                 }
-
+                for (int i = 3; i >= 0; i--)
+                {
+                    checkinglist.Add(burgurs.GetChild(15).GetChild(i).gameObject);
+                }
                 for (int i = 3; i >= 0; i--)
                 {
                     if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 3)]))
@@ -453,7 +457,7 @@ public class TrayControl : MonoBehaviour
                     }
                 }
 
-                foreach (var item in stackcreateburgur.ToArray())
+                foreach (var item in checkinglist.ToArray()/*stackcreateburgur.ToArray()*/)
                 {
                     if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]))
                     {
@@ -561,7 +565,7 @@ public class TrayControl : MonoBehaviour
             {
                 int localsuccessscore = 0;
                 int locallittlesuccessscore = 0;
-
+                List<GameObject> checkinglist = new List<GameObject>();
                 if (burgurs.GetChild(15).childCount != 5 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
                 {
                     print("재료개수가 안맞아서 실패");
@@ -578,7 +582,10 @@ public class TrayControl : MonoBehaviour
                     gamemanager.isfail2 = true;
                     return;
                 }
-
+                for (int i = 4; i >= 0; i--)
+                {
+                    checkinglist.Add(burgurs.GetChild(15).GetChild(i).gameObject);
+                }
                 for (int i = 4; i >= 0; i--)
                 {
                     if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 4)]))
@@ -586,7 +593,8 @@ public class TrayControl : MonoBehaviour
                         localsuccessscore++;
                     }
                 }
-                foreach (var item in stackcreateburgur.ToArray())
+
+                foreach (var item in checkinglist.ToArray()/*stackcreateburgur.ToArray()*/)
                 {
                     if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]))
                     {
@@ -611,6 +619,8 @@ public class TrayControl : MonoBehaviour
                 }
                 else if (localsuccessscore != 5 && locallittlesuccessscore != 5)
                 {
+                    print("localsuccessscore" + localsuccessscore);
+                    print("locallittlesuccessscore" + locallittlesuccessscore);
                     print("재료가 안맞아서 실패");
                     gamemanager.isfail2 = true;
                 }
@@ -684,7 +694,6 @@ public class TrayControl : MonoBehaviour
                     gamemanager.isfail = true;
                 }
             }
-
         }
         void LocalMenuSeletionThreeLevel(params string[] a)
         {
@@ -692,6 +701,7 @@ public class TrayControl : MonoBehaviour
             {
                 int localsuccessscore = 0;
                 int locallittlesuccessscore = 0;
+                List<GameObject> checkinglist = new List<GameObject>();
 
                 if (burgurs.GetChild(15).childCount != 6 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
                 {
@@ -710,13 +720,17 @@ public class TrayControl : MonoBehaviour
                 }
                 for (int i = 5; i >= 0; i--)
                 {
+                    checkinglist.Add(burgurs.GetChild(15).GetChild(i).gameObject);
+                }
+                for (int i = 5; i >= 0; i--)
+                {
                     if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 5)]))
                     {
                         localsuccessscore++;
                     }
                 }
 
-                foreach (var item in stackcreateburgur.ToArray())
+                foreach (var item in checkinglist.ToArray()/*stackcreateburgur.ToArray()*/)
                 {
                     if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]))
                     {
@@ -828,6 +842,8 @@ public class TrayControl : MonoBehaviour
             {
                 int localsuccessscore = 0;
                 int locallittlesuccessscore = 0;
+                List<GameObject> checkinglist = new List<GameObject>();
+
                 if (burgurs.GetChild(15).childCount != 7 || gamemanager.selectsourcecard.CompareTag(gamemanager.phase1selectedsource) == false || gamemanager.selectsourcecard == null || gamemanager.phase1selectedsource == null)
                 {
                     print("재료 개수가 안맞아서 실패");
@@ -845,13 +861,17 @@ public class TrayControl : MonoBehaviour
                 }
                 for (int i = 6; i >= 0; i--)
                 {
+                    checkinglist.Add(burgurs.GetChild(15).GetChild(i).gameObject);
+                }
+                for (int i = 6; i >= 0; i--)
+                {
                     if (burgurs.GetChild(15).GetChild(i).gameObject.CompareTag(a[(int)MathF.Abs(i - 6)]))
                     {
                         localsuccessscore++;
                     }
                 }
 
-                foreach (var item in stackcreateburgur.ToArray())
+                foreach (var item in checkinglist.ToArray()/*stackcreateburgur.ToArray()*/)
                 {
                     if (item.gameObject.CompareTag(a[0]) || item.gameObject.CompareTag(a[1]) || item.gameObject.CompareTag(a[2]) || item.gameObject.CompareTag(a[3]) || item.gameObject.CompareTag(a[4]) || item.gameObject.CompareTag(a[5]) || item.gameObject.CompareTag(a[6]))
                     {
@@ -1299,13 +1319,13 @@ public class TrayControl : MonoBehaviour
             foreach (var item in firstburgur)
             {
                 item.transform.parent = gamemanager.people[gamemanager.peoplenumbur - 1].transform.GetChild(3).GetChild(0);
-                item.transform.localPosition = new Vector3(0, item.transform.localPosition.y, 0);
+                item.transform.localPosition = new Vector3(0, item.transform.localPosition.y - 0.134305862f, 0);
             }
             //얘가 두번째에 쌓아올린 걸 타네
             foreach (var item in stackcreateburgur.ToArray())
             {
                 item.transform.parent = gamemanager.people[gamemanager.peoplenumbur - 1].transform.GetChild(3).GetChild(1);
-                item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.4219f, 0);
+                item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.3069f, 0);
                 stackcreateburgur.Pop();
             }
         }
@@ -1314,7 +1334,7 @@ public class TrayControl : MonoBehaviour
             foreach (var item in stackcreateburgur.ToArray())
             {
                 item.transform.parent = gamemanager.people[gamemanager.peoplenumbur - 1].transform.GetChild(3).GetChild(0);
-                item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.4219f, 0);
+                item.transform.localPosition = new Vector3(0, item.transform.localPosition.y + 0.3069f, 0);
                 stackcreateburgur.Pop();
             }
         }
@@ -1335,9 +1355,7 @@ public class TrayControl : MonoBehaviour
         {
             Destroy(burgursource.GetChild(0).gameObject);
         }
-
     }
-
 
     IEnumerator TooFast(Collider other)
     {
@@ -1773,7 +1791,7 @@ public class TrayControl : MonoBehaviour
                 other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
                 yield break;
             }
-           
+
             #region 안에서 집거나, 놓을때 (일반적인 상황아님)
             //안에서 집을때
             if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
