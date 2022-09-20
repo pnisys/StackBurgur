@@ -590,8 +590,12 @@ public class PeopleAnimator : MonoBehaviour
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         selecthambugurcard.SetActive(false);
         selectsourcecard.SetActive(false);
-        yield return new WaitForSeconds(4f);
-        yield return new WaitForSeconds(3f);
+        if (gamemanager.stage >= 4)
+        {
+            selecthambugurcard2.SetActive(false);
+            selectsourcecard2.SetActive(false);
+        }
+        yield return new WaitForSeconds(7f);
         SceneManager.LoadScene(0);
     }
 
