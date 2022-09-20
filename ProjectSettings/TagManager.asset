@@ -85,6 +85,7 @@ TagManager:
   - ACCIMAGE
   - RANKING
   - BIGBUTTON
+  - SOUNDMANAGER
   layers:
   - Default
   - TransparentFX

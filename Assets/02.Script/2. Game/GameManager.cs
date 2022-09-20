@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     public bool isTray = false;
 
+    public bool isbutton = false;
     public GameObject[] people;
 
     //현재 진행중인 사람
@@ -121,7 +122,15 @@ public class GameManager : MonoBehaviour
 
     public void Lobby()
     {
-        OnButtonLifeDie();
+        if (isbutton == false)
+        {
+            isbutton = true;
+            OnButtonLifeDie();
+        }
+        else
+        {
+            return;
+        }
     }
 
     public bool[] istable = new bool[10] { false, false, false, false, false, false, false, false, false, false };

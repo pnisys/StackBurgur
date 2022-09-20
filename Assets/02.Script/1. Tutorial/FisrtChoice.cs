@@ -104,4 +104,54 @@ public class FisrtChoice : MonoBehaviour
         avatarselect.SetActive(false);
         keyboard.SetActive(true);
     }
+
+    private void Start()
+    {
+        RankAvatarManager rankAvatarManager = SoundManager.instance.gameObject.GetComponent<RankAvatarManager>();
+        //버튼 달아주기
+        keyboard.transform.GetChild(2).GetChild(2).GetChild(12).GetComponent<Button>().onClick.AddListener(SoundManager.instance.gameObject.GetComponent<RankAvatarManager>()._PushCheck);
+        //씬 한번 전환되서 온것일때
+        if (SoundManager.instance.scenenext != 0)
+        {
+            avatarselect.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(rankAvatarManager._PrevFaceNum);
+            avatarselect.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(rankAvatarManager._NextFaceNum);
+            avatarselect.transform.GetChild(7).GetComponent<Button>().onClick.AddListener(rankAvatarManager._PrevHairNum);
+            avatarselect.transform.GetChild(8).GetComponent<Button>().onClick.AddListener(rankAvatarManager._NextHairNum);
+            avatarselect.transform.GetChild(10).GetComponent<Button>().onClick.AddListener(rankAvatarManager._PrevEyeNum);
+            avatarselect.transform.GetChild(11).GetComponent<Button>().onClick.AddListener(rankAvatarManager._NextEyeNum);
+            avatarselect.transform.GetChild(13).GetComponent<Button>().onClick.AddListener(rankAvatarManager._PrevAccNum);
+            avatarselect.transform.GetChild(14).GetComponent<Button>().onClick.AddListener(rankAvatarManager._NextAccNum);
+
+            rankAvatarManager.LegacyText = keyboard.transform.GetChild(3).GetComponent<Text>();
+            rankAvatarManager.manImg = avatarselect.transform.GetChild(1).GetComponent<Image>();
+            rankAvatarManager.manFaceImg = avatarselect.transform.GetChild(1).GetChild(1).GetComponent<Image>();
+            rankAvatarManager.manFaceText = avatarselect.transform.GetChild(3).GetComponent<Text>();
+            rankAvatarManager.manHairImg = avatarselect.transform.GetChild(1).GetChild(2).GetComponent<Image>();
+            rankAvatarManager.manBackHairImg = avatarselect.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+            rankAvatarManager.manHairText = avatarselect.transform.GetChild(6).GetComponent<Text>();
+            rankAvatarManager.manEyeImg = avatarselect.transform.GetChild(1).GetChild(3).GetComponent<Image>();
+            rankAvatarManager.manEyeText = avatarselect.transform.GetChild(9).GetComponent<Text>();
+            rankAvatarManager.manAccImg = avatarselect.transform.GetChild(1).GetChild(4).GetComponent<Image>();
+            rankAvatarManager.manAccText = avatarselect.transform.GetChild(12).GetComponent<Text>();
+            rankAvatarManager.nameInput = keyboard.transform.GetChild(1).GetComponent<InputField>();
+
+            rankAvatarManager.manFacesNum = Random.Range(1, 7);
+            rankAvatarManager.manHairNum = Random.Range(1, 16);
+            rankAvatarManager.manEyesNum = Random.Range(1, 7);
+            rankAvatarManager.manAccsNum = Random.Range(1, 13);
+
+            rankAvatarManager.StartCoroutine(rankAvatarManager.ManFaceSystem());
+            rankAvatarManager.StartCoroutine(rankAvatarManager.ManHairSystem());
+            rankAvatarManager.StartCoroutine(rankAvatarManager.ManEyeSystem());
+            rankAvatarManager.StartCoroutine(rankAvatarManager.ManAccSystem());
+
+
+        }
+
+      
+
+
+
+
+    }
 }

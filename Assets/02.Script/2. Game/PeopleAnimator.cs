@@ -202,7 +202,10 @@ public class PeopleAnimator : MonoBehaviour
                 agent.isStopped = true;
                 //손님 서 있는 애니메이션 틀기
                 animator.SetBool(hashIdle, true);
-                StartCoroutine(ThinkBallon());
+                if (gamemanager.isbutton == false)
+                {
+                    StartCoroutine(ThinkBallon());
+                }
             }
         }
     }
@@ -222,6 +225,7 @@ public class PeopleAnimator : MonoBehaviour
         LevelBurgurSetting();
         //제한시간 캔버스 켜기
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+
         audiosource.clip = audioclip[0];
         audiosource.Play();
         //주문하고 있으면 계속 반복 켜기
@@ -569,6 +573,8 @@ public class PeopleAnimator : MonoBehaviour
         gamemanager.islittlesuccess2 = false;
 
     }
+
+    //버튼선택
     void Died()
     {
         StartCoroutine(RealDied());
@@ -576,10 +582,6 @@ public class PeopleAnimator : MonoBehaviour
     //죽을때
     IEnumerator RealDied()
     {
-        audiosource.Stop();
-        audiosource.PlayOneShot(audioclip[8]);
-        ranking.gameObject.transform.position = new Vector3(-67.705f, 0.871083f, 34.055f);
-        gamemanager.GetComponent<AudioSource>().Stop();
         foreach (var item in gamemanager.people)
         {
             if (gamemanager.currentpeople != item)
@@ -587,14 +589,15 @@ public class PeopleAnimator : MonoBehaviour
                 item.SetActive(false);
             }
         }
+        //audiosource.Stop();
+        audiosource.PlayOneShot(audioclip[8]);
+        ranking.gameObject.transform.position = new Vector3(-67.44f, 0.62f, 34.16f);
+        gamemanager.GetComponent<AudioSource>().Stop();
+
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        selecthambugurcard.SetActive(false);
-        selectsourcecard.SetActive(false);
-        if (gamemanager.stage >= 4)
-        {
-            selecthambugurcard2.SetActive(false);
-            selectsourcecard2.SetActive(false);
-        }
+        animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+        animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+
         yield return new WaitForSeconds(7f);
         SceneManager.LoadScene(0);
     }
@@ -605,7 +608,8 @@ public class PeopleAnimator : MonoBehaviour
         GameManagerInit();
         gamemanager.GetComponent<AudioSource>().Stop();
         audiosource.PlayOneShot(audioclip[9]);
-        ranking.gameObject.transform.position = new Vector3(-67.705f, 0.871083f, 34.055f);
+        ranking.gameObject.transform.position = new Vector3(-67.44f, 0.62f, 34.16f);
+
         //gamemanager.GuideUiText.text = "게임 모두 클리어";
         //gamemanager.GuideUiText.fontSize = 0.05f;
         //gamemanager.GuideUiText2.text = null;

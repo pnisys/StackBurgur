@@ -13,10 +13,10 @@ public class RankAvatarManager : MonoBehaviour
     [Space(10)]
     [Header("Avatar Image Element")]
     public Image manImg;
-    int randomFace;
-    int randomHair;
-    int randomEye;
-    int randomAcce;
+    public int randomFace;
+    public int randomHair;
+    public int randomEye;
+    public int randomAcce;
 
     [Space(10)]
     [Header("Face Image Element")]
@@ -54,10 +54,10 @@ public class RankAvatarManager : MonoBehaviour
 
     bool isRunning = true;
 
-    IEnumerator faceCoroutine;
-    IEnumerator hairCoroutine;
-    IEnumerator eyeCoroutine;
-    IEnumerator accCoroutine;
+    public IEnumerator faceCoroutine;
+    public IEnumerator hairCoroutine;
+    public IEnumerator eyeCoroutine;
+    public IEnumerator accCoroutine;
 
     void Start()
     {
@@ -82,7 +82,7 @@ public class RankAvatarManager : MonoBehaviour
         StartCoroutine(accCoroutine);
     }
     // 아바타 상태 확인
-    IEnumerator ManFaceSystem()
+    public IEnumerator ManFaceSystem()
     {
         while (isRunning)
         {
@@ -123,7 +123,7 @@ public class RankAvatarManager : MonoBehaviour
             yield return new WaitForSeconds(0);
         }
     }
-    IEnumerator ManHairSystem()
+    public IEnumerator ManHairSystem()
     {
         while (isRunning)
         {
@@ -218,7 +218,7 @@ public class RankAvatarManager : MonoBehaviour
             yield return new WaitForSeconds(0);
         }
     }
-    IEnumerator ManEyeSystem()
+    public IEnumerator ManEyeSystem()
     {
         while (isRunning)
         {
@@ -259,7 +259,7 @@ public class RankAvatarManager : MonoBehaviour
             yield return new WaitForSeconds(0);
         }
     }
-    IEnumerator ManAccSystem()
+    public IEnumerator ManAccSystem()
     {
         while (isRunning)
         {
@@ -339,6 +339,7 @@ public class RankAvatarManager : MonoBehaviour
         if (nameInput.text.Length != 3)
         {
             LegacyText.text = "이름을 세글자로 맞춰주세요";
+            print(nameInput.text.Length);
             return;
         }
         PlayerPrefs.SetString("AvatarNumber", $"{faceAlpha}{hairAlpha}{eyeAlpha}{acceAlpha}");
@@ -372,6 +373,7 @@ public class RankAvatarManager : MonoBehaviour
 
     IEnumerator ChangeScene()
     {
+        SoundManager.instance.scenenext++;
         SceneManager.LoadScene(2);
 
         yield return new WaitUntil(() => SceneManager.GetActiveScene().buildIndex == 2);

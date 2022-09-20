@@ -21,9 +21,9 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
-
+    public int scenenext = 0;
     public float bgmSound = 1;
     public float anothersound = 1;
     public string username = null;
-
+ 
 }
