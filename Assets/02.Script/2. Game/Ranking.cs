@@ -13,11 +13,14 @@ public class Ranking : MonoBehaviour
     private void OnEnable()
     {
         PeopleAnimator.OnLifeDie += this.ScoreSet;
-
+        PeopleAnimator.OnClear += this.ScoreSet;
+        GameManager.OnButtonLifeDie += this.ScoreSet;
     }
     private void OnDisable()
     {
         PeopleAnimator.OnLifeDie -= this.ScoreSet;
+        PeopleAnimator.OnClear -= this.ScoreSet;
+        GameManager.OnButtonLifeDie -= this.ScoreSet;
     }
     public int[] bestScore = new int[5];
     public string[] bestName = new string[5];
@@ -111,13 +114,6 @@ public class Ranking : MonoBehaviour
             rankScoreText[i].text = rankScore[i].ToString();
             rankName[i] = PlayerPrefs.GetString(i.ToString() + "BestName");
             rankNameText[i].text = rankName[i];
-
-            //if (rankScoreCurrent.text == rankScoreText[i].text)
-            //{
-            //    Color Rank = new Color(233, 116, 0, 255);
-            //    rankNameText[i].color = Rank;
-            //    rankScoreText[i].color = Rank;
-            //}
         }
     }
 }

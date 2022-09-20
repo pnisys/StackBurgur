@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviour
     public int tablepeoplenumbur = 0;
     public int peoplenumbur = 0;
 
-    //public Animator animator;
+    public delegate void ButtonLifeDie();
+    public static event ButtonLifeDie OnButtonLifeDie;
 
     public int score = 0;
     public int Score
@@ -120,7 +121,7 @@ public class GameManager : MonoBehaviour
 
     public void Lobby()
     {
-        SceneManager.LoadScene(2);
+        OnButtonLifeDie();
     }
 
     public bool[] istable = new bool[10] { false, false, false, false, false, false, false, false, false, false };

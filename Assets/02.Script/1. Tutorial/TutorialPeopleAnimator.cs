@@ -301,9 +301,9 @@ public class TutorialPeopleAnimator : MonoBehaviour
         guidetext.text = "고기를 잡고 떨어뜨려보세요";
         viedoplayer.clip = viedoclips[0];
         viedoplayer.Play();
-        patty.GetComponent<HighlightEffect>().highlighted = true;
-        patty.GetComponent<HighlightEffect>().outline = 0.05f;
-        patty.GetComponent<HighlightEffect>().innerGlow = 0.1f;
+        //patty.GetComponent<HighlightEffect>().highlighted = true;
+        //patty.GetComponent<HighlightEffect>().outline = 0.05f;
+        //patty.GetComponent<HighlightEffect>().innerGlow = 0.1f;
         while (lgrabstatus.IsGrabbing == false || rgrabstatus.IsGrabbing == false)
         {
             yield return null;

@@ -14,12 +14,14 @@ public class StageCanvasControl : MonoBehaviour
     {
         PeopleAnimator.OnStageChange += this.StageUp;
         PeopleAnimator.OnLifeDie += this.Die;
+        GameManager.OnButtonLifeDie += this.Die;
         PeopleAnimator.OnClear += this.Clear;
     }
 
     private void OnDisable()
     {
         PeopleAnimator.OnStageChange -= this.StageUp;
+        GameManager.OnButtonLifeDie -= this.Die;
         PeopleAnimator.OnLifeDie -= this.Die;
         PeopleAnimator.OnClear -= this.Clear;
     }

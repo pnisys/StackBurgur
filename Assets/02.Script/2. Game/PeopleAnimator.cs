@@ -72,6 +72,16 @@ public class PeopleAnimator : MonoBehaviour
     public bool phase2source = false;
     bool buttonclick = false;
     InteractableUnityEventWrapper buttonevent;
+
+    private void OnEnable()
+    {
+        GameManager.OnButtonLifeDie += this.Died;
+    }
+    private void OnDisable()
+    {
+        GameManager.OnButtonLifeDie -= this.Died;
+    }
+
     void Start()
     {
         for (int i = 0; i < OneLevelBurgerCard.Length; i++)
@@ -465,7 +475,7 @@ public class PeopleAnimator : MonoBehaviour
         if (gamemanager.lifescore == 0)
         {
             OnLifeDie();
-            StartCoroutine(Died());
+            StartCoroutine(RealDied());
         }
         yield return new WaitForSeconds(5f);
         mood.SetActive(false);
@@ -559,15 +569,29 @@ public class PeopleAnimator : MonoBehaviour
         gamemanager.islittlesuccess2 = false;
 
     }
-
-    //죽을때
-    IEnumerator Died()
+    void Died()
     {
-        //ranking.ScoreSet(gamemanager.score, SoundManager.instance.username,gamemanager.stage);
+        StartCoroutine(RealDied());
+    }
+    //죽을때
+    IEnumerator RealDied()
+    {
+        audiosource.Stop();
         audiosource.PlayOneShot(audioclip[8]);
         ranking.gameObject.transform.position = new Vector3(-67.705f, 0.871083f, 34.055f);
         gamemanager.GetComponent<AudioSource>().Stop();
-        yield return new WaitForSeconds(10f);
+        foreach (var item in gamemanager.people)
+        {
+            if (gamemanager.currentpeople != item)
+            {
+                item.SetActive(false);
+            }
+        }
+        animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        selecthambugurcard.SetActive(false);
+        selectsourcecard.SetActive(false);
+        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         SceneManager.LoadScene(0);
     }
 
@@ -577,6 +601,7 @@ public class PeopleAnimator : MonoBehaviour
         GameManagerInit();
         gamemanager.GetComponent<AudioSource>().Stop();
         audiosource.PlayOneShot(audioclip[9]);
+        ranking.gameObject.transform.position = new Vector3(-67.705f, 0.871083f, 34.055f);
         //gamemanager.GuideUiText.text = "게임 모두 클리어";
         //gamemanager.GuideUiText.fontSize = 0.05f;
         //gamemanager.GuideUiText2.text = null;
