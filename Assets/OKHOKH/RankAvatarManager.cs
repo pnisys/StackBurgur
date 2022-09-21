@@ -435,7 +435,6 @@ public class RankAvatarManager : MonoBehaviour
         }
     }
 
-
     // 각 부분 별 버튼 클릭
     public void _PrevFaceNum()
     {

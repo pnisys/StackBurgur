@@ -15,6 +15,7 @@ public class PeopleAnimator : MonoBehaviour
     public GameObject people;
 
     AudioSource audiosource;
+
     public AudioClip[] audioclip;
     GameObject door;
     GameObject clerkcollider;
@@ -213,6 +214,10 @@ public class PeopleAnimator : MonoBehaviour
     //2. 2초 대기하다가 주문함
     IEnumerator ThinkBallon()
     {
+        if (gamemanager.isbutton == true)
+        {
+            yield break;
+        }
         yield return new WaitForSeconds(1f);
         audiosource.PlayOneShot(audioclip[5]);
         //손님이 주문하는 상태 켜기
@@ -225,13 +230,19 @@ public class PeopleAnimator : MonoBehaviour
         LevelBurgurSetting();
         //제한시간 캔버스 켜기
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-
-        audiosource.clip = audioclip[0];
-        audiosource.Play();
+        if (gamemanager.isbutton == false)
+        {
+            audiosource.clip = audioclip[0];
+            audiosource.Play();
+        }
         //주문하고 있으면 계속 반복 켜기
         while (gamemanager.isThinking == true)
         {
             yield return null;
+            if (gamemanager.isbutton == true)
+            {
+                yield break;
+            }
             //주문하는 시간 15초 생성
             gamemanager.orderlimitTime -= Time.deltaTime;
             animator.gameObject.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(gamemanager.orderlimitTime).ToString() + "초";
@@ -262,6 +273,10 @@ public class PeopleAnimator : MonoBehaviour
     //3. 주문 받음
     IEnumerator Order()
     {
+        if (gamemanager.isbutton == true)
+        {
+            yield break;
+        }
         audiosource.PlayOneShot(audioclip[6]);
         //주문 상태 On
         gamemanager.isOrder = true;
@@ -402,6 +417,10 @@ public class PeopleAnimator : MonoBehaviour
     //스테이지 4,5 따로 처리
     IEnumerator Stage45()
     {
+        if (gamemanager.isbutton == true)
+        {
+            yield break;
+        }
         audiosource.Play();
         print("이거 왜 안탐?");
         foreach (var item in traycontrol.stackcreateburgur.ToArray())
@@ -589,8 +608,7 @@ public class PeopleAnimator : MonoBehaviour
                 item.SetActive(false);
             }
         }
-        //audiosource.Stop();
-        audiosource.PlayOneShot(audioclip[8]);
+        audiosource.Stop();
         ranking.gameObject.transform.position = new Vector3(-67.44f, 0.62f, 34.16f);
         gamemanager.GetComponent<AudioSource>().Stop();
 
@@ -607,7 +625,6 @@ public class PeopleAnimator : MonoBehaviour
     {
         GameManagerInit();
         gamemanager.GetComponent<AudioSource>().Stop();
-        audiosource.PlayOneShot(audioclip[9]);
         ranking.gameObject.transform.position = new Vector3(-67.44f, 0.62f, 34.16f);
 
         //gamemanager.GuideUiText.text = "게임 모두 클리어";
@@ -622,6 +639,7 @@ public class PeopleAnimator : MonoBehaviour
     {
         //스테이지 업!
         gamemanager.Stage++;
+        //캔버스 이벤트
         OnStageChange();
         gamemanager.tablepeoplenumbur = 0;
         //gamemanager.people[gamemanager.peoplenumbur].SetActive(true);
@@ -633,7 +651,6 @@ public class PeopleAnimator : MonoBehaviour
             item.transform.localPosition = new Vector3(0, 0, 0);
             item.transform.localRotation = Quaternion.Euler(0, -90, 0);
         }
-        audiosource.PlayOneShot(audioclip[7]);
         if (gamemanager.istable[9] == true)
         {
             for (int i = 0; i < 10; i++)
@@ -644,6 +661,8 @@ public class PeopleAnimator : MonoBehaviour
         GameManagerInit();
     }
 
+
+    //GameManager 상태값 초기화
     public void GameManagerInit()
     {
         gamemanager.iscompletesuccess = false;
