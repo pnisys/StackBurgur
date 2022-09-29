@@ -65,6 +65,7 @@ public class PeopleAnimator : MonoBehaviour
     public GameObject[] ThreeLevelBurgerCard;
     public GameObject[] FourLevelBurgerCard;
     public GameObject[] sourceCard;
+    public GameObject[] oculusbutton;
 
     int ran = 0;
     int ran1 = 0;
@@ -135,7 +136,8 @@ public class PeopleAnimator : MonoBehaviour
         gamemanager.peoplenumbur++;
         gamemanager.phase1selectedsource = null;
         gamemanager.phase2selectedsource = null;
-
+        oculusbutton[0].SetActive(false);
+        oculusbutton[1].SetActive(false);
         //1. 손님 등판
         StartCoroutine(ClerkStateCheck());
         //2.숫자 랜덤하게 섞기
@@ -153,14 +155,14 @@ public class PeopleAnimator : MonoBehaviour
         {
             gamemanager.level = 1;
             gamemanager.limitTime = 90f;
-            gamemanager.orderlimitTime = 15f;
+            gamemanager.orderlimitTime = 20f;
         }
         else if (gamemanager.stage == 2)
         {
             randomstage = UnityEngine.Random.Range(1, 3);
             gamemanager.level = randomstage;
             gamemanager.limitTime = 90f;
-            gamemanager.orderlimitTime = 15f;
+            gamemanager.orderlimitTime = 20f;
 
         }
         else if (gamemanager.stage == 3)
@@ -168,7 +170,7 @@ public class PeopleAnimator : MonoBehaviour
             randomstage = UnityEngine.Random.Range(2, 4);
             gamemanager.level = randomstage;
             gamemanager.limitTime = 90f;
-            gamemanager.orderlimitTime = 15f;
+            gamemanager.orderlimitTime = 20f;
 
         }
         else if (gamemanager.stage == 4)
@@ -219,6 +221,8 @@ public class PeopleAnimator : MonoBehaviour
             yield break;
         }
         yield return new WaitForSeconds(1f);
+
+
         audiosource.PlayOneShot(audioclip[5]);
         //손님이 주문하는 상태 켜기
         gamemanager.isThinking = true;
@@ -277,6 +281,8 @@ public class PeopleAnimator : MonoBehaviour
         {
             yield break;
         }
+        oculusbutton[0].SetActive(true);
+        oculusbutton[1].SetActive(true);
         audiosource.PlayOneShot(audioclip[6]);
         //주문 상태 On
         gamemanager.isOrder = true;

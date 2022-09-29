@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI GuideUiText;
     public TextMeshProUGUI GuideUiText2;
     public TextMeshProUGUI GuideUiText3;
-
+    public GameObject[] lifescoreimage;
 
     public string phase1selectedsource;
     public string phase2selectedsource;
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
         set
         {
             score = value;
-            GuideUiText3.text = "점수 : " + score.ToString();
+            GuideUiText3.text = score.ToString();
         }
     }
     public int lifescore = 5;
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         set
         {
             lifescore = value;
-            GuideUiText2.text = "몫 : " + lifescore.ToString();
+            lifescoreimage[lifescore].SetActive(false);
         }
     }
 
@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
         set
         {
             stage = value;
-            GuideUiText.text = "스테이지 : " + stage.ToString();
+            GuideUiText.text = "스테이지  " + stage.ToString();
         }
     }
     private void Start()
@@ -110,9 +110,7 @@ public class GameManager : MonoBehaviour
         GuideUiText3 = gameObject.transform.parent.GetChild(3).GetChild(2).GetComponent<TextMeshProUGUI>();
 
         GuideUiText.text = "스테이지 : " + stage.ToString();
-        GuideUiText2.text = "몫 : " + lifescore.ToString();
-        GuideUiText3.text = "점수 : " + score.ToString();
-
+        GuideUiText3.text = score.ToString();
     }
 
     public GameObject selecthambugurcard;
