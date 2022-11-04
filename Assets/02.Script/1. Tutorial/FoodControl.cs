@@ -59,6 +59,7 @@ public class FoodControl : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("DISH"))
         {
             isOk = true;
+            StartCoroutine(HaticControl(0.2f));
             //중력이 작용하게 풀어줌
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
             //다른 곳으로 가게끔 만듬 그래야 접시에서 프리팹이 생김
@@ -66,6 +67,15 @@ public class FoodControl : MonoBehaviour
             //접시에 프리팹 생기게 하는 순간
             OnDishing();
         }
+    }
+
+    IEnumerator HaticControl(float delay)
+    {
+        OVRInput.SetControllerVibration(1f, 0.5f, OVRInput.Controller.LTouch);
+        OVRInput.SetControllerVibration(1f, 0.5f, OVRInput.Controller.RTouch);
+        yield return new WaitForSeconds(delay);
+        OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.LTouch);
+        OVRInput.SetControllerVibration(0, 0f, OVRInput.Controller.RTouch);
     }
 
     private void Update()
