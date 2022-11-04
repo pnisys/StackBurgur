@@ -17,6 +17,7 @@ public class TutorialTrayControl : MonoBehaviour
     public Transform burgursource;
     public Transform empty;
     public string selectedsource;
+    public GameObject arrow;
     //소스 4개 모아놓는 위치
     public Transform source;
     //소스 4개 프리팹

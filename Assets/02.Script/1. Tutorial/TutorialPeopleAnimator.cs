@@ -52,6 +52,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
     public GameObject patty;
     public HandGrabInteractor lgrabstatus;
     public HandGrabInteractor rgrabstatus;
+    public GameObject arrow;
     public bool islgrabstatus = false;
     public bool isrgrabstatus = false;
     private void OnEnable()
@@ -332,6 +333,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
         audiosource.PlayOneShot(audioclip2[8]);
         audiosource.Stop();
         patty.GetComponent<HighlightEffect>().highlighted = false;
+        arrow.SetActive(true);
         guidetext.text = "고기를 구워보세요.\n5초가 지나면 구워지지만\n10초가 지나면 타게 됩니다.";
         audiosource.PlayOneShot(audioclip[2]);
         viedoplayer.clip = viedoclips[2];
