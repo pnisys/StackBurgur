@@ -19,6 +19,8 @@ public class FoodControl : MonoBehaviour
     public bool islgrabstatus = false;
     public bool isrgrabstatus = false;
 
+
+    bool ishaticbool = false;
     GameObject[] hands;
     HandGrabInteractor[] grabstatus = new HandGrabInteractor[2];
     Transform empty;
@@ -59,7 +61,6 @@ public class FoodControl : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("DISH"))
         {
             isOk = true;
-            StartCoroutine(HaticControl(0.2f));
             //중력이 작용하게 풀어줌
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
             //다른 곳으로 가게끔 만듬 그래야 접시에서 프리팹이 생김
@@ -80,6 +81,17 @@ public class FoodControl : MonoBehaviour
 
     private void Update()
     {
+        if (grabstatus[0].IsGrabbing == true && ishaticbool == false)
+        {
+            ishaticbool = true;
+            StartCoroutine(HaticControl(0.2f));
+        }
+        if (grabstatus[1].IsGrabbing == true && ishaticbool == false)
+        {
+            ishaticbool = true;
+            StartCoroutine(HaticControl(0.2f));
+        }
+
         if (grabstatus[0].IsGrabbing == true && islgrabstatus == false)
         {
             islgrabstatus = true;
