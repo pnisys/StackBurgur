@@ -86,6 +86,7 @@ TagManager:
   - RANKING
   - BIGBUTTON
   - SOUNDMANAGER
+  - OVRCAMERA
   layers:
   - Default
   - TransparentFX

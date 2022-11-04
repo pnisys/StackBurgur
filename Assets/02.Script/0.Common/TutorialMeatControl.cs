@@ -5,6 +5,8 @@ using Oculus.Interaction.HandGrab;
 using Oculus.Interaction;
 using HighlightPlus;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.UI;
 
 public class TutorialMeatControl : MonoBehaviour
 {
@@ -22,6 +24,8 @@ public class TutorialMeatControl : MonoBehaviour
     public Transform[] grilltransform;
     Renderer meatrenderer;
     public AudioSource audiosource;
+    public TextMeshProUGUI TimerText;
+    GameObject centerEye;
 
     public delegate void Traying();
     public static event Traying OnTraying;
@@ -41,6 +45,7 @@ public class TutorialMeatControl : MonoBehaviour
     public bool isrgrabstatus = false;
     private void Start()
     {
+        centerEye = GameObject.FindGameObjectWithTag("OVRCAMERA");
         meatrenderer = GetComponent<Renderer>();
         hands = GameObject.FindGameObjectsWithTag("HANDGRAB");
         for (int i = 0; i < 2; i++)
@@ -96,6 +101,9 @@ public class TutorialMeatControl : MonoBehaviour
                     ismeateffect = true;
                 }
                 currentTime += Time.deltaTime;
+                TimerText.text = ((int)currentTime).ToString();
+                TimerText.transform.parent.gameObject.SetActive(true);
+                TimerText.transform.parent.gameObject.transform.LookAt(centerEye.transform);
                 if (isposition == false)
                 {
                     for (int i = 0; i < 4; i++)
@@ -121,10 +129,12 @@ public class TutorialMeatControl : MonoBehaviour
             //5초 지나면 고기가 구워짐
             if (currentTime > 5f && isgoodmeat == false && islivemeat == true)
             {
+                TimerText.color = new Color(0, 128, 0);
                 islivemeat = false;
                 isgoodmeat = true;
                 meatrenderer.material.color = new Color(94 / 255f, 64 / 255f, 52 / 255f);
                 gameObject.tag = "GOODMEAT";
+
                 if (SceneManager.GetActiveScene().buildIndex == 1)
                 {
                     OnGoodMeeting();
@@ -134,6 +144,7 @@ public class TutorialMeatControl : MonoBehaviour
             //10초 지나면 고기가 탐
             else if (currentTime > 10f && isbadmeat == false)
             {
+                TimerText.color = new Color(255, 0, 0);
                 isgoodmeat = false;
                 isbadmeat = true;
                 meatrenderer.material.color = new Color(0, 0, 0);
@@ -197,6 +208,7 @@ public class TutorialMeatControl : MonoBehaviour
         {
             if (ismeateffect == true)
             {
+                TimerText.transform.parent.gameObject.SetActive(false);
                 StartCoroutine(EndAudioControl());
                 Destroy(saveffect);
                 print("그릴에서 나갔다고 판단하는건가?");

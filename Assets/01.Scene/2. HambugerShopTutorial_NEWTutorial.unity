@@ -59989,7 +59989,7 @@ GameObject:
   - component: {fileID: 4919022601201428336}
   m_Layer: 0
   m_Name: CenterEyeAnchor
-  m_TagString: MainCamera
+  m_TagString: OVRCAMERA
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60008,7 +60008,7 @@ GameObject:
   - component: {fileID: 6432663620293157117}
   m_Layer: 0
   m_Name: OVRCameraRig
-  m_TagString: Untagged
+  m_TagString: OVRCAMERA
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72537,6 +72537,7 @@ MonoBehaviour:
   saveffect: {fileID: 0}
   grilltransform: []
   audiosource: {fileID: 0}
+  TimerText: {fileID: 0}
   ismeattrash: 0
   islgrabstatus: 0
   isrgrabstatus: 0
