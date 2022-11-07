@@ -60,7 +60,7 @@ public class TutorialMeatControl : MonoBehaviour
         grilltransform = new Transform[4];
         for (int i = 0; i < 4; i++)
         {
-            grilltransform[i] = grill.transform.GetChild(i + 3);
+            grilltransform[i] = grill.transform.GetChild(i + 1);
         }
     }
 
