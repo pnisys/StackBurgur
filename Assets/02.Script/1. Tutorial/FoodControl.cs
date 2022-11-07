@@ -77,6 +77,10 @@ public class FoodControl : MonoBehaviour
             //접시에 프리팹 생기게 하는 순간
             OnDishing();
         }
+        if ((gameObject.CompareTag("BULGOGI") || gameObject.CompareTag("GOODMEAT")) && other.gameObject.CompareTag("GRILL"))
+        {
+            isGrill = false;
+        }
     }
 
     private void Update()
