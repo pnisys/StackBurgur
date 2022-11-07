@@ -3860,6 +3860,8 @@ MonoBehaviour:
   people:
   - {fileID: 1710633969464486}
   animator: {fileID: 95890817370557664}
+  lgrabstatus: {fileID: 8553364197522708004}
+  rgrabstatus: {fileID: 8553364198841914600}
   score: 0
   lifescore: 5
   orderlimitTime: 15

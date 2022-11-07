@@ -4,9 +4,43 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using Oculus.Interaction.HandGrab;
 
 public class TutorialGamemanager : MonoBehaviour
 {
+    private void Update()
+    {
+        if (lgrabstatus.IsGrabbing == true && islgrab == false)
+        {
+            StartCoroutine(LHaticControl(0.1f));
+            islgrab = true;
+        }
+        if (rgrabstatus.IsGrabbing == true && isrgrab == false)
+        {
+            StartCoroutine(RHaticControl(0.1f));
+            isrgrab = true;
+        }
+        if (lgrabstatus.IsGrabbing == false)
+        {
+            islgrab = false;
+        }
+        if (rgrabstatus.IsGrabbing == false)
+        {
+            isrgrab = false;
+        }
+    }
+    IEnumerator LHaticControl(float delay)
+    {
+        OVRInput.SetControllerVibration(1f, 0.5f, OVRInput.Controller.LTouch);
+        yield return new WaitForSeconds(delay);
+        OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.LTouch);
+    }
+    IEnumerator RHaticControl(float delay)
+    {
+        OVRInput.SetControllerVibration(1f, 0.5f, OVRInput.Controller.RTouch);
+        yield return new WaitForSeconds(delay);
+        OVRInput.SetControllerVibration(0, 0f, OVRInput.Controller.RTouch);
+    }
     //1. 점원이 매대 앞에 서면
     public bool isClerk = false;
     //2. 점원이 생각하는 중
@@ -21,11 +55,13 @@ public class TutorialGamemanager : MonoBehaviour
     public bool isfail = false;
 
     public bool isTray = false;
-    
+    bool islgrab = false;
+    bool isrgrab = false;
 
     public GameObject[] people;
     public Animator animator;
-
+    public HandGrabInteractor lgrabstatus;
+    public HandGrabInteractor rgrabstatus;
     public int score = 0;
     public int lifescore = 5;
 
