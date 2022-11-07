@@ -12,9 +12,11 @@ public class SourceDish : MonoBehaviour
     public bool sourcebottleentry = true;
     public bool islgrabstatus = false;
     public bool isrgrabstatus = false;
+    GameObject tray;
 
     private void Start()
     {
+        tray = GameObject.FindGameObjectWithTag("TRAYCOLOR");
         hands = GameObject.FindGameObjectsWithTag("HANDGRAB");
         for (int i = 0; i < 2; i++)
         {
@@ -26,6 +28,7 @@ public class SourceDish : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("SOURCE"))
         {
+            tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 186, 186, 255);
             sourcebottleentry = false;
             StartCoroutine(CheckingSource(other));
         }
@@ -46,6 +49,7 @@ public class SourceDish : MonoBehaviour
             }
             if (((grabstatus[0].IsGrabbing == false && islgrabstatus == true) || (grabstatus[1].IsGrabbing == false && isrgrabstatus == true)) && other.gameObject.GetComponent<SourceControl>().isEntry == false)
             {
+                tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 255, 255, 255);
                 islgrabstatus = false;
                 isrgrabstatus = false;
                 other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;

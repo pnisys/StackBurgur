@@ -1445,7 +1445,7 @@ public class TrayControl : MonoBehaviour
             //안들어와있는 상태
             if (other.gameObject.GetComponent<SourceControl>().isEntry == false)
             {
-                print("여길탔니?");
+                tray.GetComponent<MeshRenderer>().material.color = new Color32(70, 193, 61, 255);
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
                 other.gameObject.GetComponent<SourceControl>().isEntry = true;
                 //잡고 있으면 계속 검사하다가
@@ -1464,6 +1464,7 @@ public class TrayControl : MonoBehaviour
                     //여기서 잡기를 놓는다면
                     if ((rgrabstatus.IsGrabbing == false && isrgrabstatus == true) || (lgrabstatus.IsGrabbing == false && islgrabstatus == true))
                     {
+                        tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 255, 255, 255);
                         islgrabstatus = false;
                         isrgrabstatus = false;
 
@@ -1791,6 +1792,11 @@ public class TrayControl : MonoBehaviour
 
     IEnumerator OnTriggerExit(Collider other)
     {
+        if (other.gameObject.layer == LayerMask.NameToLayer("SOURCE"))
+        {
+            tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 186, 186, 255);
+            other.gameObject.GetComponent<SourceControl>().isEntry = false;
+        }
         //음식이 벗어날때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
