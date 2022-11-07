@@ -87,6 +87,8 @@ TagManager:
   - BIGBUTTON
   - SOUNDMANAGER
   - OVRCAMERA
+  - TRAYCOLOR
+  - GRILLCOLOR
   layers:
   - Default
   - TransparentFX

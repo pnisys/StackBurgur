@@ -22,6 +22,8 @@ public class FoodControl : MonoBehaviour
 
     bool ishaticbool = false;
     GameObject[] hands;
+    GameObject tray;
+    GameObject grill;
     HandGrabInteractor[] grabstatus = new HandGrabInteractor[2];
     Transform empty;
     Rigidbody rb;
@@ -33,6 +35,8 @@ public class FoodControl : MonoBehaviour
 
     private void Start()
     {
+        tray = GameObject.FindGameObjectWithTag("TRAYCOLOR");
+        grill = GameObject.FindGameObjectWithTag("GRILLCOLOR");
         hands = GameObject.FindGameObjectsWithTag("HANDGRAB");
         for (int i = 0; i < 2; i++)
         {
@@ -60,6 +64,11 @@ public class FoodControl : MonoBehaviour
         //접시에서 빼면
         if (other.gameObject.layer == LayerMask.NameToLayer("DISH"))
         {
+            tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 186, 186, 255);
+            if (gameObject.CompareTag("BULGOGI"))
+            {
+                grill.GetComponent<MeshRenderer>().material.color = new Color32(255, 122, 122, 255);
+            }
             isOk = true;
             //중력이 작용하게 풀어줌
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
@@ -102,6 +111,8 @@ public class FoodControl : MonoBehaviour
 
     IEnumerator FoodDestory()
     {
+        tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 255, 255, 255);
+        grill.GetComponent<MeshRenderer>().material.color = new Color32(77, 77, 77, 255);
         //OnTraying();
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);

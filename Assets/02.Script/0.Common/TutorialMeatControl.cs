@@ -26,6 +26,7 @@ public class TutorialMeatControl : MonoBehaviour
     public AudioSource audiosource;
     public TextMeshProUGUI TimerText;
     GameObject centerEye;
+    GameObject grillcolor;
 
     public delegate void Traying();
     public static event Traying OnTraying;
@@ -43,9 +44,14 @@ public class TutorialMeatControl : MonoBehaviour
     public bool ismeattrash = false;
     public bool islgrabstatus = false;
     public bool isrgrabstatus = false;
+    public GameObject traycolor;
+    bool isGrillColor = false;
     private void Start()
     {
         centerEye = GameObject.FindGameObjectWithTag("OVRCAMERA");
+        grillcolor = GameObject.FindGameObjectWithTag("GRILLCOLOR");
+        traycolor = GameObject.FindGameObjectWithTag("TRAYCOLOR");
+
         meatrenderer = GetComponent<Renderer>();
         hands = GameObject.FindGameObjectsWithTag("HANDGRAB");
         for (int i = 0; i < 2; i++)
@@ -99,6 +105,12 @@ public class TutorialMeatControl : MonoBehaviour
                     saveffect = Instantiate(meateffect, gameObject.transform);
                     StartCoroutine(StartAudioControl());
                     ismeateffect = true;
+                }
+                if (isGrillColor == false)
+                {
+                    grillcolor.GetComponent<MeshRenderer>().material.color = new Color32(77, 77, 77, 255);
+                    traycolor.GetComponent<MeshRenderer>().material.color = new Color32(255, 255, 255, 255);
+                    isGrillColor = true;
                 }
                 currentTime += Time.deltaTime;
                 TimerText.text = ((int)currentTime).ToString();
@@ -177,6 +189,7 @@ public class TutorialMeatControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GRILL"))
         {
+            grillcolor.GetComponent<MeshRenderer>().material.color = new Color32(69, 140, 56, 255);
             while (grabstatus[0].IsGrabbing == true || grabstatus[1].IsGrabbing == true)
             {
                 if (grabstatus[0].IsGrabbing == true && islgrabstatus == false)
@@ -206,6 +219,9 @@ public class TutorialMeatControl : MonoBehaviour
         //yield return new WaitForSeconds(1);
         if (other.gameObject.CompareTag("GRILL"))
         {
+            isGrillColor = false;
+            grillcolor.GetComponent<MeshRenderer>().material.color = new Color32(255, 122, 122, 255);
+            traycolor.GetComponent<MeshRenderer>().material.color = new Color32(255, 186, 186, 255);
             if (ismeateffect == true)
             {
                 TimerText.transform.parent.gameObject.SetActive(false);
