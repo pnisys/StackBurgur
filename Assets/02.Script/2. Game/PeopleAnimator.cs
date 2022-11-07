@@ -296,44 +296,17 @@ public class PeopleAnimator : MonoBehaviour
 
             gamemanager.limitTime -= Time.deltaTime;
             animator.gameObject.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(gamemanager.limitTime).ToString() + "초";
-
+            if (gamemanager.limitTime < 20)
+            {
+                audiosource.PlayOneShot(audioclip[6]);
+                selecthambugurcard.SetActive(true);
+                selectsourcecard.SetActive(true);
+            }
             //시간 끝나면
             if (gamemanager.limitTime < 0)
             {
-                ////스테이지가 4이상이면
-                //if (gamemanager.stage >= 4)
-                //{
-                //    audiosource.PlayOneShot(audioclip[6]);
-                //    phase1source = false;
-                //    phase2source = true;
-                //    StartCoroutine(Stage45());
-                //    yield break;
-                //}
-                ////스테이지가 4이하이면
-                //else
-                //{
-                //    audiosource.Stop();
-                //    //agent 꺼줬던거 켜죽
-                //    agent.isStopped = false;
-                //    //제한 시간 끄기
-                //    animator.gameObject.transform.GetChild(1).gameObject.SetActive(false);
-                //    animator.gameObject.transform.GetChild(2).gameObject.SetActive(false);
-                //    //이때 TrayControl의 적층한 것과 정답과의 비교 함수를 시작할 것임
-                //    OnLimitTimeComplete();
-                //    yield return new WaitForSeconds(1f);
-                //    //초기화 시켜주기
-                //    gamemanager.isOrder = false;
-                //    //검사 후 성공이면
-                //    if (gamemanager.iscompletesuccess == true || gamemanager.islittlesuccess == true)
-                //    {
-                //        StartCoroutine(SucessTable());
-                //    }
-                //    //검사 후 실패면
-                //    else if (gamemanager.isfail)
-                //    {
-                //        StartCoroutine(FailTable());
-                //    }
-                //}
+                selecthambugurcard.SetActive(false);
+                selectsourcecard.SetActive(false);
                 StartCoroutine(RealButtonControl());
             }
         }
@@ -458,8 +431,17 @@ public class PeopleAnimator : MonoBehaviour
             yield return null;
             gamemanager.limitTime -= Time.deltaTime;
             animator.gameObject.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(gamemanager.limitTime).ToString() + "초";
+            if (gamemanager.limitTime < 20)
+            {
+                audiosource.PlayOneShot(audioclip[6]);
+                selecthambugurcard.SetActive(true);
+                selectsourcecard.SetActive(true);
+            }
             if (gamemanager.limitTime < 0)
             {
+                audiosource.PlayOneShot(audioclip[6]);
+                selecthambugurcard.SetActive(false);
+                selectsourcecard.SetActive(false);
                 audiosource.Stop();
                 phase2source = false;
 
