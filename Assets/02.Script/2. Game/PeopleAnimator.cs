@@ -250,6 +250,7 @@ public class PeopleAnimator : MonoBehaviour
             //주문하는 시간 15초 생성
             gamemanager.orderlimitTime -= Time.deltaTime;
             animator.gameObject.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(gamemanager.orderlimitTime).ToString() + "초";
+            animator.gameObject.transform.GetChild(0).transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = "제한시간 경과 후 말풍선이 사라집니다";
 
             //15초 지나면 다음단계로 넘어감
             if (gamemanager.orderlimitTime < 0)
