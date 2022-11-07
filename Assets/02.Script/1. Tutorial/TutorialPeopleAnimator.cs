@@ -175,6 +175,8 @@ public class TutorialPeopleAnimator : MonoBehaviour
             tutorialgamemanager.limitTime -= Time.deltaTime;
             animator.gameObject.transform.GetChild(1).gameObject.SetActive(true);
             animator.gameObject.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(tutorialgamemanager.limitTime).ToString() + "초";
+            animator.gameObject.transform.GetChild(1).transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "제한시간 경과 후 말풍선이 사라집니다";
+
 
             //시간 끝나면
             if (tutorialgamemanager.limitTime < 0)
