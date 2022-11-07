@@ -1792,6 +1792,7 @@ public class TrayControl : MonoBehaviour
 
     IEnumerator OnTriggerExit(Collider other)
     {
+        //소스가 벗어날때
         if (other.gameObject.layer == LayerMask.NameToLayer("SOURCE"))
         {
             tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 186, 186, 255);

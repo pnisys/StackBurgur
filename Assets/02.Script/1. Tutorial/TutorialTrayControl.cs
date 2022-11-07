@@ -33,6 +33,8 @@ public class TutorialTrayControl : MonoBehaviour
     public bool isrgrabstatus = false;
     public HandGrabInteractor lgrabstatus;
     public HandGrabInteractor rgrabstatus;
+    GameObject grill;
+    GameObject tray;
 
     public Stack<GameObject> stackcreateburgur = new Stack<GameObject>();
 
@@ -112,6 +114,8 @@ public class TutorialTrayControl : MonoBehaviour
         CombinationControl();
         //Tray
         burgurs = gameObject.transform.GetChild(0).GetChild(0);
+        tray = GameObject.FindGameObjectWithTag("TRAYCOLOR");
+        grill = GameObject.FindGameObjectWithTag("GRILLCOLOR");
     }
 
     //내가 적층한 햄버거와 정답 적층 순서를 비교한다.
@@ -251,7 +255,7 @@ public class TutorialTrayControl : MonoBehaviour
             //안들어와있는 상태
             if (other.gameObject.GetComponent<SourceControl>().isEntry == false)
             {
-                print("여길탔니?");
+                tray.GetComponent<MeshRenderer>().material.color = new Color32(70, 193, 61, 255);
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
                 other.gameObject.GetComponent<SourceControl>().isEntry = true;
                 //잡고 있으면 계속 검사하다가
@@ -270,6 +274,7 @@ public class TutorialTrayControl : MonoBehaviour
                     //여기서 잡기를 놓는다면
                     if ((rgrabstatus.IsGrabbing == false && isrgrabstatus == true) || (lgrabstatus.IsGrabbing == false && islgrabstatus == true))
                     {
+                        tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 255, 255, 255);
                         islgrabstatus = false;
                         isrgrabstatus = false;
                         if (selectedsourceobject != null)
@@ -378,6 +383,7 @@ public class TutorialTrayControl : MonoBehaviour
         //다시 쌓을 때가 있고, 버릴 때가 있다.
         if ((other.gameObject.CompareTag(badbulgogi) || other.gameObject.CompareTag(bulgogi)) && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == true)
         {
+            tray.GetComponent<MeshRenderer>().material.color = new Color32(70, 193, 61, 255);
             other.gameObject.GetComponent<FoodControl>().isEntry = true;
             //들어왔어!
             while (lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true)
@@ -393,12 +399,15 @@ public class TutorialTrayControl : MonoBehaviour
                 //들어왔다가 다시나가면?
                 if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
                 {
+                    tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 186, 186, 255);
                     other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
                     yield break;
                 }
                 yield return null;
                 if ((rgrabstatus.IsGrabbing == false && isrgrabstatus == true) || (lgrabstatus.IsGrabbing == false && islgrabstatus == true))
                 {
+                    tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 255, 255, 255);
+                    grill.GetComponent<MeshRenderer>().material.color = new Color32(77, 77, 77, 255);
                     isrgrabstatus = false;
                     islgrabstatus = false;
                     audiosource.PlayOneShot(audioclips[0]);
@@ -469,6 +478,7 @@ public class TutorialTrayControl : MonoBehaviour
             //밖에서 안으로 들어온것일 때
             if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
             {
+                tray.GetComponent<MeshRenderer>().material.color = new Color32(70, 193, 61, 255);
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
                 other.gameObject.GetComponent<FoodControl>().isEntry = true;
                 //잡고 있으면 계속 검사하다가
@@ -487,12 +497,14 @@ public class TutorialTrayControl : MonoBehaviour
                     //들어왔다가 다시나가면?
                     if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
                     {
+                        tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 186, 186, 255);
                         other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                         yield break;
                     }
                     //여기서 잡기를 놓는다면
                     if ((rgrabstatus.IsGrabbing == false && isrgrabstatus == true) || (lgrabstatus.IsGrabbing == false && islgrabstatus == true))
                     {
+                        tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 255, 255, 255);
                         isrgrabstatus = false;
                         islgrabstatus = false;
                         //놓는데 트레이밖으로 나가서 그릴에 있으면
@@ -503,6 +515,7 @@ public class TutorialTrayControl : MonoBehaviour
                         //놓는데 트레이밖, 그릴도 아니면
                         else if (other.gameObject.GetComponent<FoodControl>().isEntry == false)
                         {
+                            grill.GetComponent<MeshRenderer>().material.color = new Color32(255, 122, 122, 255);
                             other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                             yield break;
                         }
@@ -568,12 +581,17 @@ public class TutorialTrayControl : MonoBehaviour
 
     IEnumerator OnTriggerExit(Collider other)
     {
+        //소스가 벗어날때
+        if (other.gameObject.layer == LayerMask.NameToLayer("SOURCE"))
+        {
+            tray.GetComponent<MeshRenderer>().material.color = new Color32(255, 186, 186, 255);
+            other.gameObject.GetComponent<SourceControl>().isEntry = false;
+        }
         //음식이 벗어날때
         if (other.gameObject.layer == LayerMask.NameToLayer("FOOD"))
         {
             if ((lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
             {
-                //other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
                 other.gameObject.GetComponent<FoodControl>().isEntry = false;
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
                 other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -583,7 +601,6 @@ public class TutorialTrayControl : MonoBehaviour
             //잡고 있는 상태고 안놓고 바로 그릴쪽으로 가려면
             if ((lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true) && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == false)
             {
-                //other.gameObject.GetComponent<FoodControl>().isOnlyMeat = true;
                 other.gameObject.GetComponent<FoodControl>().isEntry = false;
                 other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
                 other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -591,17 +608,10 @@ public class TutorialTrayControl : MonoBehaviour
             }
             else if ((lgrabstatus.IsGrabbing == true || rgrabstatus.IsGrabbing == true) && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == true)
             {
-                print("이건 뭐지?");
+                grill.GetComponent<MeshRenderer>().material.color = new Color32(255, 122, 122, 255);
                 other.gameObject.GetComponent<FoodControl>().isEntry = false;
                 other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
             }
-
-            //if (grabstatus.IsGrabbing == true && other.gameObject.CompareTag(badbulgogi) && other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isInGrab == false && other.gameObject.GetComponent<FoodControl>().isOutGrab == false && /*other.gameObject.GetComponent<FoodControl>().isOnlyMeat == false && */other.gameObject.GetComponent<TutorialMeatControl>().ismeattrash == true)
-            //{
-            //    print("여길 타는거니?");
-            //    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
-            //    yield break;
-            //}
 
             //안에서 놓을때나, 안에서 집을 때나 TriggerExit 방지
             if (other.gameObject.GetComponent<FoodControl>().isEntry == true && other.gameObject.GetComponent<FoodControl>().isOutGrab == false)
