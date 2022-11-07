@@ -298,7 +298,6 @@ public class PeopleAnimator : MonoBehaviour
             animator.gameObject.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(gamemanager.limitTime).ToString() + "초";
             if (gamemanager.limitTime < 20)
             {
-                audiosource.PlayOneShot(audioclip[6]);
                 selecthambugurcard.SetActive(true);
                 selectsourcecard.SetActive(true);
             }
@@ -433,7 +432,6 @@ public class PeopleAnimator : MonoBehaviour
             animator.gameObject.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "제한 시간 : " + Mathf.Round(gamemanager.limitTime).ToString() + "초";
             if (gamemanager.limitTime < 20)
             {
-                audiosource.PlayOneShot(audioclip[6]);
                 selecthambugurcard.SetActive(true);
                 selectsourcecard.SetActive(true);
             }
