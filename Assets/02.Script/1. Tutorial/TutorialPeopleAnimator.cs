@@ -159,7 +159,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
         StartCoroutine(Order());
     }
 
-    //3. 주문 받음
+    //3. 주문 받음ㄷ
     IEnumerator Order()
     {
         audiosource.PlayOneShot(audioclip2[6]);
@@ -270,8 +270,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                     agent.enabled = false;
                     transform.position = new Vector3(100, 100, 100);
                     animator.SetBool(hashfail, false);
-                    SceneManager.LoadScene(2);
-
+                    SceneManager.LoadScene(0);
                 }
                 //yield return new WaitForSeconds(3f);
                 //SceneManager.LoadScene(2);
