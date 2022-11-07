@@ -1,14 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using System.Linq;
-using UnityEngine.SceneManagement;
+using Oculus.Interaction.HandGrab;
+using Oculus.Interaction;
 
 public class GameManager : MonoBehaviour
 {
-
+    private void Update()
+    {
+        if (lgrabstatus.IsGrabbing == true && islgrab == false)
+        {
+            StartCoroutine(LHaticControl(0.1f));
+            islgrab = true;
+        }
+        if (rgrabstatus.IsGrabbing == true && isrgrab == false)
+        {
+            StartCoroutine(RHaticControl(0.1f));
+            isrgrab = true;
+        }
+        if (lgrabstatus.IsGrabbing == false)
+        {
+            islgrab = false;
+        }
+        if (rgrabstatus.IsGrabbing == false)
+        {
+            isrgrab = false;
+        }
+    }
     //1. 점원이 매대 앞에 서면
     public bool isClerk = false;
     //2. 점원이 생각하는 중
@@ -32,6 +51,8 @@ public class GameManager : MonoBehaviour
     public bool isTray = false;
 
     public bool isbutton = false;
+    bool islgrab = false;
+    bool isrgrab = false;
     public GameObject[] people;
 
     //현재 진행중인 사람
@@ -40,6 +61,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI GuideUiText2;
     public TextMeshProUGUI GuideUiText3;
     public GameObject[] lifescoreimage;
+    public HandGrabInteractor lgrabstatus;
+    public HandGrabInteractor rgrabstatus;
 
     public string phase1selectedsource;
     public string phase2selectedsource;
@@ -129,6 +152,23 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+    }
+    public void ButtonHaticControl()
+    {
+        StartCoroutine(LHaticControl(0.1f));
+        StartCoroutine(RHaticControl(0.1f));
+    }
+    IEnumerator LHaticControl(float delay)
+    {
+        OVRInput.SetControllerVibration(1f, 0.5f, OVRInput.Controller.LTouch);
+        yield return new WaitForSeconds(delay);
+        OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.LTouch);
+    }
+    IEnumerator RHaticControl(float delay)
+    {
+        OVRInput.SetControllerVibration(1f, 0.5f, OVRInput.Controller.RTouch);
+        yield return new WaitForSeconds(delay);
+        OVRInput.SetControllerVibration(0, 0f, OVRInput.Controller.RTouch);
     }
 
     public bool[] istable = new bool[10] { false, false, false, false, false, false, false, false, false, false };

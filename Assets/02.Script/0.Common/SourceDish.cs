@@ -30,14 +30,7 @@ public class SourceDish : MonoBehaviour
             StartCoroutine(CheckingSource(other));
         }
     }
-    IEnumerator HaticControl(float delay)
-    {
-        OVRInput.SetControllerVibration(1f, 0.5f, OVRInput.Controller.LTouch);
-        OVRInput.SetControllerVibration(1f, 0.5f, OVRInput.Controller.RTouch);
-        yield return new WaitForSeconds(delay);
-        OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.LTouch);
-        OVRInput.SetControllerVibration(0, 0f, OVRInput.Controller.RTouch);
-    }
+   
     IEnumerator CheckingSource(Collider other)
     {
         while (true)
@@ -45,12 +38,10 @@ public class SourceDish : MonoBehaviour
             yield return null;
             if (grabstatus[0].IsGrabbing == true && islgrabstatus == false)
             {
-                StartCoroutine(HaticControl(0.2f));
                 islgrabstatus = true;
             }
             else if (grabstatus[1].IsGrabbing == true && isrgrabstatus == false)
             {
-                StartCoroutine(HaticControl(0.2f));
                 isrgrabstatus = true;
             }
             if (((grabstatus[0].IsGrabbing == false && islgrabstatus == true) || (grabstatus[1].IsGrabbing == false && isrgrabstatus == true)) && other.gameObject.GetComponent<SourceControl>().isEntry == false)

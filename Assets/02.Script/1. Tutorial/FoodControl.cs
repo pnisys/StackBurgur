@@ -69,7 +69,7 @@ public class FoodControl : MonoBehaviour
             OnDishing();
         }
     }
-
+   
     IEnumerator HaticControl(float delay)
     {
         OVRInput.SetControllerVibration(1f, 0.5f, OVRInput.Controller.LTouch);
@@ -84,12 +84,12 @@ public class FoodControl : MonoBehaviour
         if (grabstatus[0].IsGrabbing == true && ishaticbool == false)
         {
             ishaticbool = true;
-            StartCoroutine(HaticControl(0.2f));
+            //StartCoroutine(HaticControl(0.2f));
         }
         if (grabstatus[1].IsGrabbing == true && ishaticbool == false)
         {
             ishaticbool = true;
-            StartCoroutine(HaticControl(0.2f));
+            //StartCoroutine(HaticControl(0.2f));
         }
 
         if (grabstatus[0].IsGrabbing == true && islgrabstatus == false)
