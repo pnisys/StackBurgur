@@ -24884,6 +24884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9cd37419ad13b4d9cacceecc7bd99d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scenenext: 0
   bgmSound: 1
   anothersound: 1
   username: 

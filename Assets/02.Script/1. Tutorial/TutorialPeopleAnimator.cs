@@ -270,6 +270,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                     agent.enabled = false;
                     transform.position = new Vector3(100, 100, 100);
                     animator.SetBool(hashfail, false);
+                    SoundManager.instance.scenenext++;
                     SceneManager.LoadScene(0);
                 }
                 //yield return new WaitForSeconds(3f);

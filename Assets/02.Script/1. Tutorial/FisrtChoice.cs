@@ -108,6 +108,7 @@ public class FisrtChoice : MonoBehaviour
     private void Start()
     {
         RankAvatarManager rankAvatarManager = SoundManager.instance.gameObject.GetComponent<RankAvatarManager>();
+        print(rankAvatarManager);
         //버튼 달아주기
         keyboard.transform.GetChild(2).GetChild(2).GetChild(12).GetComponent<Button>().onClick.AddListener(SoundManager.instance.gameObject.GetComponent<RankAvatarManager>()._PushCheck);
         //씬 한번 전환되서 온것일때
