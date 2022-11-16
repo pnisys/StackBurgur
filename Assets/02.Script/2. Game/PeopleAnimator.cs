@@ -13,7 +13,7 @@ public class PeopleAnimator : MonoBehaviour
     NavMeshAgent agent;
     public GameObject[] table;
     public GameObject people;
-
+    public GameObject Countdown;
     AudioSource audiosource;
 
     public AudioClip[] audioclip;
@@ -222,16 +222,26 @@ public class PeopleAnimator : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
 
-
-        audiosource.PlayOneShot(audioclip[5]);
         //손님이 주문하는 상태 켜기
         gamemanager.isThinking = true;
         //손님이 주문하는 애니메이션 켜기
         animator.SetBool(hashIdle, false);
         animator.SetBool(hashTalk, true);
-
         //난이도에 따라 햄버거 카드에 맞는 햄버거와 소스를 카드를 보여주기
+        Countdown.SetActive(true);
+        Countdown.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "3";
+        audiosource.PlayOneShot(audioclip[7]);
+        yield return new WaitForSeconds(1f);
+        Countdown.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "2";
+        audiosource.PlayOneShot(audioclip[7]);
+        yield return new WaitForSeconds(1f);
+        Countdown.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "1";
+        audiosource.PlayOneShot(audioclip[7]);
+        yield return new WaitForSeconds(1f);
+        Countdown.SetActive(false);
+        audiosource.PlayOneShot(audioclip[5]);
         LevelBurgurSetting();
+
         //제한시간 캔버스 켜기
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         if (gamemanager.isbutton == false)

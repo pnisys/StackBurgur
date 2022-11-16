@@ -505,9 +505,6 @@ public class TrayControl : MonoBehaviour
                     {
                         print("버거재료" + i + " " + burgurs.GetChild(i).gameObject);
                     }
-                    print(gamemanager.selectsourcecard);
-                    print(gamemanager.phase1selectedsource);
-
                     gamemanager.isfail = true;
                     if (gamemanager.stage < 4)
                     {
