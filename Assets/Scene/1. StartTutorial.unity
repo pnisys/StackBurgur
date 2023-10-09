@@ -5750,7 +5750,7 @@ GameObject:
   - component: {fileID: 397931930}
   - component: {fileID: 397931935}
   m_Layer: 5
-  m_Name: Setting
+  m_Name: SettingButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7054,7 +7054,7 @@ GameObject:
   - component: {fileID: 459071835}
   - component: {fileID: 459071834}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: GameStartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11138,7 +11138,7 @@ GameObject:
   - component: {fileID: 780140266}
   - component: {fileID: 780140268}
   m_Layer: 5
-  m_Name: TutorialStart
+  m_Name: TutorialStartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11712,7 +11712,7 @@ GameObject:
   - component: {fileID: 818526137}
   - component: {fileID: 818526136}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SettingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18702,8 +18702,9 @@ GameObject:
   - component: {fileID: 1389726805}
   - component: {fileID: 1389726808}
   - component: {fileID: 1389726809}
+  - component: {fileID: 1389726810}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UI_Lobby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18826,6 +18827,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 159.6, y: 98.41997, z: 0.9999999}
   m_Center: {x: -1.621399e-16, y: -0.2349985, z: -0.43000004}
+--- !u!114 &1389726810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389726803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f3033b968e9944bbee6378a25dff21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1394727776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23566,7 +23579,7 @@ GameObject:
   - component: {fileID: 1868710711}
   - component: {fileID: 1868710713}
   m_Layer: 5
-  m_Name: Start
+  m_Name: GameStartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25110,7 +25123,7 @@ GameObject:
   - component: {fileID: 1985201346}
   - component: {fileID: 1985201345}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TutorialStartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
