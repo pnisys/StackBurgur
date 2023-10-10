@@ -8,6 +8,11 @@ public static class Extension
 {
     public static void AddUIEvnet(this GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
     {
-        UI_Base.AddUIEvnet(go, action, type);
+        UI_Base.BindEvent(go, action, type);
+    }
+
+    public static T GetOrAddComponet<T>(this GameObject go) where T : UnityEngine.Component
+    {
+        return Util.GetOrAddComponet<T>(go);
     }
 }

@@ -168,7 +168,7 @@ namespace HighlightPlus {
                 }
                 EditorGUILayout.PropertyField(glowAnimationSpeed, new GUIContent("Animation Speed"));
                 EditorGUILayout.PropertyField(glowVisibility, new GUIContent("Visibility"));
-                EditorGUILayout.PropertyField(glowBlendMode, new GUIContent("Blend Mode"));
+                EditorGUILayout.PropertyField(glowBlendMode, new GUIContent("Blend ModeType"));
                 if (glowQuality.intValue != (int)QualityLevel.Highest) {
                     EditorGUILayout.PropertyField(glowDithering, new GUIContent("Dithering"));
                     if (glowDithering.boolValue) {
@@ -274,7 +274,7 @@ namespace HighlightPlus {
             if (hitFxInitialIntensity.floatValue > 0) {
                 EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(hitFxInitialIntensity, new GUIContent("Initial Intensity"));
-                EditorGUILayout.PropertyField(hitFxMode, new GUIContent("Mode"));
+                EditorGUILayout.PropertyField(hitFxMode, new GUIContent("ModeType"));
                 EditorGUILayout.PropertyField(hitFxFadeOutDuration, new GUIContent("Fade Out Duration"));
                 EditorGUILayout.PropertyField(hitFxColor, new GUIContent("Color"));
                 if ((HitFxMode)hitFxMode.intValue == HitFxMode.LocalHit) {

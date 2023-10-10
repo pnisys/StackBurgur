@@ -9,8 +9,12 @@ public class Managers : MonoBehaviour
     public static Managers Instance { get { Init(); return s_Instance; } }
 
     #region Core
-    private ResourceManager _resourceManager = new ResourceManager();
-    public static ResourceManager Resource { get { return Instance._resourceManager; } }
+    private ResourceManager _resource = new ResourceManager();
+    private UIManager _ui = new UIManager();
+    private DataManager _data = new DataManager();
+    public static ResourceManager Resource { get { return Instance._resource; } }
+    public static UIManager UIManager { get { return Instance._ui; } }
+    public static DataManager Data { get { return Instance._data; } }
     #endregion
 
     private static void Init()
@@ -33,11 +37,5 @@ public class Managers : MonoBehaviour
     void Start()
     {
         Init();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

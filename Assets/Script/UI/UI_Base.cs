@@ -42,8 +42,9 @@ public class UI_Base : MonoBehaviour
     protected Button GetButton(int idx) { return Get<Button>(idx); }
 
     protected Image GetImage(int idx) { return Get<Image>(idx); }
+    protected GameObject GetGameObject(int idx) { return Get<GameObject>(idx); }
 
-    public static void AddUIEvnet(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
+    public static void BindEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
     {
         UI_EventHandler evt = Util.GetOrAddComponet<UI_EventHandler>(go);
 
@@ -52,7 +53,6 @@ public class UI_Base : MonoBehaviour
             case Define.UIEvent.Click:
                 evt.OnClickHandler -= action;
                 evt.OnClickHandler += action;
-                Debug.Log(go.name + "이벤트 바인딩 되었다");
                 break;
         }
     }

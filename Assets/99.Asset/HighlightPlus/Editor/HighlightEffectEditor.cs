@@ -354,7 +354,7 @@ namespace HighlightPlus {
                         }
                         GUI.enabled = glowQuality.intValue != (int)QualityLevel.Highest || CheckForwardMSAA();
                         EditorGUILayout.PropertyField(glowVisibility, new GUIContent("Visibility"));
-                        EditorGUILayout.PropertyField(glowBlendMode, new GUIContent("Blend Mode"));
+                        EditorGUILayout.PropertyField(glowBlendMode, new GUIContent("Blend ModeType"));
                         GUI.enabled = true;
                     } else {
                         GUI.enabled = glowQuality.intValue != (int)QualityLevel.Highest || CheckForwardMSAA();
@@ -465,7 +465,7 @@ namespace HighlightPlus {
                         GUI.enabled = Application.isPlaying;
                         EditorGUILayout.BeginHorizontal();
                         GUILayout.Label("", GUILayout.Width(30));
-                        if (GUILayout.Button(" Show Current Occluders (only during Play Mode) ")) {
+                        if (GUILayout.Button(" Show Current Occluders (only during Play ModeType) ")) {
                             showCurrentOccluders = true;
                         }
                         GUILayout.FlexibleSpace();
@@ -519,7 +519,7 @@ namespace HighlightPlus {
             DrawSectionField(hitFxInitialIntensity, "Hit FX", hitFxInitialIntensity.floatValue > 0);
             if (hitFxInitialIntensity.floatValue > 0) {
                 EditorGUI.indentLevel++;
-                EditorGUILayout.PropertyField(hitFxMode, new GUIContent("Mode"));
+                EditorGUILayout.PropertyField(hitFxMode, new GUIContent("ModeType"));
                 EditorGUILayout.PropertyField(hitFxFadeOutDuration, new GUIContent("Fade Out Duration"));
                 EditorGUILayout.PropertyField(hitFxColor, new GUIContent("Color"));
                 if ((HitFxMode)hitFxMode.intValue == HitFxMode.LocalHit) {
@@ -529,7 +529,7 @@ namespace HighlightPlus {
             }
 
             if (!Application.isPlaying) {
-                EditorGUILayout.HelpBox("Enter Play Mode to test this feature. In your code, call effect.HitFX() method to execute this hit effect.", MessageType.Info);
+                EditorGUILayout.HelpBox("Enter Play ModeType to test this feature. In your code, call effect.HitFX() method to execute this hit effect.", MessageType.Info);
             } else {
                 EditorGUI.indentLevel++;
                 if (GUILayout.Button("Execute Hit")) {

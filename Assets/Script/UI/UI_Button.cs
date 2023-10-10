@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 
-public class UI_Button : UI_Base
+public class UI_Button : UI_Scene
 {
     enum Buttons
     {
@@ -34,6 +34,13 @@ public class UI_Button : UI_Base
 
     private void Start()
     {
+        Init();
+    }
+
+    public override void Init()
+    {
+        base.Init();
+
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<GameObject>(typeof(GameObjects));

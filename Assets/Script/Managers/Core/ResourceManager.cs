@@ -9,7 +9,7 @@ public class ResourceManager
         return Resources.Load<T>(path);
     }
 
-    public GameObject Instantite(string path, Transform parent = null)
+    public GameObject Instantite(string path, Vector3 position = default, Quaternion rotation = default, Transform parent = null)
     {
         GameObject prefab = Load<GameObject>($"Prefabs/{path}");
         if (prefab == null)
@@ -18,7 +18,15 @@ public class ResourceManager
             return null;
         }
 
-        return Object.Instantiate(prefab, parent);
+        Vector3 finalPosition = prefab.transform.position + position;
+        Quaternion finalRotation = rotation == Quaternion.identity ? prefab.transform.rotation : rotation;
+
+        GameObject go = Object.Instantiate(prefab, finalPosition, finalRotation, parent);
+        int index = go.name.IndexOf("(Clone)");
+        if (index > 0)
+            go.name = go.name.Substring(0, index);
+
+        return go;
     }
 
     public void Destory(GameObject go)

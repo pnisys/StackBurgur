@@ -149,7 +149,7 @@ public class FisrtChoice : MonoBehaviour
 
         }
 
-      
+
 
 
 

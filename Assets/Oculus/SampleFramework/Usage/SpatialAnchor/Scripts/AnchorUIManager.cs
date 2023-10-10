@@ -17,7 +17,7 @@ public class AnchorUIManager : MonoBehaviour
 	public static AnchorUIManager Instance;
 
 	/// <summary>
-	/// Anchor Mode switches between create and select
+	/// Anchor ModeType switches between create and select
 	/// </summary>
 	public enum AnchorMode { Create, Select };
 
@@ -183,7 +183,7 @@ public class AnchorUIManager : MonoBehaviour
 		_primaryPressDelegate = null;
 	}
 
-	#endregion // Mode Handling
+	#endregion // ModeType Handling
 
 
 	#region Private Methods
