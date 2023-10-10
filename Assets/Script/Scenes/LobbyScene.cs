@@ -18,5 +18,6 @@ public class LobbyScene : BaseScene
     }
     public override void Clear()
     {
+        Debug.Log("LobbyScene Clear!");
     }
 }

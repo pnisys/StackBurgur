@@ -13,10 +13,12 @@ public class Managers : MonoBehaviour
     private UIManager _ui = new UIManager();
     private DataManager _data = new DataManager();
     private SoundManager _sound = new SoundManager();
+    private SceneManagerEx _scene = new SceneManagerEx();
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static UIManager UI { get { return Instance._ui; } }
     public static DataManager Data { get { return Instance._data; } }
     public static SoundManager Sound { get { return Instance._sound; } }
+    public static SceneManagerEx Scene { get { return Instance._scene; } }
     #endregion
 
     private static void Init()
