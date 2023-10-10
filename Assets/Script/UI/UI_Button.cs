@@ -39,6 +39,6 @@ public class UI_Button : UI_Base
         Bind<GameObject>(typeof(GameObjects));
         Bind<Image>(typeof(Images));
 
-        GetButton((int)Buttons.TutorialStartButton).gameObject.AddUIEvnet((PointerEventData) => SceneManager.LoadScene(1));
+        GetButton((int)Buttons.TutorialStartButton).gameObject.AddUIEvnet((PointerEventData) => Debug.Log("Å¬¸¯"));
     }
 }
