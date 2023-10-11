@@ -58,5 +58,10 @@ public class UI_AvatarSelect : UI_Popup
         {
             Managers.Sound.Play("Click_Button");
         }, Define.UIEvent.Highlight);
+
+        confirmButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+            Managers.UI.ShowPopupUI<UI_NameSelect>(null, new Vector3(0, 0, 2));
+        }, Define.UIEvent.Click);
     }
 }
