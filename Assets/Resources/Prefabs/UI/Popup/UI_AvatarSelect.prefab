@@ -1938,7 +1938,7 @@ GameObject:
   - component: {fileID: 8219542638455476319}
   - component: {fileID: 8219542638455476318}
   m_Layer: 5
-  m_Name: AccImg
+  m_Name: AccImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1992,7 +1992,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b0b562e92eb79c84ab99e1dbccc6de43, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2161,7 +2161,7 @@ GameObject:
   - component: {fileID: 8219542639679997100}
   - component: {fileID: 8219542639679997103}
   m_Layer: 5
-  m_Name: HairImg
+  m_Name: HairImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2215,7 +2215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 17731bd6b4d79584c97cb7ce0ca2112b, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2459,7 +2459,7 @@ GameObject:
   - component: {fileID: 8219542640241094376}
   - component: {fileID: 8219542640241094379}
   m_Layer: 5
-  m_Name: EyeImg
+  m_Name: EyeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2513,7 +2513,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9f2c27533cc098347aa676694ccd1064, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2699,7 +2699,7 @@ GameObject:
   - component: {fileID: 8219542640332849560}
   - component: {fileID: 8219542640332849563}
   m_Layer: 5
-  m_Name: FaceImg
+  m_Name: FaceImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2753,7 +2753,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 461a885e752460f4e8a83d88ffd8a528, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

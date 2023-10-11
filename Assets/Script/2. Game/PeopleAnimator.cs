@@ -20,7 +20,7 @@ public class PeopleAnimator : MonoBehaviour
     GameObject door;
     GameObject clerkcollider;
     GameObject mood;
-    public Ranking ranking;
+    //public Ranking ranking;
 
     public List<int> sourcenumber = new List<int>();
     public List<int> hambugernumber = new List<int>();
@@ -606,7 +606,7 @@ public class PeopleAnimator : MonoBehaviour
             }
         }
         audiosource.Stop();
-        ranking.gameObject.transform.position = new Vector3(-67.44f, 0.62f, 34.16f);
+        //ranking.gameObject.transform.position = new Vector3(-67.44f, 0.62f, 34.16f);
         gamemanager.GetComponent<AudioSource>().Stop();
 
         animator.gameObject.transform.GetChild(0).gameObject.SetActive(false);
@@ -622,7 +622,7 @@ public class PeopleAnimator : MonoBehaviour
     {
         GameManagerInit();
         gamemanager.GetComponent<AudioSource>().Stop();
-        ranking.gameObject.transform.position = new Vector3(-67.44f, 0.62f, 34.16f);
+        //ranking.gameObject.transform.position = new Vector3(-67.44f, 0.62f, 34.16f);
 
         //gamemanager.GuideUiText.text = "게임 모두 클리어";
         //gamemanager.GuideUiText.fontSize = 0.05f;
