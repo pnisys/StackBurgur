@@ -66,7 +66,8 @@ public class UI_Button : UI_Scene
 
         gameStartButton.AddUIEvnet((PointerEventData) =>
         {
-            Managers.Scene.LoadScene(Define.Scene.Game);
+            Managers.UI.ShowPopupUI<UI_AvatarSelect>(null, new Vector3(0, 0, 2));
+            gameObject.SetActive(false);
         }, Define.UIEvent.Click);
 
         settingButton.AddUIEvnet((PointerEventData) =>
