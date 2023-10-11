@@ -72,6 +72,6 @@ public class TutorialGamemanager : MonoBehaviour
 
     private void Start()
     {
-        gameObject.GetComponent<AudioSource>().volume = SoundManager.instance.bgmSound;
+        //gameObject.GetComponent<AudioSource>().volume = SoundManager.instance.bgmSound;
     }
 }

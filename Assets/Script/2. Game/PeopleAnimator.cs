@@ -108,7 +108,7 @@ public class PeopleAnimator : MonoBehaviour
         }
         mood = transform.GetChild(4).gameObject;
         audiosource = GetComponent<AudioSource>();
-        audiosource.volume = SoundManager.instance.anothersound;
+        //audiosource.volume = SoundManager.instance.anothersound;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         table[0] = GameObject.FindGameObjectWithTag("1TABLE");

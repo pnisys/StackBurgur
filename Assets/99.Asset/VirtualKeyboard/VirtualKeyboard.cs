@@ -130,7 +130,7 @@ public class VirtualKeyboard : MonoBehaviour {
                     {
                         if(OnReturnEventHandler != null)
                         {
-                            SoundManager.instance.username = TextInputBox.TextField;
+                            //SoundManager.instance.username = TextInputBox.TextField;
                             //OnReturnEventHandler(TextInputBox.TextField)
                         }
                         //do somehing

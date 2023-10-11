@@ -96,7 +96,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
         audiosource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        audiosource.volume = SoundManager.instance.anothersound;
+        //audiosource.volume = SoundManager.instance.anothersound;
         table[0] = GameObject.FindGameObjectWithTag("1TABLE");
         table[1] = GameObject.FindGameObjectWithTag("2TABLE");
         table[2] = GameObject.FindGameObjectWithTag("3TABLE");
@@ -270,7 +270,7 @@ public class TutorialPeopleAnimator : MonoBehaviour
                     agent.enabled = false;
                     transform.position = new Vector3(100, 100, 100);
                     animator.SetBool(hashfail, false);
-                    SoundManager.instance.scenenext++;
+                    //SoundManager.instance.scenenext++;
                     SceneManager.LoadScene(0);
                 }
                 //yield return new WaitForSeconds(3f);

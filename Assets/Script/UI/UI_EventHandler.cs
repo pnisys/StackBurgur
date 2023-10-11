@@ -4,16 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_EventHandler : MonoBehaviour, IPointerClickHandler
+public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 {
     public Action<PointerEventData> OnClickHandler = null;
+    public Action<PointerEventData> OnEnterHandler = null;
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("여긴 찍히나");
         if (OnClickHandler != null)
-        {
             OnClickHandler.Invoke(eventData);
-            Debug.Log("클릭");
-        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (OnEnterHandler != null)
+            OnEnterHandler.Invoke(eventData);
     }
 }

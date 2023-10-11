@@ -54,6 +54,11 @@ public class UI_Base : MonoBehaviour
                 evt.OnClickHandler -= action;
                 evt.OnClickHandler += action;
                 break;
+
+            case Define.UIEvent.Highlight:
+                evt.OnEnterHandler -= action;
+                evt.OnEnterHandler += action;
+                break;
         }
     }
 }

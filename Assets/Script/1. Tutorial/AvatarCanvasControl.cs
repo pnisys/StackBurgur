@@ -22,14 +22,14 @@ public class AvatarCanvasControl : MonoBehaviour
 
     void Start()
     {
-        leftarrowbutton_3.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._PrevFaceNum);
-        reftarrowbutton_3.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._NextFaceNum);
-        leftarrowbutton.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._PrevHairNum);
-        reftarrowbutton.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._NextHairNum);
-        leftarrowbutton_2.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._PrevEyeNum);
-        reftarrowbutton_2.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._NextEyeNum);
-        leftarrowbutton_1.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._PrevAccNum);
-        reftarrowbutton_1.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._NextAccNum);
+        //leftarrowbutton_3.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._PrevFaceNum);
+        //reftarrowbutton_3.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._NextFaceNum);
+        //leftarrowbutton.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._PrevHairNum);
+        //reftarrowbutton.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._NextHairNum);
+        //leftarrowbutton_2.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._PrevEyeNum);
+        //reftarrowbutton_2.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._NextEyeNum);
+        //leftarrowbutton_1.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._PrevAccNum);
+        //reftarrowbutton_1.onClick.AddListener(SoundManager.instance.GetComponent<RankAvatarManager>()._NextAccNum);
     }
 
    

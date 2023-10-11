@@ -373,7 +373,7 @@ public class RankAvatarManager : MonoBehaviour
 
     IEnumerator ChangeScene()
     {
-        SoundManager.instance.scenenext++;
+        //SoundManager.instance.scenenext++;
         SceneManager.LoadScene(2);
 
         yield return new WaitUntil(() => SceneManager.GetActiveScene().buildIndex == 2);

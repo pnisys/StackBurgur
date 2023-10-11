@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        gameObject.GetComponent<AudioSource>().volume = SoundManager.instance.bgmSound;
+        //gameObject.GetComponent<AudioSource>().volume = SoundManager.instance.bgmSound;
         GuideUiText = gameObject.transform.parent.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>();
         GuideUiText2 = gameObject.transform.parent.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>();
         GuideUiText3 = gameObject.transform.parent.GetChild(3).GetChild(2).GetComponent<TextMeshProUGUI>();
