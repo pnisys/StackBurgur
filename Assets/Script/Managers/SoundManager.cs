@@ -94,4 +94,18 @@ public class SoundManager
 
         return audioClip;
     }
+
+    public AudioSource GetAudioSource(Define.Sound type)
+    {
+        switch (type)
+        {
+            case Define.Sound.Bgm:
+                return _audioSources[(int)Define.Sound.Bgm];
+            case Define.Sound.Effect:
+                return _audioSources[(int)Define.Sound.Effect];
+            default:
+                Debug.LogError("오디오 소스가 존재하지 않습니다");
+                return null;
+        }
+    }
 }

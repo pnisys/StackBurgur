@@ -7,6 +7,8 @@ public class UIManager
     //팝업 소트오더를 활용해야 함
     int _order = 10;
 
+    Dictionary<string, GameObject> _uiGameObject = new Dictionary<string, GameObject>();
+
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
     UI_Scene _sceneUI = null;
 
@@ -36,13 +38,14 @@ public class UIManager
             canvas.sortingOrder = 0;
         }
     }
-    public T ShowSceneUI<T>(string name = null) where T : UI_Scene
+    public T ShowSceneUI<T>(string name = null, Vector3 position = default) where T : UI_Scene
     {
+        Vector3 addPosition = position;
+
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
-        GameObject go = Managers.Resource.Instantite($"UI/Scene/{name}", new Vector3(0, 0, 2));
-        Debug.Log(go ?? null);
+        GameObject go = Managers.Resource.Instantite($"UI/Scene/{name}", addPosition);
         T sceneUI = Util.GetOrAddComponet<T>(go);
         _sceneUI = sceneUI;
 
@@ -51,12 +54,14 @@ public class UIManager
     }
 
 
-    public T ShowPopupUI<T>(string name = null) where T : UI_Popup
+    public T ShowPopupUI<T>(string name = null, Vector3 position = default) where T : UI_Popup
     {
+        Vector3 addPosition = position;
+
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
-        GameObject go = Managers.Resource.Instantite($"UI/Popup/{name}", new Vector3(0, 0, 2));
+        GameObject go = Managers.Resource.Instantite($"UI/Popup/{name}", addPosition);
 
         T popup = Util.GetOrAddComponet<T>(go);
         _popupStack.Push(popup);
