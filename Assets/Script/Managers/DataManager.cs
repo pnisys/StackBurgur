@@ -6,14 +6,15 @@ public class DataManager
 {
     public Dictionary<string, AvatarStat> StatDict = new Dictionary<string, AvatarStat>();
 
-    public void AddAvatarStat(string id, AvatarStat stat)
+    public void AddAvatarStat(string id)
     {
-        if (string.IsNullOrEmpty(id) || stat == null)
+        if (string.IsNullOrEmpty(id))
             return;
 
         if (!StatDict.ContainsKey(id))
         {
-            StatDict.Add(id, stat);
+            AvatarStat avatarStat = new AvatarStat();
+            StatDict.Add(id, avatarStat);
         }
     }
 

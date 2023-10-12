@@ -28,7 +28,6 @@ public class VirtualKey : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public kType KeyType = kType.kCharacter;
     private bool mKeepPresed;
 
-
     public bool KeepPressed
     {
         set { mKeepPresed = value; }

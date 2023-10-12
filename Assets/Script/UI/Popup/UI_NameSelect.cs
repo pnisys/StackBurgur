@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +13,7 @@ public class UI_NameSelect : UI_Popup
         BackButton,
         EnterButton,
         BackspaceButton,
+        ShiftButton,
         q,
         w,
         e,
@@ -60,8 +62,17 @@ public class UI_NameSelect : UI_Popup
 
         Button backButton = GetButton((int)Buttons.BackButton);
         Button EnterButton = GetButton((int)Buttons.EnterButton);
-        Button BackSpaceButton = GetButton((int)Buttons.BackspaceButton);
         TMP_InputField nameInputField = Get<TMP_InputField>((int)InputFields.NameInputField);
+
+        foreach (Buttons item in Enum.GetValues(typeof(Buttons)))
+        {
+            Button currentButton = GetButton((int)item);
+
+            currentButton.gameObject.AddUIEvnet((PointerEventData) =>
+            {
+                Managers.Sound.Play("Click_Button");
+            }, Define.UIEvent.Highlight);
+        }
 
         backButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
@@ -69,40 +80,11 @@ public class UI_NameSelect : UI_Popup
             Managers.UI.ClosePopupUI();
         });
 
-        backButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
-
         EnterButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
+            string id = nameInputField.text;
+            Managers.Data.AddAvatarStat(id);
             Managers.UI.ShowPopupUI<UI_AvatarSelect>(null, new Vector3(0, 0, 2));
         });
-
-        EnterButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
-
-        BackSpaceButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            
-        });
-
-        BackSpaceButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
-
-        // q부터 m까지의 버튼에 대해 이벤트를 추가
-        for (Buttons btn = Buttons.q; btn <= Buttons.m; btn++)
-        {
-            Button currentButton = GetButton((int)btn);
-
-            currentButton.gameObject.AddUIEvnet((PointerEventData) =>
-            {
-                Managers.Sound.Play("Click_Button");
-            }, Define.UIEvent.Highlight);
-        }
     }
 }
