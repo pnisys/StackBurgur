@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -41,7 +43,7 @@ public class UI_AvatarSelect : UI_Popup
     Sprite[] hairs;
     Sprite[] eyes;
     Sprite[] accs;
-    
+
 
     private void Start()
     {
@@ -87,105 +89,150 @@ public class UI_AvatarSelect : UI_Popup
         TextMeshProUGUI eyeText = GetText((int)Texts.EyeText);
         TextMeshProUGUI accText = GetText((int)Texts.AccessoryText);
 
+        AvatarStat lastAvatarStat = Managers.Data.GetAvatarStat();
+
+        foreach (Buttons item in Enum.GetValues(typeof(Buttons)))
+        {
+            Button currentButton = GetButton((int)item);
+
+            currentButton.gameObject.AddUIEvnet((PointerEventData) =>
+            {
+                Managers.Sound.Play("Click_Button");
+            }, Define.UIEvent.Highlight);
+        }
+
         backButton.gameObject.AddUIEvnet((PointerEventData) =>
             {
                 Util.FindChild<UI_Button>(Managers.UI.Root).gameObject.SetActive(true);
                 Managers.UI.ClosePopupUI();
             }, Define.UIEvent.Click);
 
-        backButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
 
         confirmButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
+            Managers.Data.SaveToJson(lastAvatarStat);
 
-        confirmButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.UI.ShowPopupUI<UI_NameSelect>(null, new Vector3(0, 0, 2));
         }, Define.UIEvent.Click);
 
 
+        #region 왼쪽, 오른쪽 버튼 이벤트
         leftSkinButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
+            // lastAvatarStat.skinNumber가 0보다 클 때만 로직을 실행
+            if (lastAvatarStat.skinNumber > 0)
+            {
+                // skinNumber 감소
+                lastAvatarStat.skinNumber--;
+
+                // sprite 업데이트
+                skinImage.sprite = skins[lastAvatarStat.skinNumber];
+                skinText.text = $"피부/얼굴형{lastAvatarStat.skinNumber + 1}";
+            }
         }, Define.UIEvent.Click);
 
-        leftSkinButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
 
         rightSkinButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
-        }, Define.UIEvent.Click);
+            // lastAvatarStat.skinNumber가 0보다 클 때만 로직을 실행
+            if (lastAvatarStat.skinNumber < skins.Length - 1)
+            {
+                // skinNumber 감소
+                lastAvatarStat.skinNumber++;
 
-        rightSkinButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
+                // sprite 업데이트
+                skinImage.sprite = skins[lastAvatarStat.skinNumber];
+                skinText.text = $"피부/얼굴형{lastAvatarStat.skinNumber + 1}";
+            }
+        }, Define.UIEvent.Click);
 
         leftHairButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
+            // lastAvatarStat.skinNumber가 0보다 클 때만 로직을 실행
+            if (lastAvatarStat.hairsNumber > 0)
+            {
+                // skinNumber 감소
+                lastAvatarStat.hairsNumber--;
+
+                // sprite 업데이트
+                hairImage.sprite = hairs[lastAvatarStat.hairsNumber];
+                hairText.text = $"머리{lastAvatarStat.hairsNumber + 1}";
+            }
         }, Define.UIEvent.Click);
 
-        leftHairButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
 
         rightHairButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
-        }, Define.UIEvent.Click);
+            // lastAvatarStat.skinNumber가 0보다 클 때만 로직을 실행
+            if (lastAvatarStat.hairsNumber < hairs.Length - 1)
+            {
+                // skinNumber 감소
+                lastAvatarStat.hairsNumber++;
 
-        rightHairButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
+                // sprite 업데이트
+                hairImage.sprite = hairs[lastAvatarStat.hairsNumber];
+                hairText.text = $"머리{lastAvatarStat.hairsNumber + 1}";
+            }
+        }, Define.UIEvent.Click);
 
         leftEyeButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
+            // lastAvatarStat.skinNumber가 0보다 클 때만 로직을 실행
+            if (lastAvatarStat.eyesNumber > 0)
+            {
+                // skinNumber 감소
+                lastAvatarStat.eyesNumber--;
+
+                // sprite 업데이트
+                eyeImage.sprite = eyes[lastAvatarStat.eyesNumber];
+                eyeText.text = $"표정{lastAvatarStat.eyesNumber + 1}";
+            }
         }, Define.UIEvent.Click);
 
-        leftEyeButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
 
         rightEyeButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
+            // lastAvatarStat.skinNumber가 0보다 클 때만 로직을 실행
+            if (lastAvatarStat.eyesNumber < eyes.Length - 1)
+            {
+                // skinNumber 감소
+                lastAvatarStat.eyesNumber++;
+
+                // sprite 업데이트
+                eyeImage.sprite = eyes[lastAvatarStat.eyesNumber];
+                eyeText.text = $"표정{lastAvatarStat.eyesNumber + 1}";
+            }
         }, Define.UIEvent.Click);
 
-        rightEyeButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
 
         leftAccButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
+            // lastAvatarStat.skinNumber가 0보다 클 때만 로직을 실행
+            if (lastAvatarStat.accsNumber > 0)
+            {
+                // skinNumber 감소
+                lastAvatarStat.accsNumber--;
+
+                // sprite 업데이트
+                accImage.sprite = accs[lastAvatarStat.accsNumber];
+                accText.text = $"악세사리{lastAvatarStat.accsNumber + 1}";
+            }
         }, Define.UIEvent.Click);
 
-        leftAccButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
 
         rightAccButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
+            // lastAvatarStat.skinNumber가 0보다 클 때만 로직을 실행
+            if (lastAvatarStat.accsNumber < accs.Length - 1)
+            {
+                // skinNumber 감소
+                lastAvatarStat.accsNumber++;
+
+                // sprite 업데이트
+                accImage.sprite = accs[lastAvatarStat.accsNumber];
+                accText.text = $"악세사리{lastAvatarStat.accsNumber + 1}";
+            }
         }, Define.UIEvent.Click);
 
-        rightAccButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Managers.Sound.Play("Click_Button");
-        }, Define.UIEvent.Highlight);
-
-
-
-
-
-
-
+        #endregion
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine;
 [Serializable]
 public class AvatarStat
 {
+    public AvatarStat(string id) { Id = id; }
+
     public int skinNumber = 0;
     public int eyesNumber = 0;
     public int hairsNumber = 0;
