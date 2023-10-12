@@ -111,7 +111,7 @@ public class UI_AvatarSelect : UI_Popup
         confirmButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
             Managers.Data.SaveToJson(lastAvatarStat);
-
+            Managers.Scene.LoadScene(Define.Scene.Game);
         }, Define.UIEvent.Click);
 
 

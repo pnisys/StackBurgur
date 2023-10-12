@@ -16,6 +16,18 @@ public class LobbyScene : BaseScene
         SceneType = Define.Scene.Lobby;
         Managers.UI.ShowSceneUI<UI_Button>(null, new Vector3(0, 0, 2));
         Managers.Sound.Play("Bgm_Lobby", Define.Sound.Bgm);
+
+        switch (ModeType)
+        {
+            case Define.Mode.Test:
+                OVRGazePointer ovrGaze = FindObjectOfType<OVRGazePointer>();
+                GameObject inputOVR = GameObject.Find("InputOVR");
+                ovrGaze.gameObject.SetActive(false);
+                inputOVR.SetActive(false);
+                break;
+            case Define.Mode.Game:
+                break;
+        }
     }
     public override void Clear()
     {

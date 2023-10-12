@@ -21,11 +21,6 @@ public abstract class BaseScene : MonoBehaviour
                 case Define.Mode.Test:
                     eventSystem.GetComponent<OVRInputModule>().enabled = false;
                     eventSystem.GetComponent<StandaloneInputModule>().enabled = true;
-                    OVRGazePointer ovrGaze = FindObjectOfType<OVRGazePointer>();
-                    GameObject inputOVR = GameObject.Find("InputOVR");
-
-                    ovrGaze.gameObject.SetActive(false);
-                    inputOVR.SetActive(false);
                     break;
                 case Define.Mode.Game:
                     eventSystem.GetComponent<StandaloneInputModule>().enabled = false;
