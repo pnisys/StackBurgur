@@ -2,21 +2,23 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
+using UnityEditor;
 
 public class VirtualKey : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
 
     static public VirtualKeyboard _Keybord = null;
-    public enum kType 
-    { 
-        kCharacter, 
-        kOther, 
-        kReturn, 
-        kSpace, 
-        kBackspace, 
-        kShift, 
-        kTab, 
-        kCapsLock, 
+    public enum kType
+    {
+        kCharacter,
+        kOther,
+        kReturn,
+        kSpace,
+        kBackspace,
+        kShift,
+        kTab,
+        kCapsLock,
         kHangul,
         kSymbol_Star,
         kSymbol_Heart,
@@ -34,10 +36,10 @@ public class VirtualKey : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
 
     // private bool mIsPressed = false;
-    private Text mKeyText;
-    private Text mShiftedText = null;
-    private Text mLanguageBtnTxtKor = null;
-    private Text mLanguageBtnTxtEng = null;
+    private TextMeshProUGUI mKeyText;
+    private TextMeshProUGUI mShiftedText = null;
+    private TextMeshProUGUI mLanguageBtnTxtKor = null;
+    private TextMeshProUGUI mLanguageBtnTxtEng = null;
 
 
     static Color Color_Deactivate = new Color(0.4588236f, 0.4588236f, 0.4588236f);
@@ -56,9 +58,9 @@ public class VirtualKey : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         //mShiftedText = transform.Find("ShiftedText")?.GetComponent<Text>();
         Transform t = transform.Find("ShiftedText");
-        if(t != null)
+        if (t != null)
         {
-            mShiftedText = t.GetComponent<Text>();
+            mShiftedText = t.GetComponent<TextMeshProUGUI>();
         }
 
         if (KeyType == kType.kHangul)
@@ -67,11 +69,11 @@ public class VirtualKey : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             //mLanguageBtnTxtEng = transform.Find("Eng").GetComponent<Text>();
         }
 
-        var txtTransform = transform.Find("Text");
+        var txtTransform = Util.FindChild(transform.root.gameObject, "NameInputFieldText",true);
 
         if (txtTransform != null)
         {
-            mKeyText = txtTransform.GetComponent<Text>();
+            mKeyText = txtTransform.GetComponent<TextMeshProUGUI>();
         }
 
 
@@ -79,10 +81,13 @@ public class VirtualKey : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             //mShiftedText = mSubTransform.Find("ShiftedChar").GetComponent<Text>();
         }
+
+        GetKeyCharacterFromObjectName();
     }
-	void Start () {
+    void Start()
+    {
         UnityEngine.UI.Button _button = gameObject.GetComponent<UnityEngine.UI.Button>();
-        if(_button != null)
+        if (_button != null)
         {
             /*
             if(mSubTransform != null)
@@ -99,16 +104,17 @@ public class VirtualKey : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     void onKeyClick()
     {
         //VirtualKeyboard _keybord = GameObject.FindObjectOfType< VirtualKeyboard>();
-        if(_Keybord != null)
+        if (_Keybord != null)
         {
             _Keybord.KeyDown(this);
         }
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
-	    if(KeepPressed)
+        if (KeepPressed)
         {
             //do something
         }
@@ -220,13 +226,13 @@ public class VirtualKey : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 {
                     if (_Keybord.Language == VirtualKeyboard.kLanguage.kKorean)
                     {
-                      //  mLanguageBtnTxtKor.color = Color.black;
-                      //  mLanguageBtnTxtEng.color = Color_Deactivate;
+                        //  mLanguageBtnTxtKor.color = Color.black;
+                        //  mLanguageBtnTxtEng.color = Color_Deactivate;
                     }
                     else
                     {
-                      //  mLanguageBtnTxtKor.color = Color_Deactivate;
-                      //  mLanguageBtnTxtEng.color = Color.black;
+                        //  mLanguageBtnTxtKor.color = Color_Deactivate;
+                        //  mLanguageBtnTxtEng.color = Color.black;
                     }
                 }
                 break;
@@ -240,7 +246,7 @@ public class VirtualKey : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         //mIsPressed = true;
-	}
+    }
 
     public void OnPointerUp(PointerEventData eventData)
     {
@@ -252,7 +258,7 @@ public class VirtualKey : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         string name = transform.name;
 
-        if(name.Length > 0)
+        if (name.Length > 0)
         {
             char[] array = name.ToCharArray(0, 1);
 

@@ -26,8 +26,6 @@ public class VirtualKeyboard : MonoBehaviour {
     public VirtualTextInputBox TextInputBox = null;
     public int MaxTextCount = 20;
 
-
-    protected AudioSource mAudioSource;
     protected bool mPressShift = false;
     protected bool mCapsLocked = false;
     protected kLanguage mLanguage = kLanguage.kKorean;
@@ -38,60 +36,31 @@ public class VirtualKeyboard : MonoBehaviour {
     };
 
 
-
     void Awake()
     {
         VirtualKey._Keybord = this;
-
-        mAudioSource = GetComponent<AudioSource>();
-
     }
-	// Use this for initialization
-    void Start() {
-
-    }
-
+	
     private void OnEnable()
     {
         mLanguage = DefaultLanguage;
         mPressShift = false;
 	}
 
-	// Update is called once per frame
-    void Update() {
-
-	}
-
-    public void Clear()
-    {
-        if (TextInputBox != null)
-        {
-            TextInputBox.Clear();
-        }
-    }
-
-    void OnGUI()
-    {
-        //Event e = Event.current;
-        //if (e.isKey)
-        //  Debug.Log("Detected key code: " + e.keyCode);
-    }
-
-    public void PlayKeyAudio()
-    {
-        if (mAudioSource != null)
-        {
-            mAudioSource.Play();
-        }
-    }
+    //public void Clear()
+    //{
+    //    if (TextInputBox != null)
+    //    {
+    //        TextInputBox.Clear();
+    //    }
+    //}
+   
 
     public void KeyDown(VirtualKey _key)
     {
-        if (_key.KeyType != VirtualKey.kType.kReturn)
-        {
-            PlayKeyAudio();
-        }
-
+        //if (_key.KeyType != VirtualKey.kType.kReturn)
+        //{
+        //}
 
         if (TextInputBox != null)
         {
@@ -128,15 +97,14 @@ public class VirtualKeyboard : MonoBehaviour {
                     break;
                 case VirtualKey.kType.kReturn:
                     {
-                        if(OnReturnEventHandler != null)
-                        {
-                            //SoundManager.instance.username = TextInputBox.TextField;
-                            //OnReturnEventHandler(TextInputBox.TextField)
-                        }
+                        //if(OnReturnEventHandler != null)
+                        //{
+                        //    OnReturnEventHandler(TextInputBox.TextField)
+                        //}
                         //do somehing
                         //OnReturnEventHandler?.Invoke(TextInputBox.TextField);
 
-                        //if((bool)OnReturnDelegate?.Invoke(TextInputBox.TextField))
+                        //if ((bool)OnReturnDelegate?.Invoke(TextInputBox.TextField))
                         //{
                         //    PlayKeyAudio();
                         //}

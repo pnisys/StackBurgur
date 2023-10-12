@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TMPro;
 
-public class VirtualTextInputBox : MonoBehaviour {
 
-	AutomateKR		mAutomateKR = new AutomateKR();
-    protected UnityEngine.UI.InputField mTextField = null;
+public class VirtualTextInputBox : MonoBehaviour
+{
+
+    AutomateKR mAutomateKR = new AutomateKR();
+    protected TMP_InputField mTextField = null;
     public string TextField
     {
         set
@@ -24,13 +27,15 @@ public class VirtualTextInputBox : MonoBehaviour {
         }
     }
 
-    void Start () {
-        mTextField = GetComponent<UnityEngine.UI.InputField>();
-	}
-	
-	void Update () {
+    void Start()
+    {
+        mTextField = GetComponent<TMP_InputField>();
+    }
 
-	}
+    void Update()
+    {
+
+    }
 
     public void Clear()
     {
@@ -56,7 +61,7 @@ public class VirtualTextInputBox : MonoBehaviour {
 
     public void KeyDown(VirtualKey _key)
     {
-        switch(_key.KeyType)
+        switch (_key.KeyType)
         {
             case VirtualKey.kType.kBackspace:
                 {

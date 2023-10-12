@@ -9,6 +9,11 @@ public class ResourceManager
         return Resources.Load<T>(path);
     }
 
+    public T[] LoadAll<T>(string path) where T : Object
+    {
+        return Resources.LoadAll<T>(path);
+    }
+
     public GameObject Instantite(string path, Vector3 position = default, Quaternion rotation = default, Transform parent = null)
     {
         GameObject prefab = Load<GameObject>($"Prefabs/{path}");

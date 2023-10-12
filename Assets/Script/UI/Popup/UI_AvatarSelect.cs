@@ -11,8 +11,8 @@ public class UI_AvatarSelect : UI_Popup
     {
         ConfirmButton,
         BackButton,
-        LeftFaceButton,
-        RightFaceButton,
+        LeftSkinButton,
+        RightSkinButton,
         LeftHairButton,
         RightHairButton,
         LeftEyeButton,
@@ -23,7 +23,7 @@ public class UI_AvatarSelect : UI_Popup
 
     enum Texts
     {
-        FaceText,
+        SkinText,
         HairText,
         EyeText,
         AccessoryText
@@ -31,11 +31,17 @@ public class UI_AvatarSelect : UI_Popup
 
     enum Images
     {
-        FaceImage,
+        SkinImage,
         HairImage,
         EyeImage,
         AccImage
     }
+
+    Sprite[] skins;
+    Sprite[] hairs;
+    Sprite[] eyes;
+    Sprite[] accs;
+    
 
     private void Start()
     {
@@ -52,14 +58,40 @@ public class UI_AvatarSelect : UI_Popup
 
         Button backButton = GetButton((int)Buttons.BackButton);
         Button confirmButton = GetButton((int)Buttons.ConfirmButton);
+        Button leftSkinButton = GetButton((int)Buttons.LeftSkinButton);
+        Button rightSkinButton = GetButton((int)Buttons.RightSkinButton);
+        Button leftHairButton = GetButton((int)Buttons.LeftHairButton);
+        Button rightHairButton = GetButton((int)Buttons.RightHairButton);
+        Button leftEyeButton = GetButton((int)Buttons.LeftEyeButton);
+        Button rightEyeButton = GetButton((int)Buttons.RightEyeButton);
+        Button leftAccButton = GetButton((int)Buttons.LeftAccButton);
+        Button rightAccButton = GetButton((int)Buttons.RightAccButton);
 
-        Image faceImage = GetImage((int)Images.FaceImage);
+        skins = Managers.Resource.LoadAll<Sprite>("Art/Image/Avatar/skin");
+        hairs = Managers.Resource.LoadAll<Sprite>("Art/Image/Avatar/hair");
+        accs = Managers.Resource.LoadAll<Sprite>("Art/Image/Avatar/acc");
+        eyes = Managers.Resource.LoadAll<Sprite>("Art/Image/Avatar/eye");
+
+        Image skinImage = GetImage((int)Images.SkinImage);
+        Image hairImage = GetImage((int)Images.HairImage);
+        Image eyeImage = GetImage((int)Images.EyeImage);
+        Image accImage = GetImage((int)Images.AccImage);
+
+        skinImage.sprite = skins[0];
+        hairImage.sprite = hairs[0];
+        eyeImage.sprite = eyes[0];
+        accImage.sprite = accs[0];
+
+        TextMeshProUGUI skinText = GetText((int)Texts.SkinText);
+        TextMeshProUGUI hairText = GetText((int)Texts.HairText);
+        TextMeshProUGUI eyeText = GetText((int)Texts.EyeText);
+        TextMeshProUGUI accText = GetText((int)Texts.AccessoryText);
 
         backButton.gameObject.AddUIEvnet((PointerEventData) =>
-        {
-            Util.FindChild<UI_Button>(Managers.UI.Root).gameObject.SetActive(true);
-            Managers.UI.ClosePopupUI();
-        }, Define.UIEvent.Click);
+            {
+                Util.FindChild<UI_Button>(Managers.UI.Root).gameObject.SetActive(true);
+                Managers.UI.ClosePopupUI();
+            }, Define.UIEvent.Click);
 
         backButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
@@ -76,8 +108,83 @@ public class UI_AvatarSelect : UI_Popup
             Managers.UI.ShowPopupUI<UI_NameSelect>(null, new Vector3(0, 0, 2));
         }, Define.UIEvent.Click);
 
-        Sprite acc_1 = Managers.Resource.Load<Sprite>("Art/Image/Avatar/acc/acc_1");
-        faceImage.sprite = acc_1;
+
+        leftSkinButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+        }, Define.UIEvent.Click);
+
+        leftSkinButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+            Managers.Sound.Play("Click_Button");
+        }, Define.UIEvent.Highlight);
+
+        rightSkinButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+        }, Define.UIEvent.Click);
+
+        rightSkinButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+            Managers.Sound.Play("Click_Button");
+        }, Define.UIEvent.Highlight);
+
+        leftHairButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+        }, Define.UIEvent.Click);
+
+        leftHairButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+            Managers.Sound.Play("Click_Button");
+        }, Define.UIEvent.Highlight);
+
+        rightHairButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+        }, Define.UIEvent.Click);
+
+        rightHairButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+            Managers.Sound.Play("Click_Button");
+        }, Define.UIEvent.Highlight);
+
+        leftEyeButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+        }, Define.UIEvent.Click);
+
+        leftEyeButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+            Managers.Sound.Play("Click_Button");
+        }, Define.UIEvent.Highlight);
+
+        rightEyeButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+        }, Define.UIEvent.Click);
+
+        rightEyeButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+            Managers.Sound.Play("Click_Button");
+        }, Define.UIEvent.Highlight);
+
+        leftAccButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+        }, Define.UIEvent.Click);
+
+        leftAccButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+            Managers.Sound.Play("Click_Button");
+        }, Define.UIEvent.Highlight);
+
+        rightAccButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+        }, Define.UIEvent.Click);
+
+        rightAccButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+            Managers.Sound.Play("Click_Button");
+        }, Define.UIEvent.Highlight);
+
+
+
+
+
 
 
     }
