@@ -6,16 +6,41 @@ using UnityEngine;
 public class TutorialGameManagerEx
 {
     GameObject _player;
-    //Dictionary<int, GameObject> _players = new Dictionary<int, GameObject>();
     HashSet<GameObject> _customer = new HashSet<GameObject>();
+    public GameObject[] Customers { get; private set; }
 
     public Action<int> OnSpawnEvent;
+
+    public void Init()
+    {
+        Customers = Managers.Resource.LoadAll<GameObject>("Prefabs/Customers/Hamburger_Characters/Prefabs");
+        Debug.Log(Customers.Length);
+    }
 
     public GameObject GetPlayer() { return _player; }
 
     public GameObject Spawn(Define.WorldObject type, string path, Transform parent = null)
     {
         GameObject go = Managers.Resource.Instantite(path, default, default, parent);
+
+        switch (type)
+        {
+            case Define.WorldObject.Customer:
+                _customer.Add(go);
+                if (OnSpawnEvent != null)
+                    OnSpawnEvent.Invoke(1);
+                break;
+            case Define.WorldObject.Player:
+                _player = go;
+                break;
+        }
+
+        return go;
+    }
+
+    public GameObject Spawn(Define.WorldObject type, GameObject gameObject, Vector3 position = default, Quaternion rotiation = default, Transform parent = null)
+    {
+        GameObject go = Managers.Resource.Instantite(gameObject, default, default, parent);
 
         switch (type)
         {

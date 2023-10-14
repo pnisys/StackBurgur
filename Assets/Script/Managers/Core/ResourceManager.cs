@@ -47,6 +47,27 @@ public class ResourceManager
         return go;
     }
 
+    public GameObject Instantite(GameObject original, Vector3 position = default, Quaternion rotation = default, Transform parent = null)
+    {
+        if (original == null)
+        {
+            Debug.LogError($"Failed Load to Prefab");
+            return null;
+        }
+
+        //풀링된 녀석이 있을까?
+        if (original.GetComponent<Poolable>() != null)
+            return Managers.Pool.Pop(original, parent).gameObject;
+
+        Vector3 finalPosition = original.transform.position + position;
+        Quaternion finalRotation = rotation == Quaternion.identity ? original.transform.rotation : rotation;
+
+        GameObject go = Object.Instantiate(original, finalPosition, finalRotation, parent);
+        go.name = original.name;
+
+        return go;
+    }
+
     public void Destory(GameObject go)
     {
         if (go == null)

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TutorialScene : BaseScene
 {
-    // Start is called before the first frame update
     void Awake()
     {
         Init();
@@ -30,7 +29,9 @@ public class TutorialScene : BaseScene
         player.transform.position = playerSpawnPosition.transform.position;
         player.transform.rotation = playerSpawnPosition.transform.rotation;
 
-        GameObject customer = Managers.Tutorial.Spawn(Define.WorldObject.Customer, "Customers/Customer");
+
+        int randomCustomerValue = UnityEngine.Random.Range(0, Managers.Tutorial.Customers.Length);
+        GameObject customer = Managers.Tutorial.Spawn(Define.WorldObject.Customer, Managers.Tutorial.Customers[randomCustomerValue]);
         customer.transform.position = GameObject.Find("CustomerSpawnPosition").transform.position;
     }
 
