@@ -93,7 +93,7 @@ public class PoolManager
         return _pool[original.name].Pop(parent);
     }
 
-    private void CreatePool(GameObject original, int count = 5)
+    private void CreatePool(GameObject original, int count = 1)
     {
         Pool pool = new Pool();
         pool.Init(original, count);

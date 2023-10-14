@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialManagerEx
+public class TutorialGameManagerEx
 {
     GameObject _player;
     //Dictionary<int, GameObject> _players = new Dictionary<int, GameObject>();
-    HashSet<GameObject> _monsters = new HashSet<GameObject>();
+    HashSet<GameObject> _customer = new HashSet<GameObject>();
 
     public Action<int> OnSpawnEvent;
 
@@ -19,8 +19,8 @@ public class TutorialManagerEx
 
         switch (type)
         {
-            case Define.WorldObject.Monster:
-                _monsters.Add(go);
+            case Define.WorldObject.Customer:
+                _customer.Add(go);
                 if (OnSpawnEvent != null)
                     OnSpawnEvent.Invoke(1);
                 break;
@@ -47,11 +47,11 @@ public class TutorialManagerEx
 
         switch (type)
         {
-            case Define.WorldObject.Monster:
+            case Define.WorldObject.Customer:
                 {
-                    if (_monsters.Contains(go))
+                    if (_customer.Contains(go))
                     {
-                        _monsters.Remove(go);
+                        _customer.Remove(go);
                         if (OnSpawnEvent != null)
                             OnSpawnEvent.Invoke(-1);
                     }

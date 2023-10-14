@@ -20,7 +20,7 @@ public class CustomerController : BaseController
 
     public override void Init()
     {
-        WorldObjectType = Define.WorldObject.Monster;
+        WorldObjectType = Define.WorldObject.Customer;
         customerStateType = CustomerState.Spawned;
     }
 }

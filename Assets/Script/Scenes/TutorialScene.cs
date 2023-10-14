@@ -25,10 +25,13 @@ public class TutorialScene : BaseScene
                 break;
         }
 
-        for (int i = 0; i < 2; i++)
-        {
-            Managers.Resource.Instantite("Customer");
-        }
+        GameObject player = Managers.Tutorial.Spawn(Define.WorldObject.Player, "Player");
+        GameObject playerSpawnPosition = GameObject.Find("PlayerSpawnPosition");
+        player.transform.position = playerSpawnPosition.transform.position;
+        player.transform.rotation = playerSpawnPosition.transform.rotation;
+
+        GameObject customer = Managers.Tutorial.Spawn(Define.WorldObject.Customer, "Customers/Customer");
+        customer.transform.position = GameObject.Find("CustomerSpawnPosition").transform.position;
     }
 
     public override void Clear()
