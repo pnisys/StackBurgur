@@ -6,6 +6,17 @@ public class ResourceManager
 {
     public T Load<T>(string path) where T : Object
     {
+        if (typeof(T) == typeof(GameObject))
+        {
+            string name = path;
+            int index = name.LastIndexOf('/');
+            if (index >= 0)
+                name = name.Substring(index + 1);
+
+            GameObject go = Managers.Pool.GetOriginal(name);
+            if (go != null)
+                return go as T;
+        }
         return Resources.Load<T>(path);
     }
 
@@ -16,20 +27,22 @@ public class ResourceManager
 
     public GameObject Instantite(string path, Vector3 position = default, Quaternion rotation = default, Transform parent = null)
     {
-        GameObject prefab = Load<GameObject>($"Prefabs/{path}");
-        if (prefab == null)
+        GameObject original = Load<GameObject>($"Prefabs/{path}");
+        if (original == null)
         {
             Debug.LogError($"Failed Load to Prefab : {path}");
             return null;
         }
 
-        Vector3 finalPosition = prefab.transform.position + position;
-        Quaternion finalRotation = rotation == Quaternion.identity ? prefab.transform.rotation : rotation;
+        //풀링된 녀석이 있을까?
+        if (original.GetComponent<Poolable>() != null)
+            return Managers.Pool.Pop(original, parent).gameObject;
 
-        GameObject go = Object.Instantiate(prefab, finalPosition, finalRotation, parent);
-        int index = go.name.IndexOf("(Clone)");
-        if (index > 0)
-            go.name = go.name.Substring(0, index);
+        Vector3 finalPosition = original.transform.position + position;
+        Quaternion finalRotation = rotation == Quaternion.identity ? original.transform.rotation : rotation;
+
+        GameObject go = Object.Instantiate(original, finalPosition, finalRotation, parent);
+        go.name = original.name;
 
         return go;
     }
@@ -38,6 +51,13 @@ public class ResourceManager
     {
         if (go == null)
             return;
+
+        Poolable poolable = go.GetComponent<Poolable>();
+        if (poolable != null)
+        {
+            Managers.Pool.Push(poolable);
+            return;
+        }
 
         Object.Destroy(go);
     }

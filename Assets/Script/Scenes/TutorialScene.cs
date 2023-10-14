@@ -16,6 +16,19 @@ public class TutorialScene : BaseScene
 
         SceneType = Define.Scene.Tutorial;
         Managers.Sound.Play("Bgm_Game", Define.Sound.Bgm);
+
+        switch (ModeType)
+        {
+            case Define.Mode.Test:
+                break;
+            case Define.Mode.Game:
+                break;
+        }
+
+        for (int i = 0; i < 2; i++)
+        {
+            Managers.Resource.Instantite("Customer");
+        }
     }
 
     public override void Clear()
