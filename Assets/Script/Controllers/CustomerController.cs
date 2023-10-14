@@ -23,4 +23,39 @@ public class CustomerController : BaseController
         WorldObjectType = Define.WorldObject.Customer;
         customerStateType = CustomerState.Spawned;
     }
+
+    void Update()
+    {
+        switch (customerStateType)
+        {
+            case CustomerState.Spawned:
+                UpdateSpawned();
+                break;
+            case CustomerState.WalkingToCounter:
+                UpdateWalkingToCounter();
+                break;
+            case CustomerState.WaitingAtCounter:
+                UpdateWaitingAtCounter();
+                break;
+            case CustomerState.Ordering:
+                UpdateOrdering();
+                break;
+        }
+    }
+
+    private void UpdateSpawned()
+    {
+
+    }
+    private void UpdateWaitingAtCounter() { }
+    private void UpdateWalkingToCounter() { }
+    private void UpdateOrdering() { }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (customerStateType == CustomerState.Spawned && other == Managers.Tutorial.CountCollider)
+        {
+            Debug.Log("°¨Áö");
+        }
+    }
 }
