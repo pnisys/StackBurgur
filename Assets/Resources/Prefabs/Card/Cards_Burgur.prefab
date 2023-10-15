@@ -7161,7 +7161,7 @@ GameObject:
   - component: {fileID: 7019931700172495899}
   - component: {fileID: 7019931700172495972}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Cards_Burgur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

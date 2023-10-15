@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TutorialGameManagerEx
 {
-    public BoxCollider CountCollider { get; private set; }
+    public Transform CounterPosition { get; private set; }
     GameObject _player;
     HashSet<GameObject> _customer = new HashSet<GameObject>();
     public GameObject[] Customers { get; private set; }
@@ -14,7 +14,7 @@ public class TutorialGameManagerEx
 
     public void Init()
     {
-        CountCollider = GameObject.Find("CounterCollider").GetComponent<BoxCollider>();
+        CounterPosition = GameObject.Find("CounterPosition").transform;
         Customers = Managers.Resource.LoadAll<GameObject>("Prefabs/Customers");
         Debug.Log(Customers.Length);
     }
