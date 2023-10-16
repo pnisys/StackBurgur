@@ -38,6 +38,7 @@ public class Define
 
     public enum Levels
     {
+        None,
         Tutorial,
         Level1,
         Level2,

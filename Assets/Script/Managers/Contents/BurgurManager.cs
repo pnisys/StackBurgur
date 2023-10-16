@@ -85,25 +85,71 @@ public class BurgurManager
     private const string burgurSpriteFolderPath_Level3 = "Art/Image/BurgurImageSprite/3stage/";
     private const string burgurSpriteFolderPath_Level4 = "Art/Image/BurgurImageSprite/4stage/";
 
+    public Dictionary<string, int> BurgurLevelDict = new Dictionary<string, int>()
+{
+    // TutorialBurgurNames
+    { nameof(TutorialBurgurNames.데리버거), 0 },
+
+    // Level1BurgurNames
+    { nameof(Level1BurgurNames.새우버거), 1 },
+    { nameof(Level1BurgurNames.토토버거), 1 },
+    { nameof(Level1BurgurNames.토마토패티버거), 1 },
+    { nameof(Level1BurgurNames.더블치즈버거), 1 },
+    { nameof(Level1BurgurNames.베이컨버거), 1 },
+    { nameof(Level1BurgurNames.머쉬룸버거), 1 },
+    { nameof(Level1BurgurNames.촉촉한버거), 1 },
+    { nameof(Level1BurgurNames.불고기버거), 1 },
+
+    // Level2BurgurNames
+    { nameof(Level2BurgurNames.치즈불고기버거), 2 },
+    { nameof(Level2BurgurNames.샌드위치햄버거), 2 },
+    { nameof(Level2BurgurNames.치킨버거), 2 },
+    { nameof(Level2BurgurNames.트리플고기버거), 2 },
+    { nameof(Level2BurgurNames.먹물버거), 2 },
+    { nameof(Level2BurgurNames.양파버거), 2 },
+    { nameof(Level2BurgurNames.육즙가득버거), 2 },
+    { nameof(Level2BurgurNames.버섯많이버거), 2 },
+
+    // Level3BurgurNames
+    { nameof(Level3BurgurNames.살찌는버거), 3 },
+    { nameof(Level3BurgurNames.치즈토마토버거), 3 },
+    { nameof(Level3BurgurNames.샌드위치치즈버거), 3 },
+    { nameof(Level3BurgurNames.다이어트버거), 3 },
+    { nameof(Level3BurgurNames.고칼로리버거), 3 },
+    { nameof(Level3BurgurNames.더블새우버거), 3 },
+    { nameof(Level3BurgurNames.직화버섯불고기버거), 3 },
+    { nameof(Level3BurgurNames.치즈새우버거), 3 },
+
+    // Level4BurgurNames
+    { nameof(Level4BurgurNames.기네스버거), 4 },
+    { nameof(Level4BurgurNames.수분가득버거), 4 },
+    { nameof(Level4BurgurNames.통큰버거), 4 },
+    { nameof(Level4BurgurNames.비주얼버거), 4 },
+    { nameof(Level4BurgurNames.폭탄칼로리버거), 4 },
+    { nameof(Level4BurgurNames.일편단심버거), 4 },
+    { nameof(Level4BurgurNames.기력보충버거), 4 },
+    { nameof(Level4BurgurNames.빵많이버거), 4 },
+};
 
     private Dictionary<string, string> enumToString_BurgurCardNameDict = new Dictionary<string, string>()
-        {
-           { MaterialNames.햄버거빵위.ToString(), "HamburgurBreadUp" },
-            { MaterialNames.햄버거빵아래.ToString(), "HamburgurBreadDown" },
-            { MaterialNames.먹물빵위.ToString(), "BlackburgurBreadUp" },
-            { MaterialNames.먹물빵아래.ToString(), "BlackburgurBreadDown" },
-            { MaterialNames.샌드위치빵위.ToString(), "HamburgurBreadUp" },
-            { MaterialNames.샌드위치빵아래.ToString(), "HamburgurBreadDown" },
-            { MaterialNames.베이컨.ToString(), "Bacon" },
-            { MaterialNames.불고기.ToString(), "Bulmeat" },
-            { MaterialNames.치즈.ToString(), "Cheeze" },
-            { MaterialNames.치킨.ToString(), "Chicken" },
-            { MaterialNames.버섯.ToString(), "Mushroom" },
-            { MaterialNames.양파.ToString(), "Onion" },
-            { MaterialNames.새우.ToString(), "Shrimp" },
-            { MaterialNames.토마토.ToString(), "Tomato" },
-            { MaterialNames.양상추.ToString(), "Lettuce" }
-        };
+{
+    { nameof(MaterialNames.햄버거빵위), "HamburgurBreadUp" },
+    { nameof(MaterialNames.햄버거빵아래), "HamburgurBreadDown" },
+    { nameof(MaterialNames.먹물빵위), "BlackburgurBreadUp" },
+    { nameof(MaterialNames.먹물빵아래), "BlackburgurBreadDown" },
+    { nameof(MaterialNames.샌드위치빵위), "HamburgurBreadUp" },
+    { nameof(MaterialNames.샌드위치빵아래), "HamburgurBreadDown" },
+    { nameof(MaterialNames.베이컨), "Bacon" },
+    { nameof(MaterialNames.불고기), "Bulmeat" },
+    { nameof(MaterialNames.치즈), "Cheeze" },
+    { nameof(MaterialNames.치킨), "Chicken" },
+    { nameof(MaterialNames.버섯), "Mushroom" },
+    { nameof(MaterialNames.양파), "Onion" },
+    { nameof(MaterialNames.새우), "Shrimp" },
+    { nameof(MaterialNames.토마토), "Tomato" },
+    { nameof(MaterialNames.양상추), "Lettuce" }
+};
+
     public Dictionary<string, Sprite> BurgurMaterialSpriteDict { get; private set; } = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> BurgurImageSpriteDict { get; private set; } = new Dictionary<string, Sprite>();
     public Dictionary<string, string[]> BurgursInfoDict { get; private set; } = new Dictionary<string, string[]>()

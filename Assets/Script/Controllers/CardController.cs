@@ -10,8 +10,23 @@ public class CardController : UI_Scene
     //currentLevel과 버거이름만 넘겨주면, BurgurManager가 들고있다가 받아오면됨
     //물론 Level과 버거이름은 여기서 정하는 건 아님
     //대신 갖고 있는 산하에 오브젝트들은 여기서 만들어줘야 함
-    Define.Levels currentLevel = Define.Levels.Level4;
-    string burgurName = "기력보충버거";
+    Define.Levels currentLevel = Define.Levels.None;
+    private string burgurName;
+    public string BurgurName
+    {
+        get
+        {
+            return burgurName;
+        }
+        set
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                burgurName = value;
+                currentLevel = (Define.Levels)Managers.Burgur.BurgurLevelDict[burgurName];
+            }
+        }
+    }
 
     enum Texts
     {
@@ -30,6 +45,7 @@ public class CardController : UI_Scene
 
     GameObject burgurNameParent;
     Image image_Burgur;
+
     private void Start()
     {
         Bind<TextMeshProUGUI>(typeof(Texts));
@@ -39,8 +55,8 @@ public class CardController : UI_Scene
         TextMeshProUGUI burgurNameText = GetText((int)Texts.Text_BurgurName);
         burgurNameParent = GetGameObject((int)GameObjects.BurgurNameParent);
         image_Burgur = GetImage((int)Images.Image_Burgur);
-        burgurNameText.text = burgurName;
-        image_Burgur.sprite = Managers.Burgur.BurgurImageSpriteDict[burgurName];
+        burgurNameText.text = BurgurName;
+        image_Burgur.sprite = Managers.Burgur.BurgurImageSpriteDict[BurgurName];
         Setting(currentLevel);
     }
 
@@ -59,7 +75,7 @@ public class CardController : UI_Scene
             go.transform.localPosition = new Vector3(6.1f, yPos, 0f);
             go.transform.localScale = new Vector3(0.44315f, 0.04390998f, 0.44315f);
             Image image = Util.GetOrAddComponet<Image>(go);
-            string materialName = Managers.Burgur.BurgursInfoDict[burgurName][i];
+            string materialName = Managers.Burgur.BurgursInfoDict[BurgurName][i];
 
             // 조건 추가
             if (i == 0 && materialName.EndsWith("빵"))
