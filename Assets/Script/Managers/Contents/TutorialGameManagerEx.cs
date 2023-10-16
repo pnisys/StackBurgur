@@ -94,4 +94,6 @@ public class TutorialGameManagerEx
 
         Managers.Resource.Destory(go);
     }
+
+
 }

@@ -35,4 +35,13 @@ public class Define
         Click,
         Highlight,
     }
+
+    public enum Levels
+    {
+        Tutorial,
+        Level1,
+        Level2,
+        Level3,
+        Level4,
+    }
 }

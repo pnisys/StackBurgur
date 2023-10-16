@@ -16,6 +16,7 @@ public class Managers : MonoBehaviour
     private SceneManagerEx _scene = new SceneManagerEx();
     private TutorialGameManagerEx _tutorial = new TutorialGameManagerEx();
     private PoolManager _pool = new PoolManager();
+    private BurgurManager _burgur = new BurgurManager();
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static UIManager UI { get { return Instance._ui; } }
     public static DataManager Data { get { return Instance._data; } }
@@ -23,6 +24,7 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static TutorialGameManagerEx Tutorial { get { return Instance._tutorial; } }
     public static PoolManager Pool { get { return Instance._pool; } }
+    public static BurgurManager Burgur { get {  return Instance._burgur; } }
     #endregion
 
     private static void Init()
@@ -42,6 +44,7 @@ public class Managers : MonoBehaviour
             s_Instance._sound.Init();
             s_Instance._pool.Init();
             s_Instance._tutorial.Init();
+            s_Instance._burgur.Init();
         }
     }
 
