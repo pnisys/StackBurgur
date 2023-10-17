@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class CustomerController : BaseController
 {
-    CustomerState customerStateType;
+    Define.CustomerState customerStateType;
     [SerializeField]
     float speed = 1.0f; // 속도는 원하는 값으로 조정 가능합니다.
 
     Coroutine co;
 
-    public enum CustomerState
-    {
-        Spawned, // 손님이 매장 안에서 처음 소환된 상태, 매대 앞까지 걸어가기 전 대기 상태
-        WalkingToCounter, // 손님이 매대 앞까지 걸어오는 상태
-        WaitingAtCounter, // 손님이 매대 앞에서 멈추고 주문을 기다리는 상태
-        Ordering // 손님이 주문을 하는 상태
-    }
+
 
     void Start()
     {
@@ -26,23 +20,23 @@ public class CustomerController : BaseController
     public override void Init()
     {
         WorldObjectType = Define.WorldObject.Customer;
-        customerStateType = CustomerState.Spawned;
+        customerStateType = Define.CustomerState.Spawned;
     }
 
     void Update()
     {
         switch (customerStateType)
         {
-            case CustomerState.Spawned:
+            case Define.CustomerState.Spawned:
                 UpdateSpawned();
                 break;
-            case CustomerState.WalkingToCounter:
+            case Define.CustomerState.WalkingToCounter:
                 UpdateWalkingToCounter();
                 break;
-            case CustomerState.WaitingAtCounter:
+            case Define.CustomerState.WaitingAtCounter:
                 UpdateWaitingAtCounter();
                 break;
-            case CustomerState.Ordering:
+            case Define.CustomerState.Ordering:
                 UpdateOrdering();
                 break;
         }
@@ -50,7 +44,7 @@ public class CustomerController : BaseController
 
     private void UpdateSpawned()
     {
-        customerStateType = CustomerState.WalkingToCounter;
+        customerStateType = Define.CustomerState.WalkingToCounter;
     }
     private void UpdateWalkingToCounter()
     {
@@ -68,7 +62,8 @@ public class CustomerController : BaseController
         float distanceThreshold = 1f;
         if (direction.magnitude < distanceThreshold)
         {
-            customerStateType = CustomerState.WaitingAtCounter;
+            customerStateType = Define.CustomerState.WaitingAtCounter;
+            //Managers.Tutorial.StateControl(customerStateType);
         }
     }
     private void UpdateWaitingAtCounter()
@@ -79,12 +74,15 @@ public class CustomerController : BaseController
     private IEnumerator WaitAtCounter(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        customerStateType = CustomerState.Ordering;
+        customerStateType = Define.CustomerState.Ordering;
         co = null;
     }
 
     private void UpdateOrdering()
     {
+        //난이도에 따라 햄버거 카드에 맞는 햄버거와 소스를 카드를 보여주기
+        //제한시간 캔버스 켜기
+        //튜토리얼 안내캔버스 끝나야 제한시간 흐르게 하기
     }
 
 

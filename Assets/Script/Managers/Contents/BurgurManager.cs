@@ -78,6 +78,7 @@ public class BurgurManager
 
     #endregion
 
+    #region Path
     private const string materialSpriteFolderPath = "Art/Image/BurgurMaterialsSprite/";
     private const string burgurSpriteFolderPath_Tutorial = "Art/Image/BurgurImageSprite/";
     private const string burgurSpriteFolderPath_Level1 = "Art/Image/BurgurImageSprite/1stage/";
@@ -86,6 +87,7 @@ public class BurgurManager
     private const string burgurSpriteFolderPath_Level4 = "Art/Image/BurgurImageSprite/4stage/";
 
     private const string sourceSpriteFolderPath = "Art/Image/SourceCardMaterialsSprite/";
+    #endregion
 
     #region burgurDict
 
@@ -280,6 +282,7 @@ public class BurgurManager
     public Dictionary<string, Sprite> SourceTextNameDict { get; private set; } = new Dictionary<string, Sprite>();
     #endregion
 
+    #region Init
     public void Init()
     {
         InitMaterialSprites(typeof(MaterialNames), materialSpriteFolderPath, enumToString_BurgurCardNameDict);
@@ -319,4 +322,5 @@ public class BurgurManager
             dict.Add(item.ToString(), Managers.Resource.Load<Sprite>($"{folderPath}{sourceFileName}"));
         }
     }
+    #endregion
 }

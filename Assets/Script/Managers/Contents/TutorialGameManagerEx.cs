@@ -16,7 +16,6 @@ public class TutorialGameManagerEx
     {
         CounterPosition = GameObject.Find("CounterPosition").transform;
         Customers = Managers.Resource.LoadAll<GameObject>("Prefabs/Customers");
-        Debug.Log(Customers.Length);
     }
 
     public GameObject GetPlayer() { return _player; }
@@ -93,5 +92,20 @@ public class TutorialGameManagerEx
         }
 
         Managers.Resource.Destory(go);
+    }
+
+    public void StateControl(Define.CustomerState state)
+    {
+        switch (state)
+        {
+            case Define.CustomerState.Spawned:
+                break;
+            case Define.CustomerState.WalkingToCounter:
+                break;
+            case Define.CustomerState.WaitingAtCounter:
+                break;
+            case Define.CustomerState.Ordering:
+                break;
+        }
     }
 }
