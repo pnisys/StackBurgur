@@ -45,4 +45,19 @@ public class Define
         Level3,
         Level4,
     }
+
+    public enum Cards
+    {
+        None,
+        Burgur,
+        Source
+    }
+
+    public enum SourceNames
+    {
+        바베큐소스,
+        칠리소스,
+        머스타드소스,
+        마요네즈소스
+    }
 }

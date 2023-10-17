@@ -7,10 +7,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class CardController : UI_Scene
 {
-    //currentLevel과 버거이름만 넘겨주면, BurgurManager가 들고있다가 받아오면됨
-    //물론 Level과 버거이름은 여기서 정하는 건 아님
-    //대신 갖고 있는 산하에 오브젝트들은 여기서 만들어줘야 함
+    Define.Cards currentCard = Define.Cards.Source;
     Define.Levels currentLevel = Define.Levels.None;
+
     private string burgurName;
     public string BurgurName
     {
@@ -20,22 +19,39 @@ public class CardController : UI_Scene
         }
         set
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                burgurName = value;
-                currentLevel = (Define.Levels)Managers.Burgur.BurgurLevelDict[burgurName];
-            }
+            burgurName = value;
+            currentLevel = (Define.Levels)Managers.Burgur.BurgurLevelDict[burgurName];
         }
     }
+
+    Define.SourceNames currentSource = Define.SourceNames.마요네즈소스;
+    public Define.SourceNames CurrentSource
+    {
+        get
+        {
+            return currentSource;
+        }
+        set
+        {
+            currentSource = value;
+        }
+    }
+
 
     enum Texts
     {
         Text_BurgurName
     }
 
-    enum Images
+    enum BurgurImages
     {
         Image_Burgur,
+    }
+
+    enum SourceImages
+    {
+        Image_TitleName,
+        Image_Source,
     }
 
     enum GameObjects
@@ -45,22 +61,47 @@ public class CardController : UI_Scene
 
     GameObject burgurNameParent;
     Image image_Burgur;
+    Image image_sourceImage;
+    Image image_sourceName;
+
 
     private void Start()
     {
+        switch (currentCard)
+        {
+            case Define.Cards.Burgur:
+                InitBurgurCard();
+                break;
+            case Define.Cards.Source:
+                InitSourceCard();
+                break;
+        }
+    }
+    private void InitBurgurCard()
+    {
         Bind<TextMeshProUGUI>(typeof(Texts));
-        Bind<Image>(typeof(Images));
+        Bind<Image>(typeof(BurgurImages));
         Bind<GameObject>(typeof(GameObjects));
 
         TextMeshProUGUI burgurNameText = GetText((int)Texts.Text_BurgurName);
         burgurNameParent = GetGameObject((int)GameObjects.BurgurNameParent);
-        image_Burgur = GetImage((int)Images.Image_Burgur);
+        image_Burgur = GetImage((int)BurgurImages.Image_Burgur);
         burgurNameText.text = BurgurName;
         image_Burgur.sprite = Managers.Burgur.BurgurImageSpriteDict[BurgurName];
-        Setting(currentLevel);
+        BurgurCardSetting(currentLevel);
     }
 
-    private void Setting(Define.Levels currentLevel)
+    private void InitSourceCard()
+    {
+        Bind<Image>(typeof(SourceImages));
+        image_sourceImage = GetImage((int)SourceImages.Image_Source);
+        image_sourceName = GetImage((int)SourceImages.Image_TitleName);
+
+        image_sourceImage.sprite = Managers.Burgur.SourceImageDict[currentSource.ToString()];
+        image_sourceName.sprite = Managers.Burgur.SourceTextNameDict[currentSource.ToString()];
+    }
+
+    private void BurgurCardSetting(Define.Levels currentLevel)
     {
 
         int value = currentLevel == Define.Levels.Tutorial ? 3 :
