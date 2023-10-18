@@ -16,7 +16,8 @@ public class Managers : MonoBehaviour
     private SceneManagerEx _scene = new SceneManagerEx();
     private TutorialGameManagerEx _tutorial = new TutorialGameManagerEx();
     private PoolManager _pool = new PoolManager();
-    private BurgurManager _burgur = new BurgurManager();
+    private CardManager _burgur = new CardManager();
+    private MeditateManager _meditate = new MeditateManager();
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static UIManager UI { get { return Instance._ui; } }
     public static DataManager Data { get { return Instance._data; } }
@@ -24,7 +25,8 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static TutorialGameManagerEx Tutorial { get { return Instance._tutorial; } }
     public static PoolManager Pool { get { return Instance._pool; } }
-    public static BurgurManager Burgur { get {  return Instance._burgur; } }
+    public static CardManager Card { get {  return Instance._burgur; } }
+    public static MeditateManager Meditate { get {  return Instance._meditate; } }
     #endregion
 
     private static void Init()

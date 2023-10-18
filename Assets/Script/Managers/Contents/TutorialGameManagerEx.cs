@@ -8,6 +8,9 @@ public class TutorialGameManagerEx
     public Transform CounterPosition { get; private set; }
     GameObject _player;
     HashSet<GameObject> _customer = new HashSet<GameObject>();
+    GameObject _burgurCard;
+    GameObject _sourceCard;
+
     public GameObject[] Customers { get; private set; }
 
     public Action<int> OnSpawnEvent;
@@ -34,6 +37,12 @@ public class TutorialGameManagerEx
             case Define.WorldObject.Player:
                 _player = go;
                 break;
+            case Define.WorldObject.BurgurCard:
+                _burgurCard = go;
+                break;
+            case Define.WorldObject.SourceCard:
+                _sourceCard = go;
+                break;
         }
 
         return go;
@@ -52,6 +61,12 @@ public class TutorialGameManagerEx
                 break;
             case Define.WorldObject.Player:
                 _player = go;
+                break;
+            case Define.WorldObject.BurgurCard:
+                _burgurCard = go;
+                break;
+            case Define.WorldObject.SourceCard:
+                _sourceCard = go;
                 break;
         }
 
@@ -89,23 +104,14 @@ public class TutorialGameManagerEx
                         _player = null;
                 }
                 break;
+            case Define.WorldObject.BurgurCard:
+                _burgurCard = null;
+                break;
+            case Define.WorldObject.SourceCard:
+                _sourceCard = null;
+                break;
         }
 
         Managers.Resource.Destory(go);
-    }
-
-    public void StateControl(Define.CustomerState state)
-    {
-        switch (state)
-        {
-            case Define.CustomerState.Spawned:
-                break;
-            case Define.CustomerState.WalkingToCounter:
-                break;
-            case Define.CustomerState.WaitingAtCounter:
-                break;
-            case Define.CustomerState.Ordering:
-                break;
-        }
     }
 }

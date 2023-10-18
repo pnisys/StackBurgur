@@ -10,8 +10,6 @@ public class CustomerController : BaseController
 
     Coroutine co;
 
-
-
     void Start()
     {
         Init();
@@ -62,8 +60,8 @@ public class CustomerController : BaseController
         float distanceThreshold = 1f;
         if (direction.magnitude < distanceThreshold)
         {
+            Managers.Meditate.Notify();
             customerStateType = Define.CustomerState.WaitingAtCounter;
-            //Managers.Tutorial.StateControl(customerStateType);
         }
     }
     private void UpdateWaitingAtCounter()
@@ -80,7 +78,8 @@ public class CustomerController : BaseController
 
     private void UpdateOrdering()
     {
-        //난이도에 따라 햄버거 카드에 맞는 햄버거와 소스를 카드를 보여주기
+        //1. 난이도에 따라 햄버거 카드에 맞는 햄버거와 소스를 카드를 보여주기
+
         //제한시간 캔버스 켜기
         //튜토리얼 안내캔버스 끝나야 제한시간 흐르게 하기
     }
