@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public class SourceCardController : UI_Scene
+public class UI_Card_Source : UI_Scene
 {
     Define.SourceNames currentSource = Define.SourceNames.마요네즈소스;
     public Define.SourceNames CurrentSource

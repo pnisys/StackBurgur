@@ -14,19 +14,21 @@ public class Managers : MonoBehaviour
     private DataManager _data = new DataManager();
     private SoundManager _sound = new SoundManager();
     private SceneManagerEx _scene = new SceneManagerEx();
-    private TutorialGameManagerEx _tutorial = new TutorialGameManagerEx();
+    private GameManagerEx _game = new GameManagerEx();
     private PoolManager _pool = new PoolManager();
     private CardManager _burgur = new CardManager();
     private MeditateManager _meditate = new MeditateManager();
+    private ObjectManager _object = new ObjectManager();
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static UIManager UI { get { return Instance._ui; } }
     public static DataManager Data { get { return Instance._data; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
-    public static TutorialGameManagerEx Tutorial { get { return Instance._tutorial; } }
+    public static GameManagerEx Game { get { return Instance._game; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static CardManager Card { get {  return Instance._burgur; } }
     public static MeditateManager Meditate { get {  return Instance._meditate; } }
+    public static ObjectManager Object { get {  return Instance._object; } }
     #endregion
 
     private static void Init()
@@ -45,8 +47,6 @@ public class Managers : MonoBehaviour
 
             s_Instance._sound.Init();
             s_Instance._pool.Init();
-            //s_Instance._tutorial.Init();
-            //s_Instance._burgur.Init();
         }
     }
 

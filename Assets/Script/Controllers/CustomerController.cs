@@ -46,22 +46,28 @@ public class CustomerController : BaseController
     }
     private void UpdateWalkingToCounter()
     {
-        // 방향과 거리를 구합니다.
-        Vector3 direction = Managers.Tutorial.CounterPosition.position - transform.position;
-        direction.y = 0; // y 값을 고려하지 않습니다.
-        Vector3 dirNormalized = direction.normalized;
+        TutorialScene tutorialScene = Managers.Scene.CurrentScene as TutorialScene;
 
-        // 고객이 목적지로 걸어갑니다.
-        float initialY = transform.position.y; // 초기 Y 값을 저장합니다.
-        transform.position += dirNormalized * speed * Time.deltaTime;
-        transform.position = new Vector3(transform.position.x, initialY, transform.position.z); // Y 값을 초기값으로 유지합니다.
-
-        // 일정 거리(예: 1.0f)보다 작으면 도착했다고 간주하고 상태를 변경합니다.
-        float distanceThreshold = 1f;
-        if (direction.magnitude < distanceThreshold)
+        if (tutorialScene != null)
         {
-            customerStateType = Define.CustomerState.WaitingAtCounter;
+            Vector3 direction = tutorialScene.CounterPosition.position - transform.position;
+            direction.y = 0; // y 값을 고려하지 않습니다.
+            Vector3 dirNormalized = direction.normalized;
+
+            // 고객이 목적지로 걸어갑니다.
+            float initialY = transform.position.y; // 초기 Y 값을 저장합니다.
+            transform.position += dirNormalized * speed * Time.deltaTime;
+            transform.position = new Vector3(transform.position.x, initialY, transform.position.z); // Y 값을 초기값으로 유지합니다.
+
+            // 일정 거리(예: 1.0f)보다 작으면 도착했다고 간주하고 상태를 변경합니다.
+            float distanceThreshold = 1f;
+            if (direction.magnitude < distanceThreshold)
+            {
+                customerStateType = Define.CustomerState.WaitingAtCounter;
+            }
         }
+        else
+            Debug.LogError("gameScene이 Null입니다");
     }
     private void UpdateWaitingAtCounter()
     {

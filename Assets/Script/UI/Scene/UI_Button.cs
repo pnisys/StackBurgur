@@ -56,7 +56,7 @@ public class UI_Button : UI_Scene
 
         tutorialButton.AddUIEvnet((PointerEventData) =>
         {
-            Managers.Scene.LoadScene(Define.Scene.Tutorial);
+            Managers.Scene.LoadScene(Define.SceneType.Tutorial);
         }, Define.UIEvent.Click);
 
         gameStartButton.AddUIEvnet((PointerEventData) =>

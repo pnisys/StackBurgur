@@ -3,13 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialGameManagerEx
+public class ObjectManager
 {
-    public Transform CounterPosition { get; private set; }
     GameObject _player;
     HashSet<GameObject> _customer = new HashSet<GameObject>();
-    GameObject _burgurCard;
-    GameObject _sourceCard;
 
     public GameObject[] Customers { get; private set; }
 
@@ -17,7 +14,6 @@ public class TutorialGameManagerEx
 
     public void Init()
     {
-        CounterPosition = GameObject.Find("CounterPosition").transform;
         Customers = Managers.Resource.LoadAll<GameObject>("Prefabs/Customers");
     }
 
@@ -38,10 +34,8 @@ public class TutorialGameManagerEx
                 _player = go;
                 break;
             case Define.WorldObject.BurgurCard:
-                _burgurCard = go;
                 break;
             case Define.WorldObject.SourceCard:
-                _sourceCard = go;
                 break;
         }
 
@@ -63,10 +57,8 @@ public class TutorialGameManagerEx
                 _player = go;
                 break;
             case Define.WorldObject.BurgurCard:
-                _burgurCard = go;
                 break;
             case Define.WorldObject.SourceCard:
-                _sourceCard = go;
                 break;
         }
 
@@ -105,10 +97,8 @@ public class TutorialGameManagerEx
                 }
                 break;
             case Define.WorldObject.BurgurCard:
-                _burgurCard = null;
                 break;
             case Define.WorldObject.SourceCard:
-                _sourceCard = null;
                 break;
         }
 

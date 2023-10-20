@@ -35,7 +35,7 @@ public class PoolManager
             if (poolable == null)
                 return;
 
-            poolable.transform.parent = Root;
+            poolable.transform.SetParent(Root);
             poolable.gameObject.SetActive(false);
             poolable.IsUsing = false;
 
@@ -54,9 +54,9 @@ public class PoolManager
             poolable.gameObject.SetActive(true);
             //DonDestroyOnLoad 해제 용도
             if (parent == null)
-                poolable.transform.parent = Managers.Scene.CurrentScene.transform;
+                poolable.transform.SetParent(Managers.Scene.CurrentScene.transform);
 
-            poolable.transform.parent = parent;
+            poolable.transform.SetParent(parent);  
             poolable.IsUsing = true;
             return poolable;
         }

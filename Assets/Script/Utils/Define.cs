@@ -19,7 +19,7 @@ public class Define
         Effect,
         MaxCount,
     }
-    public enum Scene
+    public enum SceneType
     {
         Unknown,
         Lobby,

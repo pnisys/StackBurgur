@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public class BurgurCardController : UI_Scene
+public class UI_Card_Burgur : UI_Scene
 {
     Define.Levels currentLevel;
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TutorialScene : BaseScene
 {
+    public Transform CounterPosition { get; private set; }
+
     void Awake()
     {
         Init();
@@ -13,25 +15,31 @@ public class TutorialScene : BaseScene
     {
         base.Init();
 
-        SceneType = Define.Scene.Tutorial;
+        Managers.Object.Init();
+        Managers.Card.Init();
+        CounterPosition = GameObject.Find("CounterPosition").transform;
+
+        SceneType = Define.SceneType.Tutorial;
         Managers.Sound.Play("Bgm_Game", Define.Sound.Bgm);
+
+        GameObject player = Managers.Object.Spawn(Define.WorldObject.Player, "Player");
 
         switch (ModeType)
         {
             case Define.Mode.Test:
+                GameObject inputOVR = GameObject.Find("InputOVR");
+                inputOVR.SetActive(false);
                 break;
             case Define.Mode.Game:
                 break;
         }
 
-        GameObject player = Managers.Tutorial.Spawn(Define.WorldObject.Player, "Player");
-        GameObject playerSpawnPosition = GameObject.Find("PlayerSpawnPosition");
-        player.transform.position = playerSpawnPosition.transform.position;
-        player.transform.rotation = playerSpawnPosition.transform.rotation;
+        Transform playerSpawnPosition = GameObject.Find("PlayerSpawnPosition").transform;
+        player.transform.position = playerSpawnPosition.position;
+        player.transform.rotation = playerSpawnPosition.rotation;
 
-
-        int randomCustomerValue = UnityEngine.Random.Range(0, Managers.Tutorial.Customers.Length);
-        GameObject customer = Managers.Tutorial.Spawn(Define.WorldObject.Customer, Managers.Tutorial.Customers[randomCustomerValue]);
+        int randomCustomerValue = UnityEngine.Random.Range(0, Managers.Object.Customers.Length);
+        GameObject customer = Managers.Object.Spawn(Define.WorldObject.Customer, Managers.Object.Customers[randomCustomerValue]);
         customer.transform.position = GameObject.Find("CustomerSpawnPosition").transform.position;
     }
 

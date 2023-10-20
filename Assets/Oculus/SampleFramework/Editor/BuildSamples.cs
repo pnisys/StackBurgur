@@ -83,7 +83,7 @@ partial class OculusBuildSamples
         InitializeBuild("com.oculus.samples_2DPanel");
         AddSplashScreen("/Assets/Oculus/SampleFramework/Core/OculusInternal/EnhancedOVROverlay/Textures/SplashScreen/STADIUM_White-01.png");
         SetAppDetails("Oculus","2DPanel");
-        BuildInternal("EnhancedOVROverlay"); //Scene is presnet in OculusInternal folder.
+        BuildInternal("EnhancedOVROverlay"); //SceneType is presnet in OculusInternal folder.
     }
 
     static void BuildStartScene() {

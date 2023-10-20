@@ -13,7 +13,7 @@ public class PassthroughProjectionSurface : MonoBehaviour
         GameObject ovrCameraRig = GameObject.Find("OVRCameraRig");
         if (ovrCameraRig == null)
         {
-            Debug.LogError("Scene does not contain an OVRCameraRig");
+            Debug.LogError("SceneType does not contain an OVRCameraRig");
             return;
         }
 
