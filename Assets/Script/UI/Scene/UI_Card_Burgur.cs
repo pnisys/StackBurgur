@@ -41,7 +41,12 @@ public class UI_Card_Burgur : UI_Scene
 
     GameObject burgurNameParent;
     Image image_Burgur;
-  
+
+    private void Start()
+    {
+        InitBurgurCard();
+    }
+
     public void InitBurgurCard()
     {
         Bind<TextMeshProUGUI>(typeof(Texts));

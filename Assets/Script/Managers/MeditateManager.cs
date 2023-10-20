@@ -12,7 +12,6 @@ public class MeditateManager
         burgurCard.transform.position = new Vector3(0.9900001f, -0.572f, 0.013f);
         burgurCard.transform.Rotate(new Vector3(0f, 180f, 0f));
         burgurCard.BurgurName = Define.TutorialBurgurNames.데리버거.ToString();
-        burgurCard.InitBurgurCard();
 
         UI_Card_Source sourceCard = Managers.UI.ShowSceneUI<UI_Card_Source>();
 
@@ -21,5 +20,11 @@ public class MeditateManager
         Array sourceNames = Enum.GetValues(typeof(Define.SourceNames));
         int randomValue = UnityEngine.Random.Range(0, sourceNames.Length);
         sourceCard.CurrentSource = (Define.SourceNames)sourceNames.GetValue(randomValue);
+
+        UI_TimeLimit timeLimit = Managers.UI.ShowSceneUI<UI_TimeLimit>();
+        timeLimit.transform.Rotate(new Vector3(0f, 180f, 0f));
+        timeLimit.transform.position = new Vector3(-0.285f, -0.54f, 0);
+
+        UI_Select select = Managers.UI.ShowSceneUI<UI_Select>();
     }
 }

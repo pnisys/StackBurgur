@@ -15,6 +15,12 @@ public static class Util
         return component;
     }
 
+    public static bool FindChild<T>(GameObject go, out T child, string name = null, bool recursive = false) where T : UnityEngine.Object
+    {
+        child = FindChild<T>(go, name, recursive);
+        return child != null;
+    }
+
     public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)
     {
         Transform transform = FindChild<Transform>(go, name, recursive);
