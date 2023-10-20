@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
@@ -38,6 +40,14 @@ public class UI_Select : UI_Scene
     "바베큐소스", "칠리소스", "마요네즈소스", "머스타드소스",
     };
 
+    Action<PointerEventData>[] handlers = new Action<PointerEventData>[]
+        {
+
+
+        };
+
+
+
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
@@ -60,6 +70,7 @@ public class UI_Select : UI_Scene
         for (int i = 0; i < 12; i++)
         {
             GameObject item = Managers.Resource.Instantite("UI/Scene/UI_Select_Item");
+            //item.AddUIEvnet(handlers[i]);
             item.transform.SetParent(MaterialPanel.transform);
 
             Image imageComponent = Util.FindChild<Image>(item);

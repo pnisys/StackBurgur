@@ -25,10 +25,18 @@ public class GameData
     public bool EffectSoundOn = true;
 
     public int LastStoryID = -1;
+
+    public Dictionary<string, string[]> currentBurgurDic = new Dictionary<string, string[]>();
 }
 
 
 public class GameManagerEx
 {
-  
+    GameData _gameData = new GameData();
+
+    public Dictionary<string, string[]> CurrentBurgurDic
+    {
+        get { return _gameData.currentBurgurDic; }
+        set { _gameData.currentBurgurDic = value; }
+    }
 }
