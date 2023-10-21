@@ -12,8 +12,7 @@ public class CardManager
         ÇÜ¹ö°Å»§¾Æ·¡,
         ¸Ô¹°»§À§,
         ¸Ô¹°»§¾Æ·¡,
-        »÷µåÀ§Ä¡»§À§,
-        »÷µåÀ§Ä¡»§¾Æ·¡,
+        »÷µåÀ§Ä¡»§,
         º£ÀÌÄÁ,
         ºÒ°í±â,
         Ä¡Áî,
@@ -25,17 +24,6 @@ public class CardManager
         ¾ç»óÃß
     }
     
-    #endregion
-
-    #region Path
-    private const string materialSpriteFolderPath = "Art/Image/BurgurMaterialsSprite/";
-    private const string burgurSpriteFolderPath_Tutorial = "Art/Image/BurgurImageSprite/";
-    private const string burgurSpriteFolderPath_Level1 = "Art/Image/BurgurImageSprite/1stage/";
-    private const string burgurSpriteFolderPath_Level2 = "Art/Image/BurgurImageSprite/2stage/";
-    private const string burgurSpriteFolderPath_Level3 = "Art/Image/BurgurImageSprite/3stage/";
-    private const string burgurSpriteFolderPath_Level4 = "Art/Image/BurgurImageSprite/4stage/";
-
-    private const string sourceSpriteFolderPath = "Art/Image/SourceCardMaterialsSprite/";
     #endregion
 
     #region burgurDict
@@ -92,8 +80,7 @@ public class CardManager
     { nameof(MaterialNames.ÇÜ¹ö°Å»§¾Æ·¡), "HamburgurBreadDown" },
     { nameof(MaterialNames.¸Ô¹°»§À§), "BlackburgurBreadUp" },
     { nameof(MaterialNames.¸Ô¹°»§¾Æ·¡), "BlackburgurBreadDown" },
-    { nameof(MaterialNames.»÷µåÀ§Ä¡»§À§), "HamburgurBreadUp" },
-    { nameof(MaterialNames.»÷µåÀ§Ä¡»§¾Æ·¡), "HamburgurBreadDown" },
+    { nameof(MaterialNames.»÷µåÀ§Ä¡»§), "SandwichBread" },
     { nameof(MaterialNames.º£ÀÌÄÁ), "Bacon" },
     { nameof(MaterialNames.ºÒ°í±â), "Bulmeat" },
     { nameof(MaterialNames.Ä¡Áî), "Cheeze" },
@@ -208,6 +195,7 @@ public class CardManager
 
 };
     #endregion
+
     #region SourceDit
 
     private Dictionary<string, string> enumToString_SourceCardTextNameDict = new Dictionary<string, string>()
@@ -232,15 +220,15 @@ public class CardManager
     #region Init
     public void Init()
     {
-        InitMaterialSprites(typeof(MaterialNames), materialSpriteFolderPath, enumToString_BurgurCardNameDict);
-        InitBurgurSprites(typeof(Define.TutorialBurgurNames), burgurSpriteFolderPath_Tutorial, BurgurImageSpriteDict);
-        InitBurgurSprites(typeof(Define.Level1BurgurNames), burgurSpriteFolderPath_Level1, BurgurImageSpriteDict);
-        InitBurgurSprites(typeof(Define.Level2BurgurNames), burgurSpriteFolderPath_Level2, BurgurImageSpriteDict);
-        InitBurgurSprites(typeof(Define.Level3BurgurNames), burgurSpriteFolderPath_Level3, BurgurImageSpriteDict);
-        InitBurgurSprites(typeof(Define.Level4BurgurNames), burgurSpriteFolderPath_Level4, BurgurImageSpriteDict);
+        InitMaterialSprites(typeof(MaterialNames), Define.materialSpriteFolderPath, enumToString_BurgurCardNameDict);
+        InitBurgurSprites(typeof(Define.TutorialBurgurNames), Define.burgurSpriteFolderPath_Tutorial, BurgurImageSpriteDict);
+        InitBurgurSprites(typeof(Define.Level1BurgurNames), Define.burgurSpriteFolderPath_Level1, BurgurImageSpriteDict);
+        InitBurgurSprites(typeof(Define.Level2BurgurNames), Define.burgurSpriteFolderPath_Level2, BurgurImageSpriteDict);
+        InitBurgurSprites(typeof(Define.Level3BurgurNames), Define.burgurSpriteFolderPath_Level3, BurgurImageSpriteDict);
+        InitBurgurSprites(typeof(Define.Level4BurgurNames), Define.burgurSpriteFolderPath_Level4, BurgurImageSpriteDict);
 
-        InitSourceSprites(typeof(Define.SourceNames), sourceSpriteFolderPath, enumToString_SourceCardImageDict, SourceImageDict);
-        InitSourceSprites(typeof(Define.SourceNames), sourceSpriteFolderPath, enumToString_SourceCardTextNameDict, SourceTextNameDict);
+        InitSourceSprites(typeof(Define.SourceNames), Define.sourceSpriteFolderPath, enumToString_SourceCardImageDict, SourceImageDict);
+        InitSourceSprites(typeof(Define.SourceNames), Define.sourceSpriteFolderPath, enumToString_SourceCardTextNameDict, SourceTextNameDict);
     }
 
     private void InitMaterialSprites(Type enumType, string folderPath, Dictionary<string, string> nameDict)
@@ -270,6 +258,4 @@ public class CardManager
         }
     }
     #endregion
-
-
 }

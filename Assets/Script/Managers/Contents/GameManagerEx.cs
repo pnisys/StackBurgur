@@ -27,6 +27,9 @@ public class GameData
     public int LastStoryID = -1;
 
     public Dictionary<string, string[]> currentBurgurDic = new Dictionary<string, string[]>();
+    public Stack<string> burgurs = new Stack<string>();
+
+   
 }
 
 
@@ -38,5 +41,14 @@ public class GameManagerEx
     {
         get { return _gameData.currentBurgurDic; }
         set { _gameData.currentBurgurDic = value; }
+    }
+
+    public void SetBurgur(string item)
+    {
+        _gameData.burgurs.Push(item);
+        foreach (var burgur in _gameData.burgurs)
+        {
+            Debug.Log(burgur);
+        }
     }
 }

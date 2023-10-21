@@ -20,6 +20,8 @@ public class UI_Card_Burgur : UI_Scene
         {
             burgurName = value;
             currentLevel = (Define.Levels)Managers.Card.BurgurLevelDict[burgurName];
+            Managers.Game.CurrentBurgurDic.Clear();
+            Managers.Game.CurrentBurgurDic.Add(BurgurName, Managers.Card.BurgursInfoDict[BurgurName]);
         }
     }
 

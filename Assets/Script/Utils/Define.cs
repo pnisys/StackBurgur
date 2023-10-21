@@ -113,6 +113,15 @@ public class Define
         »§¸¹ÀÌ¹ö°Å
     }
 
+    #region Path
+    public const string materialSpriteFolderPath = "Art/Image/BurgurMaterialsSprite/";
+    public const string burgurSpriteFolderPath_Tutorial = "Art/Image/BurgurImageSprite/";
+    public const string burgurSpriteFolderPath_Level1 = "Art/Image/BurgurImageSprite/1stage/";
+    public const string burgurSpriteFolderPath_Level2 = "Art/Image/BurgurImageSprite/2stage/";
+    public const string burgurSpriteFolderPath_Level3 = "Art/Image/BurgurImageSprite/3stage/";
+    public const string burgurSpriteFolderPath_Level4 = "Art/Image/BurgurImageSprite/4stage/";
 
+    public const string sourceSpriteFolderPath = "Art/Image/SourceCardMaterialsSprite/";
+    #endregion
 
 }

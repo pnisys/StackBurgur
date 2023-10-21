@@ -11,11 +11,6 @@ using Image = UnityEngine.UI.Image;
 
 public class UI_Select : UI_Scene
 {
-    enum Buttons
-    {
-
-    }
-
     enum GameObjects
     {
         MeterialPanel,
@@ -40,13 +35,7 @@ public class UI_Select : UI_Scene
     "바베큐소스", "칠리소스", "마요네즈소스", "머스타드소스",
     };
 
-    Action<PointerEventData>[] handlers = new Action<PointerEventData>[]
-        {
-
-
-        };
-
-
+    Action<PointerEventData>[] handlers = new Action<PointerEventData>[12];
 
     public override void Init()
     {
@@ -70,7 +59,6 @@ public class UI_Select : UI_Scene
         for (int i = 0; i < 12; i++)
         {
             GameObject item = Managers.Resource.Instantite("UI/Scene/UI_Select_Item");
-            //item.AddUIEvnet(handlers[i]);
             item.transform.SetParent(MaterialPanel.transform);
 
             Image imageComponent = Util.FindChild<Image>(item);
@@ -79,6 +67,7 @@ public class UI_Select : UI_Scene
                 if (sprite.name == burgurMaterialNames[i])
                 {
                     imageComponent.sprite = sprite;
+                    item.AddUIEvnet((PointerEventData) => Managers.Game.SetBurgur(sprite.name));
                     break;
                 }
             }
