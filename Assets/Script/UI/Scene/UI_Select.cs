@@ -22,7 +22,7 @@ public class UI_Select : UI_Scene
     }
 
     Sprite[] sprites = null;
-    // 이미지 이름 목록을 저장할 배열이나 리스트
+    //이미지 이름 목록을 저장할 배열이나 리스트
     string[] burgurMaterialNames = new string[]
     {
     "HamburgurBreadDown", "BlackburgurBreadDown", "SandwichBread", "Shrimp",
@@ -34,8 +34,6 @@ public class UI_Select : UI_Scene
     {
     "바베큐소스", "칠리소스", "마요네즈소스", "머스타드소스",
     };
-
-    Action<PointerEventData>[] handlers = new Action<PointerEventData>[12];
 
     public override void Init()
     {
@@ -67,7 +65,7 @@ public class UI_Select : UI_Scene
                 if (sprite.name == burgurMaterialNames[i])
                 {
                     imageComponent.sprite = sprite;
-                    item.AddUIEvnet((PointerEventData) => Managers.Game.SetBurgur(sprite.name));
+                    item.AddUIEvnet((PointerEventData) => /*Managers.Game.SetBurgur(sprite.name)*/);
                     break;
                 }
             }

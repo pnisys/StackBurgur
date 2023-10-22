@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 using static Define;
 
@@ -14,6 +15,7 @@ public class GameData
     public bool EffectSoundOn = true;
 
     public string[] BurgurMaterials;
+    public Queue<string> CurrentMaterials;
 }
 
 

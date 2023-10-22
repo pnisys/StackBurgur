@@ -75,24 +75,6 @@ public class BurgurMaterialData
 }
 
 [Serializable]
-public class SourceTextFileData
-{
-    public string 바베큐소스;
-    public string 칠리소스;
-    public string 머스타드소스;
-    public string 마요네즈소스;
-}
-
-[Serializable]
-public class SourceImageFileData
-{
-    public string 바베큐소스;
-    public string 칠리소스;
-    public string 머스타드소스;
-    public string 마요네즈소스;
-}
-
-[Serializable]
 public class BurgurMaterialLoader : ILoader<string, string>
 {
     public List<BurgurMaterialData> burgurfileDict = new List<BurgurMaterialData>();
@@ -118,6 +100,29 @@ public class BurgurMaterialLoader : ILoader<string, string>
         return dict;
     }
 }
+#endregion
+
+#region SourceMaterial
+
+[Serializable]
+public class SourceTextFileData
+{
+    public string 바베큐소스;
+    public string 칠리소스;
+    public string 머스타드소스;
+    public string 마요네즈소스;
+}
+
+[Serializable]
+public class SourceImageFileData
+{
+    public string 바베큐소스;
+    public string 칠리소스;
+    public string 머스타드소스;
+    public string 마요네즈소스;
+}
+
+
 
 [Serializable]
 public class SourceTextFileLoader : ILoader<string, string>
