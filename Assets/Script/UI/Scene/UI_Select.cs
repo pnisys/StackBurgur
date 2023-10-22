@@ -64,8 +64,9 @@ public class UI_Select : UI_Scene
             {
                 if (sprite.name == burgurMaterialNames[i])
                 {
+                    string name = sprite.name;
                     imageComponent.sprite = sprite;
-                    item.AddUIEvnet((PointerEventData) => /*Managers.Game.SetBurgur(sprite.name)*/);
+                    //item.AddUIEvnet((PointerEventData) => );
                     break;
                 }
             }
