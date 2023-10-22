@@ -4,42 +4,32 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[Serializable]
-public class JsonFile
+public interface ILoader<Key, Value>
 {
-    public string name;
-    public int level;
-    public string[] ingredients;
-}
-
-[Serializable]
-public class FileData
-{
-    public List<JsonFile> burgurList = new List<JsonFile>();
+    Dictionary<Key, Value> MakeDict();
 }
 
 public class DataManager
 {
-    public Dictionary<string, string[]> BurgursInfoDict { get; private set; } = new Dictionary<string, string[]>();
-    
-    FileData data;
+    public Dictionary<string, BurgurData> BurgursInfoDict { get; private set; } = new Dictionary<string, BurgurData>();
+    public Dictionary<string, string> BurgursMaterialFileDict { get; private set; } = new Dictionary<string, string>();
+    public Dictionary<string, string> SourceTextFileDict { get; private set; } = new Dictionary<string, string>();
+    public Dictionary<string, string> SourceImageFileDict { get; private set; } = new Dictionary<string, string>();
+
 
     public void Init()
     {
-        TextAsset textAsset = Managers.Resource.Load<TextAsset>("Data/TestData");
-        data = JsonUtility.FromJson<FileData>(textAsset.text);
+        BurgursInfoDict = LoadJson<BurgurDataLoader, string, BurgurData>("BurgurData").MakeDict();
+        BurgursMaterialFileDict = LoadJson<BurgurMaterialLoader, string, string>("ProjectFileData").MakeDict();
+        SourceTextFileDict = LoadJson<SourceTextFileLoader, string, string>("ProjectFileData").MakeDict();
+        SourceImageFileDict = LoadJson<SourceImageFileLoader, string, string>("ProjectFileData").MakeDict();
+    }
 
-        // 데이터가 제대로 로드되었는지 확인
-        foreach (var burgur in data.burgurList)
-        {
-            BurgursInfoDict.Add(burgur.name, burgur.ingredients);
-        }
-
-        foreach (KeyValuePair<string, string[]> keyValuePair in BurgursInfoDict)
-        {
-            string ingredients = string.Join(", ", keyValuePair.Value); // 배열의 모든 원소를 쉼표로 구분한 문자열로 변환
-            Debug.Log($"Burger Name: {keyValuePair.Key}, Ingredients: {ingredients}");
-        }
+    Loader LoadJson<Loader, key, value>(string path) where Loader : ILoader<key, value>
+    {
+        TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{path}");
+        var jsonLoader = JsonUtility.FromJson<Loader>(textAsset.text);
+        return jsonLoader;
     }
 
 

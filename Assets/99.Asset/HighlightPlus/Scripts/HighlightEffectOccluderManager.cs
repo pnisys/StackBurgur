@@ -61,7 +61,7 @@ namespace HighlightPlus {
         }
 
         /// <summary>
-        /// Test see-through occluders.
+        /// BurgursMaterialFileDict see-through occluders.
         /// </summary>
         /// <param name="cam">The camera to be tested</param>
         /// <returns>Returns true if there's no raycast-based occluder cancelling the see-through effect</returns>

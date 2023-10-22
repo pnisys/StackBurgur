@@ -7,29 +7,13 @@ using static Define;
 [Serializable]
 public class GameData
 {
-    public int Chapter;
-    public int Stage;
-
-    public int Coin;
-    public int Dia;
-
-
-    public int ShortRangeWeaponID;
-    public int MiddleRangeWeaponID;
-    public int LongRangeWeaponID;
-
-    public int SelectedChapter;
-    public int SelectedStage;
+    public int Stage = 0;
+    public string Burgur;
 
     public bool BGMOn = true;
     public bool EffectSoundOn = true;
 
-    public int LastStoryID = -1;
-
-    public Dictionary<string, string[]> currentBurgurDic = new Dictionary<string, string[]>();
-    public Stack<string> burgurs = new Stack<string>();
-
-   
+    public string[] BurgurMaterials;
 }
 
 
@@ -37,18 +21,47 @@ public class GameManagerEx
 {
     GameData _gameData = new GameData();
 
-    public Dictionary<string, string[]> CurrentBurgurDic
+    public int CurrentStage { get { return _gameData.Stage; } set { _gameData.Stage = value; } }
+    public string CurrentBurgur { get { return _gameData.Burgur; } set { _gameData.Burgur = value; } }
+    public string[] CurrentBurgur_Material { get { return _gameData.BurgurMaterials; } set { _gameData.BurgurMaterials = value; } }
+
+    public void SetBurgur()
     {
-        get { return _gameData.currentBurgurDic; }
-        set { _gameData.currentBurgurDic = value; }
+        CurrentBurgur = GetRandomBurgurName();
+        BurgurData data = Managers.Data.BurgursInfoDict[CurrentBurgur];
+        CurrentBurgur_Material = data.ingredients;
     }
 
-    public void SetBurgur(string item)
+    public string GetRandomBurgurName()
     {
-        _gameData.burgurs.Push(item);
-        foreach (var burgur in _gameData.burgurs)
+        string burgur;
+        Array values;
+
+        switch (CurrentStage)
         {
-            Debug.Log(burgur);
+            case 0:
+                burgur = Define.TutorialBurgurNames.데리버거.ToString();
+                break;
+            case 1:
+                values = Enum.GetValues(typeof(Define.Level1BurgurNames));
+                burgur = ((Define.Level1BurgurNames)values.GetValue(UnityEngine.Random.Range(0, values.Length))).ToString();
+                break;
+            case 2:
+                values = Enum.GetValues(typeof(Define.Level2BurgurNames));
+                burgur = ((Define.Level2BurgurNames)values.GetValue(UnityEngine.Random.Range(0, values.Length))).ToString();
+                break;
+            case 3:
+                values = Enum.GetValues(typeof(Define.Level3BurgurNames));
+                burgur = ((Define.Level3BurgurNames)values.GetValue(UnityEngine.Random.Range(0, values.Length))).ToString();
+                break;
+            case 4:
+                values = Enum.GetValues(typeof(Define.Level4BurgurNames));
+                burgur = ((Define.Level4BurgurNames)values.GetValue(UnityEngine.Random.Range(0, values.Length))).ToString();
+                break;
+            default:
+                burgur = "Unknown";
+                break;
         }
+        return burgur;
     }
 }

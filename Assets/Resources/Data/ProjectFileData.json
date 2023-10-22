@@ -1,0 +1,38 @@
+{
+  "burgurfileDict": [
+    {
+      "햄버거빵위": "HamburgurBreadUp",
+      "햄버거빵아래": "HamburgurBreadDown",
+      "먹물빵위": "BlackburgurBreadUp",
+      "먹물빵아래": "BlackburgurBreadDown",
+      "샌드위치빵": "SandwichBread",
+      "베이컨": "Bacon",
+      "불고기": "Bulmeat",
+      "치즈": "Cheeze",
+      "치킨": "Chicken",
+      "버섯": "Mushroom",
+      "양파": "Onion",
+      "새우": "Shrimp",
+      "토마토": "Tomato",
+      "양상추": "Lettuce"
+    }
+  ],
+
+  "sourceCardTextNameDict": [
+    {
+      "바베큐소스": "sauce_txt_1",
+      "칠리소스": "sauce_txt_2",
+      "머스타드소스": "sauce_txt_3",
+      "마요네즈소스": "sauce_txt_4"
+    }
+  ],
+
+  "sourceCardImageDict": [
+    {
+      "바베큐소스": "sauce_type_1",
+      "칠리소스": "sauce_type_2",
+      "머스타드소스": "sauce_type_3",
+      "마요네즈소스": "sauce_type_4"
+    }
+  ]
+}

@@ -20,8 +20,6 @@ public class UI_Card_Burgur : UI_Scene
         {
             burgurName = value;
             currentLevel = (Define.Levels)Managers.Card.BurgurLevelDict[burgurName];
-            Managers.Game.CurrentBurgurDic.Clear();
-            Managers.Game.CurrentBurgurDic.Add(BurgurName, Managers.Card.BurgursInfoDict[BurgurName]);
         }
     }
 
@@ -58,8 +56,10 @@ public class UI_Card_Burgur : UI_Scene
         TextMeshProUGUI burgurNameText = GetText((int)Texts.Text_BurgurName);
         burgurNameParent = GetGameObject((int)GameObjects.BurgurNameParent);
         image_Burgur = GetImage((int)BurgurImages.Image_Burgur);
+        //Todo
         burgurNameText.text = BurgurName;
         image_Burgur.sprite = Managers.Card.BurgurImageSpriteDict[BurgurName];
+
         BurgurCardSetting(currentLevel);
     }
 
@@ -80,6 +80,7 @@ public class UI_Card_Burgur : UI_Scene
             go.transform.localPosition = new Vector3(6.1f, yPos, 0f);
             go.transform.localScale = new Vector3(0.44315f, 0.04390998f, 0.44315f);
             Image image = Util.GetOrAddComponet<Image>(go);
+            //Todo
             string materialName = Managers.Card.BurgursInfoDict[BurgurName][i];
 
             // 조건 추가
