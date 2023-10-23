@@ -16,7 +16,6 @@ public class Managers : MonoBehaviour
     private SceneManagerEx _scene = new SceneManagerEx();
     private GameManagerEx _game = new GameManagerEx();
     private PoolManager _pool = new PoolManager();
-    private CardManager _burgur = new CardManager();
     private MeditateManager _meditate = new MeditateManager();
     private ObjectManager _object = new ObjectManager();
     public static ResourceManager Resource { get { return Instance._resource; } }
@@ -26,7 +25,6 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static GameManagerEx Game { get { return Instance._game; } }
     public static PoolManager Pool { get { return Instance._pool; } }
-    public static CardManager Card { get {  return Instance._burgur; } }
     public static MeditateManager Meditate { get {  return Instance._meditate; } }
     public static ObjectManager Object { get {  return Instance._object; } }
     #endregion
@@ -48,6 +46,7 @@ public class Managers : MonoBehaviour
             s_Instance._sound.Init();
             s_Instance._pool.Init();
             s_Instance._data.Init();
+            s_Instance._game.Init();
         }
     }
 

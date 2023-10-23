@@ -66,7 +66,15 @@ public class UI_Select : UI_Scene
                 {
                     string name = sprite.name;
                     imageComponent.sprite = sprite;
-                    //item.AddUIEvnet((PointerEventData) => );
+                    item.AddUIEvnet((PointerEventData) =>
+                    {
+                        Managers.Game.CurrentBurgurMaterials.Enqueue(name);
+                        Queue<string> strings = Managers.Game.CurrentBurgurMaterials;
+                        foreach (string str in strings)
+                        {
+                            Debug.Log(str);
+                        }
+                    });
                     break;
                 }
             }
@@ -78,7 +86,14 @@ public class UI_Select : UI_Scene
             item.transform.SetParent(SourcePanel.transform);
             if (Util.FindChild<TextMeshProUGUI>(item, out var textChild))
             {
-                textChild.text = sourceNames[i];
+                string name = sourceNames[i];
+                textChild.text = name;
+                item.AddUIEvnet((PointerEventData) =>
+                {
+                    Managers.Game.CurrentSource = null;
+                    Managers.Game.CurrentSource = name;
+                    Debug.Log($"CurrentSource : {Managers.Game.CurrentSource}");
+                });
             }
             else
             {

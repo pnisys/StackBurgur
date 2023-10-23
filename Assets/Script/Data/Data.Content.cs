@@ -154,14 +154,14 @@ public class SourceTextFileLoader : ILoader<string, string>
 [Serializable]
 public class SourceImageFileLoader : ILoader<string, string>
 {
-    public List<SourceImageFileData> sourceCardTextNameDict = new List<SourceImageFileData>();
+    public List<SourceImageFileData> sourceCardImageDict = new List<SourceImageFileData>();
 
     public Dictionary<string, string> MakeDict()
     {
         Dictionary<string, string> dict = new Dictionary<string, string>();
 
         // 데이터가 제대로 로드되었는지 확인
-        foreach (var file in sourceCardTextNameDict)
+        foreach (var file in sourceCardImageDict)
         {
             // 클래스의 모든 프로퍼티를 가져옴
             var fields = file.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);

@@ -7,22 +7,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UI_Card_Burgur : UI_Scene
 {
-    Define.Levels currentLevel;
-
-    private string burgurName;
-    public string BurgurName
-    {
-        get
-        {
-            return burgurName;
-        }
-        set
-        {
-            burgurName = value;
-            currentLevel = (Define.Levels)Managers.Card.BurgurLevelDict[burgurName];
-        }
-    }
-
     enum Texts
     {
         Text_BurgurName
@@ -37,7 +21,6 @@ public class UI_Card_Burgur : UI_Scene
     {
         BurgurNameParent
     }
-
 
     GameObject burgurNameParent;
     Image image_Burgur;
@@ -56,22 +39,19 @@ public class UI_Card_Burgur : UI_Scene
         TextMeshProUGUI burgurNameText = GetText((int)Texts.Text_BurgurName);
         burgurNameParent = GetGameObject((int)GameObjects.BurgurNameParent);
         image_Burgur = GetImage((int)BurgurImages.Image_Burgur);
-        //Todo
-        burgurNameText.text = BurgurName;
-        image_Burgur.sprite = Managers.Card.BurgurImageSpriteDict[BurgurName];
 
-        BurgurCardSetting(currentLevel);
+        //Todo
+        burgurNameText.text = Managers.Game.CurrentBurgur;
+        image_Burgur.sprite = Managers.Game.BurgurImageSpriteDict[Managers.Game.CurrentBurgur];
+
+        BurgurCardSetting();
     }
 
-    private void BurgurCardSetting(Define.Levels currentLevel)
+    private void BurgurCardSetting()
     {
-        int value = currentLevel == Define.Levels.Tutorial ? 3 :
-               currentLevel == Define.Levels.Level1 ? 4 :
-               currentLevel == Define.Levels.Level2 ? 5 :
-               currentLevel == Define.Levels.Level3 ? 6 :
-               currentLevel == Define.Levels.Level4 ? 7 : -1;
+        int floor = Managers.Game.CurrentStage + 3;
 
-        for (int i = 0; i < value; i++)
+        for (int i = 0; i < floor; i++)
         {
             GameObject go = new GameObject { name = $"{i + 1}F" };
             go.transform.SetParent(burgurNameParent.transform);
@@ -81,27 +61,19 @@ public class UI_Card_Burgur : UI_Scene
             go.transform.localScale = new Vector3(0.44315f, 0.04390998f, 0.44315f);
             Image image = Util.GetOrAddComponet<Image>(go);
             //Todo
-            string materialName = Managers.Card.BurgursInfoDict[BurgurName][i];
+            string materialName = Managers.Game.Burgur_Material[i];
 
             // 조건 추가
             if (i == 0 && materialName.EndsWith("빵"))
             {
                 materialName += "아래";
             }
-            else if (i == value - 1 && materialName.EndsWith("빵"))
+            else if (i == floor - 1 && materialName.EndsWith("빵"))
             {
                 materialName += "위";
             }
 
-            Sprite result;
-            if (Managers.Card.BurgurMaterialSpriteDict.TryGetValue(materialName, out result))
-            {
-                image.sprite = result;
-            }
-            else
-            {
-                Debug.LogError($"'{materialName}'에 대한 스프라이트를 찾을 수 없습니다.");
-            }
+            image.sprite = Managers.Game.BurgurMaterialSpriteDict[materialName];
         }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CustomerController : BaseController
 {
     Define.CustomerState customerStateType;
+
     [SerializeField]
     float speed = 1.0f; // 속도는 원하는 값으로 조정 가능합니다.
 

@@ -7,9 +7,7 @@ public class MeditateManager
 {
     public void Notify()
     {
-        //1. Stage를 가져와서, Stage에 맞는 버거들 중 랜덤으로 하나를 얻는다
-        //2. 그 버거가 셋팅되고, 정보를 카드에 넘긴다.
-        Managers.Game.SetBurgur();
+        Managers.Game.SetBurgurAndSource();
         UI_Card_Burgur burgurCard = Managers.UI.ShowSceneUI<UI_Card_Burgur>();
 
         burgurCard.transform.position = new Vector3(0.9900001f, -0.572f, 0.013f);
@@ -19,9 +17,8 @@ public class MeditateManager
 
         sourceCard.transform.position = new Vector3(0.397f, -0.572f, 0.013f);
         sourceCard.transform.Rotate(new Vector3(0f, 180f, 0f));
-        Array sourceNames = Enum.GetValues(typeof(Define.SourceNames));
-        int randomValue = UnityEngine.Random.Range(0, sourceNames.Length);
-        sourceCard.CurrentSource = (Define.SourceNames)sourceNames.GetValue(randomValue);
+
+        //소스
 
         UI_TimeLimit timeLimit = Managers.UI.ShowSceneUI<UI_TimeLimit>();
         timeLimit.transform.Rotate(new Vector3(0f, 180f, 0f));

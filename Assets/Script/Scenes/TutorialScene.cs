@@ -16,7 +16,6 @@ public class TutorialScene : BaseScene
         base.Init();
 
         Managers.Object.Init();
-        Managers.Card.Init();
         CounterPosition = GameObject.Find("CounterPosition").transform;
 
         SceneType = Define.SceneType.Tutorial;

@@ -13,16 +13,15 @@ public class DataManager
 {
     public Dictionary<string, BurgurData> BurgursInfoDict { get; private set; } = new Dictionary<string, BurgurData>();
     public Dictionary<string, string> BurgursMaterialFileDict { get; private set; } = new Dictionary<string, string>();
-    public Dictionary<string, string> SourceTextFileDict { get; private set; } = new Dictionary<string, string>();
     public Dictionary<string, string> SourceImageFileDict { get; private set; } = new Dictionary<string, string>();
-
+    public Dictionary<string, string> SourceTextFileDict { get; private set; } = new Dictionary<string, string>();
 
     public void Init()
     {
         BurgursInfoDict = LoadJson<BurgurDataLoader, string, BurgurData>("BurgurData").MakeDict();
         BurgursMaterialFileDict = LoadJson<BurgurMaterialLoader, string, string>("ProjectFileData").MakeDict();
-        SourceTextFileDict = LoadJson<SourceTextFileLoader, string, string>("ProjectFileData").MakeDict();
         SourceImageFileDict = LoadJson<SourceImageFileLoader, string, string>("ProjectFileData").MakeDict();
+        SourceTextFileDict = LoadJson<SourceTextFileLoader, string, string>("ProjectFileData").MakeDict();
     }
 
     Loader LoadJson<Loader, key, value>(string path) where Loader : ILoader<key, value>
