@@ -39,7 +39,7 @@ public class UI_Select : UI_Scene
 
         DecisionButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
-            Queue<string> queue = Managers.Game.CurrentBurgurMaterials;
+            Queue<string> queue = Managers.Game.PlayerAnswerMaterials;
             string[] array = queue.ToArray();
 
             for (int i = 0; i < queue.Count; i++)
@@ -50,6 +50,15 @@ public class UI_Select : UI_Scene
                 {
                     Debug.Log($"정답 : {Managers.Game.Burgur_Material[i]} \n 그러나 현재 답 {array[i]}이므로 감점");
                 }
+            }
+
+            if (Managers.Game.CurrentSource.Equals(Managers.Game.PlayerAnswerSource))
+            {
+                Debug.Log("소스도 정답");
+            }
+            else
+            {
+                Debug.Log($"소스 정답 : {Managers.Game.CurrentSource} 그러나 제출 답안 : {Managers.Game.PlayerAnswerSource} ");
             }
         }
         );
@@ -103,10 +112,8 @@ public class UI_Select : UI_Scene
 
                     item.AddUIEvnet((PointerEventData) =>
                     {
-                        //이걸 햄버거빵 이렇게 바꿔야함
-                        //근데 현재 json 파일에는 버거파일에 
-                        Managers.Game.CurrentBurgurMaterials.Enqueue(dictName);
-                        Queue<string> strings = Managers.Game.CurrentBurgurMaterials;
+                        Managers.Game.PlayerAnswerMaterials.Enqueue(dictName);
+                        Queue<string> strings = Managers.Game.PlayerAnswerMaterials;
                         foreach (string str in strings)
                         {
                             Debug.Log(str);
@@ -129,9 +136,9 @@ public class UI_Select : UI_Scene
                 textChild.text = name;
                 item.AddUIEvnet((PointerEventData) =>
                 {
-                    Managers.Game.CurrentSource = null;
-                    Managers.Game.CurrentSource = name;
-                    Debug.Log($"CurrentSource : {Managers.Game.CurrentSource}");
+                    Managers.Game.PlayerAnswerSource = null;
+                    Managers.Game.PlayerAnswerSource = name;
+                    Debug.Log($"CurrentSource : {Managers.Game.PlayerAnswerSource}");
                 });
             }
             else

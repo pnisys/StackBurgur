@@ -30,8 +30,9 @@ public class GameManagerEx
     public int MaxStage { get { return _gameData.MaxBurgurLevel; } }
     public string CurrentBurgur { get { return _gameData.CurrentBurgur; } set { _gameData.CurrentBurgur = value; } }
     public string CurrentSource { get { return _gameData.CurrentSource; } set { _gameData.CurrentSource = value; } }
+    public string PlayerAnswerSource { get { return _gameData.PlayerAnswerSource; } set { _gameData.PlayerAnswerSource = value; } }
     public string[] Burgur_Material { get { return _gameData.BurgurMaterials; } set { _gameData.BurgurMaterials = value; } }
-    public Queue<string> CurrentBurgurMaterials { get { return _gameData.PlayerAnswerMaterials; } set { _gameData.PlayerAnswerMaterials = value; } }
+    public Queue<string> PlayerAnswerMaterials { get { return _gameData.PlayerAnswerMaterials; } set { _gameData.PlayerAnswerMaterials = value; } }
 
     public Dictionary<string, Sprite> BurgurImageSpriteDict = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> BurgurMaterialSpriteDict = new Dictionary<string, Sprite>();
