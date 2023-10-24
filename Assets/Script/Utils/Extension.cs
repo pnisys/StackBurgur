@@ -15,4 +15,9 @@ public static class Extension
     {
         return Util.GetOrAddComponet<T>(go);
     }
+
+    public static object ConvertDictToArray<U, V>(this Dictionary<U, V> keyValuePairs, Define.ConvertDict version)
+    {
+        return Util.ConvertDictToArray(keyValuePairs, version);
+    }
 }

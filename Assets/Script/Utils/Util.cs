@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 
 public static class Util
@@ -57,5 +58,22 @@ public static class Util
         }
 
         return null;
+    }
+
+    public static object ConvertDictToArray<U, V>(Dictionary<U, V> keyValuePairs, Define.ConvertDict version)
+    {
+        if (keyValuePairs == null)
+        {
+            Debug.LogError("매개변수 딕셔너리가 null입니다");
+            return null;
+        }
+        if (version == Define.ConvertDict.Key)
+        {
+            return keyValuePairs.Keys.ToArray();
+        }
+        else
+        {
+            return keyValuePairs.Values.ToArray();
+        }
     }
 }

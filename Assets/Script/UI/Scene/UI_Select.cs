@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -16,6 +17,11 @@ public class UI_Select : UI_Scene
         MeterialPanel,
         SourcePanel
     }
+
+    enum Buttons
+    {
+        DecisionButton
+    }
     void Start()
     {
         Init();
@@ -23,22 +29,19 @@ public class UI_Select : UI_Scene
 
     Sprite[] sprites = null;
     //이미지 이름 목록을 저장할 배열이나 리스트
-    string[] burgurMaterialNames = new string[]
-    {
-    "HamburgurBreadDown", "BlackburgurBreadDown", "SandwichBread", "Shrimp",
-    "Lettuce","Onion","Bacon","Chicken",
-    "Tomato","Cheeze","Bulmeat","Mushroom"
-    };
-
-    string[] sourceNames = new string[]
-    {
-    "바베큐소스", "칠리소스", "마요네즈소스", "머스타드소스",
-    };
 
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
+        Bind<UnityEngine.UI.Button>(typeof(Buttons));
         GameObject MaterialPanel = GetGameObject((int)GameObjects.MeterialPanel);
+        UnityEngine.UI.Button DecisionButton = GetButton((int)Buttons.DecisionButton);
+
+        DecisionButton.gameObject.AddUIEvnet((PointerEventData) =>
+        {
+            Debug.Log("결정");
+        }
+        );
 
         foreach (Transform item in MaterialPanel.transform)
         {
@@ -54,7 +57,20 @@ public class UI_Select : UI_Scene
 
         sprites = Managers.Resource.LoadAll<Sprite>("Art/Image/BurgurMaterialsSprite");
 
-        for (int i = 0; i < 12; i++)
+
+        string[] array = (string[])Managers.Data.BurgursMaterialFileDict.ConvertDictToArray(Define.ConvertDict.Value);
+
+        // 배열을 리스트로 변환
+        List<string> arrayList = new List<string>(array);
+
+        // 필요한 요소를 제거
+        arrayList.Remove("HamburgurBreadUp");
+        arrayList.Remove("BlackburgurBreadUp");
+
+        // 리스트를 다시 배열로 변환
+        array = arrayList.ToArray();
+
+        for (int i = 0; i < array.Length; i++)
         {
             GameObject item = Managers.Resource.Instantite("UI/Scene/UI_Select_Item");
             item.transform.SetParent(MaterialPanel.transform);
@@ -62,7 +78,7 @@ public class UI_Select : UI_Scene
             Image imageComponent = Util.FindChild<Image>(item);
             foreach (Sprite sprite in sprites)
             {
-                if (sprite.name == burgurMaterialNames[i])
+                if (sprite.name == array[i])
                 {
                     string name = sprite.name;
                     imageComponent.sprite = sprite;
@@ -79,14 +95,16 @@ public class UI_Select : UI_Scene
                 }
             }
         }
+      
+        string[] sourceArray = (string[])Managers.Data.SourceImageFileDict.ConvertDictToArray(Define.ConvertDict.Key);
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < sourceArray.Length; i++)
         {
             GameObject item = Managers.Resource.Instantite("UI/Scene/UI_Select_Item");
             item.transform.SetParent(SourcePanel.transform);
             if (Util.FindChild<TextMeshProUGUI>(item, out var textChild))
             {
-                string name = sourceNames[i];
+                string name = sourceArray[i];
                 textChild.text = name;
                 item.AddUIEvnet((PointerEventData) =>
                 {
