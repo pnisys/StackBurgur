@@ -20,4 +20,9 @@ public static class Extension
     {
         return Util.ConvertDictToArray(keyValuePairs, version);
     }
+
+    public static Dictionary<V, U> ReverseDict<U, V>(this Dictionary<U, V> dict)
+    {
+        return Util.ReverseDict(dict);
+    }
 }

@@ -39,10 +39,22 @@ public class UI_Select : UI_Scene
 
         DecisionButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
-            Debug.Log("결정");
+            Queue<string> queue = Managers.Game.CurrentBurgurMaterials;
+            string[] array = queue.ToArray();
+
+            for (int i = 0; i < queue.Count; i++)
+            {
+                if (array[i] == Managers.Game.Burgur_Material[i])
+                    Debug.Log("맞음");
+                else
+                {
+                    Debug.Log($"정답 : {Managers.Game.Burgur_Material[i]} \n 그러나 현재 답 {array[i]}이므로 감점");
+                }
+            }
         }
         );
 
+        #region 스프라이트 설정
         foreach (Transform item in MaterialPanel.transform)
         {
             Managers.Resource.Destory(item.gameObject);
@@ -57,8 +69,8 @@ public class UI_Select : UI_Scene
 
         sprites = Managers.Resource.LoadAll<Sprite>("Art/Image/BurgurMaterialsSprite");
 
-
         string[] array = (string[])Managers.Data.BurgursMaterialFileDict.ConvertDictToArray(Define.ConvertDict.Value);
+        Dictionary<string, string> dict = Managers.Data.BurgursMaterialFileDict.ReverseDict();
 
         // 배열을 리스트로 변환
         List<string> arrayList = new List<string>(array);
@@ -82,9 +94,18 @@ public class UI_Select : UI_Scene
                 {
                     string name = sprite.name;
                     imageComponent.sprite = sprite;
+
+                    string dictName = dict[name];
+                    if (dictName.EndsWith("위"))
+                        dictName = dictName.Substring(0, dictName.Length - 1);
+                    else if (dictName.EndsWith("아래"))
+                        dictName = dictName.Substring(0, dictName.Length - 2);
+
                     item.AddUIEvnet((PointerEventData) =>
                     {
-                        Managers.Game.CurrentBurgurMaterials.Enqueue(name);
+                        //이걸 햄버거빵 이렇게 바꿔야함
+                        //근데 현재 json 파일에는 버거파일에 
+                        Managers.Game.CurrentBurgurMaterials.Enqueue(dictName);
                         Queue<string> strings = Managers.Game.CurrentBurgurMaterials;
                         foreach (string str in strings)
                         {
@@ -95,7 +116,7 @@ public class UI_Select : UI_Scene
                 }
             }
         }
-      
+
         string[] sourceArray = (string[])Managers.Data.SourceImageFileDict.ConvertDictToArray(Define.ConvertDict.Key);
 
         for (int i = 0; i < sourceArray.Length; i++)
@@ -118,5 +139,6 @@ public class UI_Select : UI_Scene
                 Debug.LogError("해당 textChild가 존재하지 않습니다");
             }
         }
+        #endregion
     }
 }

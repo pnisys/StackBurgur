@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -75,5 +76,24 @@ public static class Util
         {
             return keyValuePairs.Values.ToArray();
         }
+    }
+
+    public static Dictionary<V, U> ReverseDict<U, V>(Dictionary<U, V> dict)
+    {
+        Dictionary<V, U> reversedDict = new Dictionary<V, U>();
+
+        foreach (KeyValuePair<U, V> entry in dict)
+        {
+            if (!reversedDict.ContainsKey(entry.Value)) // 값이 유일한지 확인
+            {
+                reversedDict.Add(entry.Value, entry.Key);
+            }
+            else
+            {
+                throw new ArgumentException("Values in the original dictionary must be unique.");
+            }
+        }
+
+        return reversedDict;
     }
 }
