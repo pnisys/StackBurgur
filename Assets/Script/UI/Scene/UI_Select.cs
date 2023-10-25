@@ -42,13 +42,20 @@ public class UI_Select : UI_Scene
             Queue<string> queue = Managers.Game.PlayerAnswerMaterials;
             string[] array = queue.ToArray();
 
-            for (int i = 0; i < queue.Count; i++)
+            for (int i = 0; i < Managers.Game.Burgur_Material.Length; i++)
             {
-                if (array[i] == Managers.Game.Burgur_Material[i])
-                    Debug.Log("맞음");
+                if (array[i] != null)
+                {
+                    if (array[i] == Managers.Game.Burgur_Material[i])
+                        Debug.Log("맞음");
+                    else
+                    {
+                        Debug.Log($"정답 : {Managers.Game.Burgur_Material[i]} \n 그러나 현재 답 {array[i]}이므로 감점");
+                    }
+                }
                 else
                 {
-                    Debug.Log($"정답 : {Managers.Game.Burgur_Material[i]} \n 그러나 현재 답 {array[i]}이므로 감점");
+                    Debug.Log($"정답 :  {Managers.Game.Burgur_Material[i]} \n 그러나 제출 안함");
                 }
             }
 
@@ -58,8 +65,14 @@ public class UI_Select : UI_Scene
             }
             else
             {
-                Debug.Log($"소스 정답 : {Managers.Game.CurrentSource} 그러나 제출 답안 : {Managers.Game.PlayerAnswerSource} ");
+                if (Managers.Game.PlayerAnswerSource == string.Empty)
+                    Debug.Log($"소스 정답 : {Managers.Game.CurrentSource} 그러나 소스 답안 제출 안함");
+                else
+                    Debug.Log($"소스 정답 : {Managers.Game.CurrentSource} 그러나 제출 답안 : {Managers.Game.PlayerAnswerSource} ");
             }
+
+
+            Managers.Meditate.Notify2();
         }
         );
 

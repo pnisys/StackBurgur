@@ -26,4 +26,11 @@ public class MeditateManager
 
         UI_Select select = Managers.UI.ShowSceneUI<UI_Select>();
     }
+
+    public void Notify2()
+    {
+        UI_Select select = GameObject.FindObjectOfType<UI_Select>();
+        if (select != null)
+            Managers.Resource.Destory(select.gameObject);
+    }
 }
