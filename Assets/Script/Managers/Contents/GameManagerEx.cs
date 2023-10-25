@@ -2,10 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Search;
 using UnityEngine;
 using static Define;
-using static UnityEditor.Progress;
 
 [Serializable]
 public class GameData
@@ -16,9 +14,6 @@ public class GameData
     public string CurrentBurgur;
     public string CurrentSource;
     public string[] BurgurMaterials;
-
-    public Queue<string> PlayerAnswerMaterials = new Queue<string>();
-    public string PlayerAnswerSource;
 }
 
 
@@ -28,11 +23,14 @@ public class GameManagerEx
 
     public int CurrentStage { get { return _gameData.Stage; } set { _gameData.Stage = value; } }
     public int MaxStage { get { return _gameData.MaxBurgurLevel; } }
+
     public string CurrentBurgur { get { return _gameData.CurrentBurgur; } set { _gameData.CurrentBurgur = value; } }
     public string CurrentSource { get { return _gameData.CurrentSource; } set { _gameData.CurrentSource = value; } }
-    public string PlayerAnswerSource { get { return _gameData.PlayerAnswerSource; } set { _gameData.PlayerAnswerSource = value; } }
     public string[] Burgur_Material { get { return _gameData.BurgurMaterials; } set { _gameData.BurgurMaterials = value; } }
-    public Queue<string> PlayerAnswerMaterials { get { return _gameData.PlayerAnswerMaterials; } set { _gameData.PlayerAnswerMaterials = value; } }
+
+    public Queue<string> PlayerAnswerMaterials = new Queue<string>();
+    public string PlayerAnswerSource;
+
 
     public Dictionary<string, Sprite> BurgurImageSpriteDict = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> BurgurMaterialSpriteDict = new Dictionary<string, Sprite>();
@@ -137,5 +135,13 @@ public class GameManagerEx
 
         int randomValue = UnityEngine.Random.Range(0, sources.Length);
         return sources[randomValue];
+    }
+
+    public void Clear()
+    {
+        BurgurImageSpriteDict.Clear();
+        BurgurMaterialSpriteDict.Clear();
+        SourceImageDict.Clear();
+        SourceTextNameDict.Clear();
     }
 }

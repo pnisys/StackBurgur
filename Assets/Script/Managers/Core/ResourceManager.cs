@@ -90,4 +90,9 @@ public class ResourceManager
 
         Object.Destroy(go);
     }
+
+    public void Clear()
+    {
+        Resources.Clear();
+    }
 }

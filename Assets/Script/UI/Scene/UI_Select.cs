@@ -32,6 +32,8 @@ public class UI_Select : UI_Scene
 
     public override void Init()
     {
+        Managers.EventBus.Subscribe("GameSceneLoad", Managers.EventBus.GameSceneLoad);
+
         Bind<GameObject>(typeof(GameObjects));
         Bind<UnityEngine.UI.Button>(typeof(Buttons));
         GameObject MaterialPanel = GetGameObject((int)GameObjects.MeterialPanel);
@@ -75,7 +77,7 @@ public class UI_Select : UI_Scene
             Managers.Game.PlayerAnswerMaterials.Clear();
             Managers.Game.PlayerAnswerSource = string.Empty;
 
-            Managers.Meditate.Notify2();
+            Managers.EventBus.Trigger("GameSceneLoad");
         }
         );
 

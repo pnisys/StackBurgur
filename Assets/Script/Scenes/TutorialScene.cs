@@ -13,12 +13,10 @@ public class TutorialScene : BaseScene
     {
         base.Init();
 
-        Managers.Object.Init();
-
         SceneType = Define.SceneType.Tutorial;
         Managers.Sound.Play("Bgm_Game", Define.Sound.Bgm);
 
-        GameObject player = Managers.Object.Spawn(Define.WorldObject.Player, "Player");
+        Managers.Object.Spawn(Define.WorldObject.Player, "Player");
 
         switch (ModeType)
         {
@@ -30,13 +28,8 @@ public class TutorialScene : BaseScene
                 break;
         }
 
-        Transform playerSpawnPosition = GameObject.Find("PlayerSpawnPosition").transform;
-        player.transform.position = playerSpawnPosition.position;
-        player.transform.rotation = playerSpawnPosition.rotation;
-
         int randomCustomerValue = UnityEngine.Random.Range(0, Managers.Object.Customers.Length);
-        GameObject customer = Managers.Object.Spawn(Define.WorldObject.Customer, Managers.Object.Customers[randomCustomerValue]);
-        customer.transform.position = GameObject.Find("CustomerSpawnPosition").transform.position;
+        Managers.Object.Spawn(Define.WorldObject.Customer, Managers.Object.Customers[randomCustomerValue]);
     }
 
     public override void Clear()

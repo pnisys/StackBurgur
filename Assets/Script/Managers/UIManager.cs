@@ -7,8 +7,6 @@ public class UIManager
     //팝업 소트오더를 활용해야 함
     int _order = 10;
 
-    Dictionary<string, GameObject> _uiGameObject = new Dictionary<string, GameObject>();
-
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
     UI_Scene _sceneUI = null;
 

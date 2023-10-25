@@ -370,7 +370,7 @@ public class LocomotionTeleport : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Notify the teleport destination that it needs to deactivate.
+	/// ShowCard the teleport destination that it needs to deactivate.
 	/// If the destination has event handlers hooked up, the destination game object may not be immediately deactivated
 	/// in order to allow it to trigger animated effects.
 	/// </summary>

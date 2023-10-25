@@ -16,7 +16,7 @@ public class Managers : MonoBehaviour
     private SceneManagerEx _scene = new SceneManagerEx();
     private GameManagerEx _game = new GameManagerEx();
     private PoolManager _pool = new PoolManager();
-    private MeditateManager _meditate = new MeditateManager();
+    private EventBus _eventBus = new EventBus();
     private ObjectManager _object = new ObjectManager();
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static UIManager UI { get { return Instance._ui; } }
@@ -25,11 +25,11 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static GameManagerEx Game { get { return Instance._game; } }
     public static PoolManager Pool { get { return Instance._pool; } }
-    public static MeditateManager Meditate { get {  return Instance._meditate; } }
-    public static ObjectManager Object { get {  return Instance._object; } }
+    public static EventBus EventBus { get { return Instance._eventBus; } }
+    public static ObjectManager Object { get { return Instance._object; } }
     #endregion
 
-    private static void Init()
+    public static void Init()
     {
         if (s_Instance == null)
         {
@@ -48,18 +48,21 @@ public class Managers : MonoBehaviour
             s_Instance._data.Init();
             s_Instance._game.Init();
         }
+
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Init();
     }
 
-    static void Clear()
+    public static void Clear()
     {
-        Sound.Clear();
+        Resource.Clear();
         UI.Clear();
+        Data.Clear();
+        Sound.Clear();
+        Game.Clear();
         Pool.Clear();
         Object.Clear();
     }

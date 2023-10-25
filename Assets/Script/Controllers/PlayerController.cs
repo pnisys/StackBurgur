@@ -15,5 +15,9 @@ public class PlayerController : BaseController
     public override void Init()
     {
         WorldObjectType = Define.WorldObject.Player;
+
+        Transform playerSpawnPosition = GameObject.Find("PlayerSpawnPosition").transform;
+        transform.position = playerSpawnPosition.position;
+        transform.rotation = playerSpawnPosition.rotation;
     }
 }

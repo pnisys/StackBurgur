@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ObjectManager
@@ -8,14 +9,27 @@ public class ObjectManager
     GameObject _player;
     HashSet<GameObject> _customer = new HashSet<GameObject>();
 
-    public GameObject[] Customers { get; private set; }
+    private GameObject[] _customers;
+    public GameObject[] Customers
+    {
+        get
+        {
+            if (_customers == null)
+            {
+                GameObject[] customers = Managers.Resource.LoadAll<GameObject>("Prefabs/Customers");
+                _customers = null;
+                return _customers = customers;
+            }
+            else
+                return _customers;
+        }
+        private set
+        {
+            _customers = value;
+        }
+    }
 
     public Action<int> OnSpawnEvent;
-
-    public void Init()
-    {
-        Customers = Managers.Resource.LoadAll<GameObject>("Prefabs/Customers");
-    }
 
     public GameObject GetPlayer() { return _player; }
 

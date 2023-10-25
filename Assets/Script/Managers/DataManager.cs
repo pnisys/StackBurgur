@@ -93,4 +93,12 @@ public class DataManager
             return null;
         }
     }
+
+    public void Clear()
+    {
+        BurgursInfoDict.Clear();
+        BurgursMaterialFileDict.Clear();
+        SourceImageFileDict.Clear();
+        SourceTextFileDict.Clear();
+    }
 }

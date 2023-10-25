@@ -2,9 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface ICustomerStrategy
+{
+    void Init(CustomerController controller);
+    void Update(CustomerController controller);
+}
+
+public class TutorialCustomerStrategy : ICustomerStrategy
+{
+    public void Init(CustomerController controller)
+    {
+        Managers.EventBus.Subscribe("ShowCard", Managers.EventBus.ShowCard);
+    }
+
+    public void Update(CustomerController controller)
+    {
+    }
+}
+
+public class GameCustomerStrategy : ICustomerStrategy
+{
+    public void Init(CustomerController controller)
+    {
+    }
+
+    public void Update(CustomerController controller)
+    {
+    }
+}
+
 public class CustomerController : BaseController
 {
     Define.CustomerState customerStateType;
+    private ICustomerStrategy _strategy;
 
     [SerializeField]
     float speed = 1.0f; // 속도는 원하는 값으로 조정 가능합니다.
@@ -18,8 +48,15 @@ public class CustomerController : BaseController
 
     public override void Init()
     {
+        if (Managers.Scene.CurrentSceneType == Define.SceneType.Tutorial)
+            _strategy = new TutorialCustomerStrategy();
+        else if (Managers.Scene.CurrentSceneType == Define.SceneType.Game)
+            _strategy = new GameCustomerStrategy();
+
         WorldObjectType = Define.WorldObject.Customer;
         customerStateType = Define.CustomerState.Spawned;
+
+        transform.position = GameObject.Find("CustomerSpawnPosition").transform.position;
     }
 
     void Update()
@@ -74,7 +111,7 @@ public class CustomerController : BaseController
     {
         yield return new WaitForSeconds(waitTime);
         //난이도에 따라 햄버거 카드에 맞는 햄버거와 소스를 카드를 보여주기
-        Managers.Meditate.Notify();
+        Managers.EventBus.Trigger("ShowCard");
         customerStateType = Define.CustomerState.Ordering;
         co = null;
     }
@@ -84,7 +121,5 @@ public class CustomerController : BaseController
         //제한시간 캔버스 켜기
         //튜토리얼 안내캔버스 끝나야 제한시간 흐르게 하기
     }
-
-
 }
 
