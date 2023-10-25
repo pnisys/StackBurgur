@@ -72,6 +72,9 @@ public class UI_Select : UI_Scene
             }
 
 
+            Managers.Game.PlayerAnswerMaterials.Clear();
+            Managers.Game.PlayerAnswerSource = string.Empty;
+
             Managers.Meditate.Notify2();
         }
         );

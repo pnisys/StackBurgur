@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ResourceManager
 {
+    public Dictionary<string, GameObject> Resources { get; private set; } = new Dictionary<string, GameObject>();
+
     public T Load<T>(string path) where T : Object
     {
         if (typeof(T) == typeof(GameObject))
@@ -17,12 +19,12 @@ public class ResourceManager
             if (go != null)
                 return go as T;
         }
-        return Resources.Load<T>(path);
+        return UnityEngine.Resources.Load<T>(path);
     }
 
     public T[] LoadAll<T>(string path) where T : Object
     {
-        return Resources.LoadAll<T>(path);
+        return UnityEngine.Resources.LoadAll<T>(path);
     }
 
     public GameObject Instantite(string path, Vector3 position = default, Quaternion rotation = default, Transform parent = null)
@@ -43,6 +45,8 @@ public class ResourceManager
 
         GameObject go = Object.Instantiate(original, finalPosition, finalRotation, parent);
         go.name = original.name;
+
+        Resources.TryAdd(go.name, go);
 
         return go;
     }
@@ -65,6 +69,8 @@ public class ResourceManager
         GameObject go = Object.Instantiate(original, finalPosition, finalRotation, parent);
         go.name = original.name;
 
+        Resources.TryAdd(go.name, go);
+
         return go;
     }
 
@@ -79,6 +85,8 @@ public class ResourceManager
             Managers.Pool.Push(poolable);
             return;
         }
+
+        Resources.Remove(go.name);
 
         Object.Destroy(go);
     }
