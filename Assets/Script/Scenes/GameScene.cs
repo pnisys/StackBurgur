@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameScene : BaseScene
 {
-    public Transform CounterPosition { get; private set; }
-
     private void Awake()
     {
         Init();
@@ -16,7 +14,6 @@ public class GameScene : BaseScene
         base.Init();
 
         SceneType = Define.SceneType.Game;
-        Managers.UI.ShowSceneUI<UI_Button>(null, new Vector3(0, 0, 2));
         Managers.Sound.Play("Bgm_Game", Define.Sound.Bgm);
 
         Managers.Object.Init();
