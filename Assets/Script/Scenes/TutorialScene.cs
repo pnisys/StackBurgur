@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class TutorialScene : BaseScene
 {
-    public Transform CounterPosition { get; private set; }
-
     void Awake()
     {
         Init();
@@ -16,7 +14,6 @@ public class TutorialScene : BaseScene
         base.Init();
 
         Managers.Object.Init();
-        CounterPosition = GameObject.Find("CounterPosition").transform;
 
         SceneType = Define.SceneType.Tutorial;
         Managers.Sound.Play("Bgm_Game", Define.Sound.Bgm);

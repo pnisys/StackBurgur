@@ -33,6 +33,7 @@ public class MeditateManager
         if (select != null)
             Managers.Resource.Destory(select.gameObject);
 
+        Managers.Object.Clear();
         Managers.Scene.LoadScene(Define.SceneType.Game);
     }
 }

@@ -33,10 +33,6 @@ public class ObjectManager
             case Define.WorldObject.Player:
                 _player = go;
                 break;
-            case Define.WorldObject.BurgurCard:
-                break;
-            case Define.WorldObject.SourceCard:
-                break;
         }
 
         return go;
@@ -55,10 +51,6 @@ public class ObjectManager
                 break;
             case Define.WorldObject.Player:
                 _player = go;
-                break;
-            case Define.WorldObject.BurgurCard:
-                break;
-            case Define.WorldObject.SourceCard:
                 break;
         }
 
@@ -96,12 +88,15 @@ public class ObjectManager
                         _player = null;
                 }
                 break;
-            case Define.WorldObject.BurgurCard:
-                break;
-            case Define.WorldObject.SourceCard:
-                break;
         }
 
         Managers.Resource.Destory(go);
+    }
+
+    public void Clear()
+    {
+        _player = null;
+        _customer.Clear();
+        Customers = null;
     }
 }

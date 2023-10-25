@@ -61,5 +61,6 @@ public class Managers : MonoBehaviour
         Sound.Clear();
         UI.Clear();
         Pool.Clear();
+        Object.Clear();
     }
 }
