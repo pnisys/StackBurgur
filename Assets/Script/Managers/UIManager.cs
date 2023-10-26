@@ -8,8 +8,7 @@ public class UIManager
     int _order = 10;
 
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
-    List<UI_Scene> _sceneList = new List<UI_Scene>();
-    UI_Scene _sceneUI = null;
+    Dictionary<string, UI_Scene> _sceneDict = new Dictionary<string, UI_Scene>();
 
     public GameObject Root
     {
@@ -45,13 +44,9 @@ public class UIManager
             name = typeof(T).Name;
 
         GameObject go = Managers.Resource.Instantite($"UI/Scene/{name}", addPosition);
-
-        Managers.Resource.ResourcesDict.TryAdd(go.name, go);
         T sceneUI = Util.GetOrAddComponet<T>(go);
-        _sceneUI = sceneUI;
-
+        _sceneDict.Add(go.name, sceneUI);
         go.transform.SetParent(Root.transform);
-        _sceneList.Add(sceneUI);
         return sceneUI;
     }
 
@@ -101,6 +96,20 @@ public class UIManager
         _order--;
     }
 
+    public void CloseSceneUI(string name)
+    {
+        if (_sceneDict.ContainsKey(name))
+        {
+            Managers.Object.Despawn(_sceneDict[name].gameObject);
+            _sceneDict.Remove(name);
+        }
+        else
+        {
+            Debug.LogError("해당 Key가 존재하지 않습니다");
+            return;
+        }
+    }
+
     public void CloseAllPopupUI()
     {
         while (_popupStack.Count > 0)
@@ -110,6 +119,5 @@ public class UIManager
     public void Clear()
     {
         CloseAllPopupUI();
-        _sceneUI = null;
     }
 }

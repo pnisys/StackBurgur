@@ -27,6 +27,9 @@ public class Game_UI_Select_Strategy : I_UI_Select_Strategy
 {
     public void Decision(UI_Select uI_Select)
     {
+        Managers.UI.CloseSceneUI("UI_Card_Burgur");
+        Managers.UI.CloseSceneUI("UI_Card_Source");
+
         Managers.UI.ShowPopupUI<UI_Check>();
         Managers.EventBus.Trigger("ChangeCustomerStateToJudge");
         Managers.Object.Despawn(uI_Select.gameObject);
@@ -72,7 +75,6 @@ public class UI_Select : UI_Scene
         DecisionButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
             Managers.Game.CheckAnswer();
-            GameObject go = Managers.Resource.ResourcesDict["UI_TimeLimit"];
             strategy.Decision(this);
         }
         );

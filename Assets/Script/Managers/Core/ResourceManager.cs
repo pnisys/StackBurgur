@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ResourceManager
 {
-    public Dictionary<string, GameObject> ResourcesDict { get; private set; } = new Dictionary<string, GameObject>();
-
     public T Load<T>(string path) where T : Object
     {
         if (typeof(T) == typeof(GameObject))
@@ -48,8 +46,6 @@ public class ResourceManager
         GameObject go = Object.Instantiate(original, finalPosition, finalRotation, parent);
         go.name = original.name;
 
-        ResourcesDict.TryAdd(go.name, go);
-
         return go;
     }
 
@@ -73,8 +69,6 @@ public class ResourceManager
         GameObject go = Object.Instantiate(original, finalPosition, finalRotation, parent);
         go.name = original.name;
 
-        ResourcesDict.TryAdd(go.name, go);
-
         return go;
     }
 
@@ -90,13 +84,6 @@ public class ResourceManager
             return;
         }
 
-        ResourcesDict.Remove(go.name);
-
         Object.Destroy(go);
-    }
-
-    public void Clear()
-    {
-        ResourcesDict.Clear();
     }
 }

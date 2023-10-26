@@ -57,7 +57,6 @@ public class Managers : MonoBehaviour
 
     public static void Clear()
     {
-        Resource.Clear();
         UI.Clear();
         Object.Clear();
         EventBus.Clear();

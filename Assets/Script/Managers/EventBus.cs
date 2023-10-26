@@ -57,7 +57,7 @@ public class EventBus
 
     public void GameSceneLoad()
     {
-        GameObject select = Managers.Resource.ResourcesDict["UI_Select"];
+        GameObject select = Managers.Object.ObjectDict["UI_Select"];
         if (select != null)
             Managers.Resource.Destory(select.gameObject);
 

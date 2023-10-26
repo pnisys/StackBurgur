@@ -198,9 +198,6 @@ public class CustomerController : BaseController
 
     private void UpdateFinish()
     {
-        Managers.Object.Despawn(Managers.Resource.ResourcesDict["UI_Card_Burgur"]);
-        Managers.Object.Despawn(Managers.Resource.ResourcesDict["UI_Card_Source"]);
-
         Managers.UI.CloseAllPopupUI();
         Managers.Object.Despawn(gameObject);
     }

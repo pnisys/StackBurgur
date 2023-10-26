@@ -29,6 +29,9 @@ public class ObjectManager
         }
     }
 
+    public Dictionary<string, GameObject> ObjectDict { get; private set; } = new Dictionary<string, GameObject>();
+
+
     public Action<int> OnSpawnEvent;
 
     public GameObject GetPlayer() { return _player; }
