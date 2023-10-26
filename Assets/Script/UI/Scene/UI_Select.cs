@@ -10,8 +10,30 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
+public interface I_UI_Select_Strategy
+{
+    void Decision(UI_Select uI_Select);
+}
+
+public class Tutorial_UI_Select_Strategy : I_UI_Select_Strategy
+{
+    public void Decision(UI_Select uI_Select)
+    {
+        Managers.EventBus.Trigger("GameSceneLoad");
+    }
+}
+
+public class Game_UI_Select_Strategy : I_UI_Select_Strategy
+{
+    public void Decision(UI_Select uI_Select)
+    {
+    }
+}
+
 public class UI_Select : UI_Scene
 {
+    I_UI_Select_Strategy strategy;
+
     enum GameObjects
     {
         MeterialPanel,
@@ -24,6 +46,11 @@ public class UI_Select : UI_Scene
     }
     void Start()
     {
+        if (Managers.Scene.CurrentSceneType == Define.SceneType.Tutorial)
+            strategy = new Tutorial_UI_Select_Strategy();
+        else if (Managers.Scene.CurrentSceneType == Define.SceneType.Game)
+            strategy = new Game_UI_Select_Strategy();
+
         Init();
     }
 
@@ -77,7 +104,7 @@ public class UI_Select : UI_Scene
             Managers.Game.PlayerAnswerMaterials.Clear();
             Managers.Game.PlayerAnswerSource = string.Empty;
 
-            Managers.EventBus.Trigger("GameSceneLoad");
+            strategy.Decision(this);
         }
         );
 

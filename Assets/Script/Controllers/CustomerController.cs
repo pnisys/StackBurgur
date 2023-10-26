@@ -5,7 +5,6 @@ using UnityEngine;
 public interface ICustomerStrategy
 {
     void Init(CustomerController controller);
-    void Update(CustomerController controller);
 }
 
 public class TutorialCustomerStrategy : ICustomerStrategy
@@ -14,20 +13,13 @@ public class TutorialCustomerStrategy : ICustomerStrategy
     {
         Managers.EventBus.Subscribe("ShowCard", Managers.EventBus.ShowCard);
     }
-
-    public void Update(CustomerController controller)
-    {
-    }
 }
 
 public class GameCustomerStrategy : ICustomerStrategy
 {
     public void Init(CustomerController controller)
     {
-    }
-
-    public void Update(CustomerController controller)
-    {
+        Managers.EventBus.Subscribe("ShowCard", Managers.EventBus.ShowCard);
     }
 }
 
@@ -43,16 +35,17 @@ public class CustomerController : BaseController
 
     void Start()
     {
-        Init();
-    }
-
-    public override void Init()
-    {
         if (Managers.Scene.CurrentSceneType == Define.SceneType.Tutorial)
             _strategy = new TutorialCustomerStrategy();
         else if (Managers.Scene.CurrentSceneType == Define.SceneType.Game)
             _strategy = new GameCustomerStrategy();
 
+        Init();
+        _strategy.Init(this);
+    }
+
+    public override void Init()
+    {
         WorldObjectType = Define.WorldObject.Customer;
         customerStateType = Define.CustomerState.Spawned;
 

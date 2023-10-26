@@ -60,10 +60,7 @@ public class Managers : MonoBehaviour
     {
         Resource.Clear();
         UI.Clear();
-        Data.Clear();
-        Sound.Clear();
-        Game.Clear();
-        Pool.Clear();
         Object.Clear();
+        EventBus.Clear();
     }
 }

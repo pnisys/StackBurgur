@@ -64,4 +64,9 @@ public class EventBus
         Managers.Object.Clear();
         Managers.Scene.LoadScene(Define.SceneType.Game);
     }
+
+    public void Clear()
+    {
+        events.Clear();
+    }
 }

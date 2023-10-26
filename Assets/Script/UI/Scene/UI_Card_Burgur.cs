@@ -62,13 +62,12 @@ public class UI_Card_Burgur : UI_Scene
             Image image = Util.GetOrAddComponet<Image>(go);
             //Todo
             string materialName = Managers.Game.Burgur_Material[i];
-
             // Á¶°Ç Ãß°¡
-            if (i == 0 && materialName.EndsWith("»§"))
+            if (i == 0 && materialName.EndsWith("»§") && materialName != "»÷µåÀ§Ä¡»§")
             {
                 materialName += "¾Æ·¡";
             }
-            else if (i == floor - 1 && materialName.EndsWith("»§"))
+            else if (i == floor - 1 && materialName.EndsWith("»§") && materialName != "»÷µåÀ§Ä¡»§")
             {
                 materialName += "À§";
             }
