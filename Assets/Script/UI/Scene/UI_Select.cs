@@ -29,6 +29,7 @@ public class Game_UI_Select_Strategy : I_UI_Select_Strategy
     {
         Managers.UI.CloseSceneUI("UI_Card_Burgur");
         Managers.UI.CloseSceneUI("UI_Card_Source");
+        Managers.UI.CloseSceneUI("UI_TimeLimit");
 
         Managers.UI.ShowPopupUI<UI_Check>();
         Managers.EventBus.Trigger("ChangeCustomerStateToJudge");
@@ -67,6 +68,7 @@ public class UI_Select : UI_Scene
     {
         Managers.EventBus.Subscribe("GameSceneLoad", Managers.EventBus.GameSceneLoad);
         Managers.EventBus.Subscribe("ChangeCustomerStateToJudge", Managers.EventBus.ChangeCustomerStateToJudge);
+
         Bind<GameObject>(typeof(GameObjects));
         Bind<UnityEngine.UI.Button>(typeof(Buttons));
         GameObject MaterialPanel = GetGameObject((int)GameObjects.MeterialPanel);

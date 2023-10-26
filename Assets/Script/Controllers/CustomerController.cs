@@ -34,7 +34,7 @@ public class CustomerController : BaseController
 
     Coroutine co;
 
-   public bool IsOrdering = false;
+    public bool IsOrdering = false;
 
     public void SetCustomerStateType(Define.CustomerState type)
     {
@@ -118,7 +118,12 @@ public class CustomerController : BaseController
         yield return new WaitForSeconds(waitTime);
         //난이도에 따라 햄버거 카드에 맞는 햄버거와 소스를 카드를 보여주기
         Managers.EventBus.Trigger("ShowCard");
-        yield return new WaitUntil(() => IsOrdering == true);
+
+        yield return new WaitUntil(() =>
+        {
+            return IsOrdering == true;
+        });
+
         customerStateType = Define.CustomerState.Judgeing;
         co = null;
     }
