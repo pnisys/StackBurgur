@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public interface ILoader<Key, Value>
 {
@@ -17,12 +18,21 @@ public class DataManager
     public Dictionary<string, string> SourceImageFileDict { get; private set; } = new Dictionary<string, string>();
     public Dictionary<string, string> SourceTextFileDict { get; private set; } = new Dictionary<string, string>();
 
+    public Dictionary<string, Sprite> BurgurImageSpriteDict = new Dictionary<string, Sprite>();
+    public Dictionary<string, Sprite> BurgurMaterialSpriteDict = new Dictionary<string, Sprite>();
+    public Dictionary<string, Sprite> SourceImageDict { get; private set; } = new Dictionary<string, Sprite>();
+    public Dictionary<string, Sprite> SourceTextNameDict { get; private set; } = new Dictionary<string, Sprite>();
+
     public void Init()
     {
         BurgursInfoDict = LoadJson<BurgurDataLoader, string, BurgurData>("BurgurData").MakeDict();
         BurgursMaterialFileDict = LoadJson<BurgurMaterialLoader, string, string>("ProjectFileData").MakeDict();
         SourceImageFileDict = LoadJson<SourceImageFileLoader, string, string>("ProjectFileData").MakeDict();
         SourceTextFileDict = LoadJson<SourceTextFileLoader, string, string>("ProjectFileData").MakeDict();
+
+        InitBurgurSprites();
+        InitBurgurMaterialSprites();
+        InitSourceSprites();
     }
 
     Loader LoadJson<Loader, key, value>(string path) where Loader : ILoader<key, value>
@@ -94,11 +104,56 @@ public class DataManager
         }
     }
 
+    private void InitBurgurSprites()
+    {
+        for (int i = 0; i <= Managers.Game.MaxStage; i++)
+        {
+            foreach (var item in Managers.Game.GetLevelBurgur(i))
+            {
+                string path = i == 0 ? Define.burgurSpriteFolderPath_Tutorial : i == 1 ? Define.burgurSpriteFolderPath_Level1 :
+                    i == 2 ? Define.burgurSpriteFolderPath_Level2 : i == 3 ? Define.burgurSpriteFolderPath_Level3 :
+                    i == 4 ? Define.burgurSpriteFolderPath_Level4 : string.Empty;
+
+                Managers.Data.BurgurImageSpriteDict.Add(item, Managers.Resource.Load<Sprite>($"{path}{item}"));
+            }
+        }
+    }
+
+    private void InitBurgurMaterialSprites()
+    {
+        string path = Define.materialSpriteFolderPath;
+
+        foreach (var item in Managers.Data.BurgursMaterialFileDict)
+        {
+            Managers.Data.BurgurMaterialSpriteDict.Add(item.Key, Managers.Resource.Load<Sprite>($"{path}{item.Value}"));
+        }
+    }
+
+    private void InitSourceSprites()
+    {
+        string path = Define.sourceSpriteFolderPath;
+
+        foreach (var item in Managers.Data.SourceImageFileDict)
+        {
+            Managers.Data.SourceImageDict.Add(item.Key, Managers.Resource.Load<Sprite>($"{path}{item.Value}"));
+        }
+
+        foreach (var item in Managers.Data.SourceTextFileDict)
+        {
+            Managers.Data.SourceTextNameDict.Add(item.Key, Managers.Resource.Load<Sprite>($"{path}{item.Value}"));
+        }
+    }
+
     public void Clear()
     {
         BurgursInfoDict.Clear();
         BurgursMaterialFileDict.Clear();
         SourceImageFileDict.Clear();
         SourceTextFileDict.Clear();
+
+        BurgurImageSpriteDict.Clear();
+        BurgurMaterialSpriteDict.Clear();
+        SourceImageDict.Clear();
+        SourceTextNameDict.Clear();
     }
 }

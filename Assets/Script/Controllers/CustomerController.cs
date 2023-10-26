@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,13 @@ public class CustomerController : BaseController
 
     Coroutine co;
 
+   public bool IsOrdering = false;
+
+    public void SetCustomerStateType(Define.CustomerState type)
+    {
+        customerStateType = type;
+    }
+
     void Start()
     {
         if (Managers.Scene.CurrentSceneType == Define.SceneType.Tutorial)
@@ -65,11 +73,16 @@ public class CustomerController : BaseController
             case Define.CustomerState.WaitingAtCounter:
                 UpdateWaitingAtCounter();
                 break;
-            case Define.CustomerState.Ordering:
-                UpdateOrdering();
+            case Define.CustomerState.Judgeing:
+                UpdateJudge();
+                break;
+            case Define.CustomerState.Finish:
+                UpdateFinish();
                 break;
         }
     }
+
+
 
     private void UpdateSpawned()
     {
@@ -105,14 +118,91 @@ public class CustomerController : BaseController
         yield return new WaitForSeconds(waitTime);
         //난이도에 따라 햄버거 카드에 맞는 햄버거와 소스를 카드를 보여주기
         Managers.EventBus.Trigger("ShowCard");
-        customerStateType = Define.CustomerState.Ordering;
+        yield return new WaitUntil(() => IsOrdering == true);
+        customerStateType = Define.CustomerState.Judgeing;
         co = null;
     }
 
-    private void UpdateOrdering()
+    private void UpdateJudge()
     {
-        //제한시간 캔버스 켜기
-        //튜토리얼 안내캔버스 끝나야 제한시간 흐르게 하기
+        int stage = Managers.Game.CurrentStage;
+        int score = Managers.Game.Score;
+
+        bool isPass = false;
+        switch (stage)
+        {
+            case 0:
+                if (score >= 30)
+                    isPass = true;
+                break;
+            case 1:
+                if (score >= 40)
+                    isPass = true;
+                break;
+            case 2:
+                if (score >= 50)
+                    isPass = true;
+                break;
+            case 3:
+                if (score >= 60)
+                    isPass = true;
+                break;
+            case 4:
+                if (score >= 70)
+                    isPass = true;
+                break;
+        }
+
+        if (isPass == true)
+        {
+            //합격하면 자리로 가기
+            GameObject seatPosition = GameObject.Find("SeatPosition");
+
+            Vector3 direction = seatPosition.transform.position - transform.position;
+            direction.y = 0; // y 값을 고려하지 않습니다.
+            Vector3 dirNormalized = direction.normalized;
+
+            // 고객이 목적지로 걸어갑니다.
+            float initialY = transform.position.y; // 초기 Y 값을 저장합니다.
+            transform.position += dirNormalized * speed * Time.deltaTime;
+            transform.position = new Vector3(transform.position.x, initialY, transform.position.z); // Y 값을 초기값으로 유지합니다.
+
+            // 일정 거리(예: 1.0f)보다 작으면 도착했다고 간주하고 상태를 변경합니다.
+            float distanceThreshold = 1f;
+            if (direction.magnitude < distanceThreshold)
+            {
+                customerStateType = Define.CustomerState.Finish;
+            }
+        }
+        else
+        {
+            GameObject customerSpawnPosition = GameObject.Find("CustomerSpawnPosition");
+
+            Vector3 direction = customerSpawnPosition.transform.position - transform.position;
+            direction.y = 0; // y 값을 고려하지 않습니다.
+            Vector3 dirNormalized = direction.normalized;
+
+            // 고객이 목적지로 걸어갑니다.
+            float initialY = transform.position.y; // 초기 Y 값을 저장합니다.
+            transform.position += dirNormalized * speed * Time.deltaTime;
+            transform.position = new Vector3(transform.position.x, initialY, transform.position.z); // Y 값을 초기값으로 유지합니다.
+
+            // 일정 거리(예: 1.0f)보다 작으면 도착했다고 간주하고 상태를 변경합니다.
+            float distanceThreshold = 1f;
+            if (direction.magnitude < distanceThreshold)
+            {
+                customerStateType = Define.CustomerState.Finish;
+            }
+        }
+    }
+
+    private void UpdateFinish()
+    {
+        Managers.Object.Despawn(Managers.Resource.ResourcesDict["UI_Card_Burgur"]);
+        Managers.Object.Despawn(Managers.Resource.ResourcesDict["UI_Card_Source"]);
+
+        Managers.UI.CloseAllPopupUI();
+        Managers.Object.Despawn(gameObject);
     }
 }
 

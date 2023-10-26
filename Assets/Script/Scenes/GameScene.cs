@@ -29,7 +29,8 @@ public class GameScene : BaseScene
         }
 
         int randomCustomerValue = UnityEngine.Random.Range(0, Managers.Object.Customers.Length);
-        Managers.Object.Spawn(Define.WorldObject.Customer, Managers.Object.Customers[randomCustomerValue]);
+        GameObject customer = Managers.Object.Spawn(Define.WorldObject.Customer, Managers.Object.Customers[randomCustomerValue]);
+        Managers.Game.CurrentCustomer = customer;
 
         Managers.Game.CurrentStage = 1;
     }

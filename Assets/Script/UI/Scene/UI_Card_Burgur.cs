@@ -42,7 +42,7 @@ public class UI_Card_Burgur : UI_Scene
 
         //Todo
         burgurNameText.text = Managers.Game.CurrentBurgur;
-        image_Burgur.sprite = Managers.Game.BurgurImageSpriteDict[Managers.Game.CurrentBurgur];
+        image_Burgur.sprite = Managers.Data.BurgurImageSpriteDict[Managers.Game.CurrentBurgur];
 
         BurgurCardSetting();
     }
@@ -72,7 +72,7 @@ public class UI_Card_Burgur : UI_Scene
                 materialName += "À§";
             }
 
-            image.sprite = Managers.Game.BurgurMaterialSpriteDict[materialName];
+            image.sprite = Managers.Data.BurgurMaterialSpriteDict[materialName];
         }
     }
 }

@@ -8,11 +8,13 @@ public class UI_TimeLimit : UI_Scene
 {
     private TextMeshProUGUI countdownText;
     private float countdownTime = 10f;
+
+    private Coroutine countDownCo;
     private void Start()
     {
         base.Init();
         countdownText = GetComponent<TextMeshProUGUI>();
-        StartCoroutine(CountDown());
+        countDownCo = StartCoroutine(CountDown());
     }
 
     IEnumerator CountDown()
@@ -39,5 +41,10 @@ public class UI_TimeLimit : UI_Scene
 
         countdownText.text = string.Empty; // 카운트다운이 끝나면 표시할 메시지
         // 여기에 시간이 다 된 후에 실행할 코드를 추가
+    }
+
+    public void OnDestroy()
+    {
+        StopCoroutine(countDownCo);
     }
 }

@@ -25,7 +25,7 @@ public class UI_Card_Source : UI_Scene
         image_sourceImage = GetImage((int)SourceImages.Image_Source);
         image_sourceName = GetImage((int)SourceImages.Image_TitleName);
 
-        image_sourceImage.sprite = Managers.Game.SourceImageDict[Managers.Game.CurrentSource];
-        image_sourceName.sprite = Managers.Game.SourceTextNameDict[Managers.Game.CurrentSource];
+        image_sourceImage.sprite = Managers.Data.SourceImageDict[Managers.Game.CurrentSource];
+        image_sourceName.sprite = Managers.Data.SourceTextNameDict[Managers.Game.CurrentSource];
     }
 }

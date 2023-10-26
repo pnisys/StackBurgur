@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ResourceManager
 {
-    public Dictionary<string, GameObject> Resources { get; private set; } = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> ResourcesDict { get; private set; } = new Dictionary<string, GameObject>();
 
     public T Load<T>(string path) where T : Object
     {
@@ -38,7 +38,9 @@ public class ResourceManager
 
         //풀링된 녀석이 있을까?
         if (original.GetComponent<Poolable>() != null)
+        {
             return Managers.Pool.Pop(original, parent).gameObject;
+        }
 
         Vector3 finalPosition = original.transform.position + position;
         Quaternion finalRotation = rotation == Quaternion.identity ? original.transform.rotation : rotation;
@@ -46,7 +48,7 @@ public class ResourceManager
         GameObject go = Object.Instantiate(original, finalPosition, finalRotation, parent);
         go.name = original.name;
 
-        Resources.TryAdd(go.name, go);
+        ResourcesDict.TryAdd(go.name, go);
 
         return go;
     }
@@ -61,7 +63,9 @@ public class ResourceManager
 
         //풀링된 녀석이 있을까?
         if (original.GetComponent<Poolable>() != null)
+        {
             return Managers.Pool.Pop(original, parent).gameObject;
+        }
 
         Vector3 finalPosition = original.transform.position + position;
         Quaternion finalRotation = rotation == Quaternion.identity ? original.transform.rotation : rotation;
@@ -69,7 +73,7 @@ public class ResourceManager
         GameObject go = Object.Instantiate(original, finalPosition, finalRotation, parent);
         go.name = original.name;
 
-        Resources.TryAdd(go.name, go);
+        ResourcesDict.TryAdd(go.name, go);
 
         return go;
     }
@@ -86,13 +90,13 @@ public class ResourceManager
             return;
         }
 
-        Resources.Remove(go.name);
+        ResourcesDict.Remove(go.name);
 
         Object.Destroy(go);
     }
 
     public void Clear()
     {
-        Resources.Clear();
+        ResourcesDict.Clear();
     }
 }

@@ -8,6 +8,7 @@ public class UIManager
     int _order = 10;
 
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
+    List<UI_Scene> _sceneList = new List<UI_Scene>();
     UI_Scene _sceneUI = null;
 
     public GameObject Root
@@ -44,10 +45,13 @@ public class UIManager
             name = typeof(T).Name;
 
         GameObject go = Managers.Resource.Instantite($"UI/Scene/{name}", addPosition);
+
+        Managers.Resource.ResourcesDict.TryAdd(go.name, go);
         T sceneUI = Util.GetOrAddComponet<T>(go);
         _sceneUI = sceneUI;
 
         go.transform.SetParent(Root.transform);
+        _sceneList.Add(sceneUI);
         return sceneUI;
     }
 

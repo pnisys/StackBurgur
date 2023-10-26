@@ -27,6 +27,9 @@ public class Game_UI_Select_Strategy : I_UI_Select_Strategy
 {
     public void Decision(UI_Select uI_Select)
     {
+        Managers.UI.ShowPopupUI<UI_Check>();
+        Managers.EventBus.Trigger("ChangeCustomerStateToJudge");
+        Managers.Object.Despawn(uI_Select.gameObject);
     }
 }
 
@@ -60,7 +63,7 @@ public class UI_Select : UI_Scene
     public override void Init()
     {
         Managers.EventBus.Subscribe("GameSceneLoad", Managers.EventBus.GameSceneLoad);
-
+        Managers.EventBus.Subscribe("ChangeCustomerStateToJudge", Managers.EventBus.ChangeCustomerStateToJudge);
         Bind<GameObject>(typeof(GameObjects));
         Bind<UnityEngine.UI.Button>(typeof(Buttons));
         GameObject MaterialPanel = GetGameObject((int)GameObjects.MeterialPanel);
@@ -68,42 +71,8 @@ public class UI_Select : UI_Scene
 
         DecisionButton.gameObject.AddUIEvnet((PointerEventData) =>
         {
-            Queue<string> queue = Managers.Game.PlayerAnswerMaterials;
-            string[] array = queue.ToArray();
-
-            for (int i = 0; i < Managers.Game.Burgur_Material.Length; i++)
-            {
-                if (array[i] != null)
-                {
-                    if (array[i] == Managers.Game.Burgur_Material[i])
-                        Debug.Log("맞음");
-                    else
-                    {
-                        Debug.Log($"정답 : {Managers.Game.Burgur_Material[i]} \n 그러나 현재 답 {array[i]}이므로 감점");
-                    }
-                }
-                else
-                {
-                    Debug.Log($"정답 :  {Managers.Game.Burgur_Material[i]} \n 그러나 제출 안함");
-                }
-            }
-
-            if (Managers.Game.CurrentSource.Equals(Managers.Game.PlayerAnswerSource))
-            {
-                Debug.Log("소스도 정답");
-            }
-            else
-            {
-                if (Managers.Game.PlayerAnswerSource == string.Empty)
-                    Debug.Log($"소스 정답 : {Managers.Game.CurrentSource} 그러나 소스 답안 제출 안함");
-                else
-                    Debug.Log($"소스 정답 : {Managers.Game.CurrentSource} 그러나 제출 답안 : {Managers.Game.PlayerAnswerSource} ");
-            }
-
-
-            Managers.Game.PlayerAnswerMaterials.Clear();
-            Managers.Game.PlayerAnswerSource = string.Empty;
-
+            Managers.Game.CheckAnswer();
+            GameObject go = Managers.Resource.ResourcesDict["UI_TimeLimit"];
             strategy.Decision(this);
         }
         );
@@ -159,10 +128,6 @@ public class UI_Select : UI_Scene
                     {
                         Managers.Game.PlayerAnswerMaterials.Enqueue(dictName);
                         Queue<string> strings = Managers.Game.PlayerAnswerMaterials;
-                        foreach (string str in strings)
-                        {
-                            Debug.Log(str);
-                        }
                     });
                     break;
                 }

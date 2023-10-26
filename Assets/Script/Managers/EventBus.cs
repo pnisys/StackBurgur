@@ -57,12 +57,17 @@ public class EventBus
 
     public void GameSceneLoad()
     {
-        GameObject select = Managers.Resource.Resources["UI_Select"];
+        GameObject select = Managers.Resource.ResourcesDict["UI_Select"];
         if (select != null)
             Managers.Resource.Destory(select.gameObject);
 
-        Managers.Object.Clear();
+        Managers.Clear();
         Managers.Scene.LoadScene(Define.SceneType.Game);
+    }
+
+    public void ChangeCustomerStateToJudge()
+    {
+        Managers.Game.CurrentCustomer.GetComponent<CustomerController>().IsOrdering = true;
     }
 
     public void Clear()

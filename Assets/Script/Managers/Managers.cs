@@ -46,7 +46,6 @@ public class Managers : MonoBehaviour
             s_Instance._sound.Init();
             s_Instance._pool.Init();
             s_Instance._data.Init();
-            s_Instance._game.Init();
         }
 
     }
@@ -62,5 +61,6 @@ public class Managers : MonoBehaviour
         UI.Clear();
         Object.Clear();
         EventBus.Clear();
+        Game.Clear();
     }
 }
